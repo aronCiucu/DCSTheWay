@@ -11,7 +11,7 @@ Supported modules:
 Multiplayer is supported as long as the server has ownship/player exports turned on.
 
 ## How to install?
-1. You have to have Java 11 installed. Download from [here](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html).
+1. You have to have Java 11 installed. Download from [here](https://docs.aws.amazon.com/corretto/latest/corretto-11-ug/downloads-list.html).
 2. Download the .zip file from the Releases tab and extract it
 3. Paste the TheWay.lua file into `Saved Games/DCS/Scripts`. The `DCS` folder name may be `DCS.openbeta` if you are on the openbeta version of the game.
 4. Edit the Export.lua file and append this line at the end of the file, and save it:
