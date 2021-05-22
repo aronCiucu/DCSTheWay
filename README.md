@@ -25,11 +25,11 @@ Video tutorial here:
 [![DCSTheWayVideoThumbnail](http://img.youtube.com/vi/0PHWXWClENQ/0.jpg)](http://www.youtube.com/watch?v=0PHWXWClENQ)
 
 Or follow these steps:
-1. With the game launched and mission started, launch TheWay.exe
-2. Click Start selecting on map, and a crosshair will show on screen
-3. Enter the F10 map, position the crosshair ontop of the desired place you wish to mark, and click Select point.
+1. Launch `TheWay.exe`.
+2. Click `Start selecting on map`, and a selection dot will show on screen.
+3. Enter the F10 map, position the dot ontop of the desired place you wish to mark, and click `Select point`.
 Repeat this step to mark as many points as you want.
-4. When finished, click Begin transfer to DCS to begin the transfering process.
-It is advised that you are in the F1 cockpit view when you do this, and refrain from additional cockpit inputs until the wapoints have been loaded.
+4. When finished, enter the F1 cockpit view and click `Begin transfer to DCS` to begin the transfering process.
+It is advised that you refrain from additional cockpit inputs until the wapoints have been loaded.
 
 This is the way.
