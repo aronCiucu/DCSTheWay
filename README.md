@@ -11,13 +11,14 @@ Supported modules:
 Multiplayer is supported as long as the server has ownship/player exports turned on.
 
 ## How to install?
-1. Download the .zip file from the Releases tab and extract it
-2. Paste the TheWay.lua file into `Saved Games/DCS/Scripts`. The `DCS` folder name may be `DCS.openbeta` if you are on the openbeta version of the game.
-3. Edit the Export.lua file and append this line at the end of the file, and save it:
+1. You have to have Java 11 installed. Download from [here](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html).
+2. Download the .zip file from the Releases tab and extract it
+3. Paste the TheWay.lua file into `Saved Games/DCS/Scripts`. The `DCS` folder name may be `DCS.openbeta` if you are on the openbeta version of the game.
+4. Edit the Export.lua file and append this line at the end of the file, and save it:
   ```lua
   local TheWayLfs=require('lfs'); dofile(TheWayLfs.writedir()..'Scripts/TheWay.lua')
   ```
-4. Launch TheWay.exe from the extracted zip file and go fly!
+5. Launch TheWay.exe from the extracted zip file and go fly!
 
 ## How to use? 
 Video tutorial here:
