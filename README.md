@@ -1,5 +1,6 @@
 # DCSTheWay
 Imports waypoints from DCS F10 map into the plane navigation system, like a Data Transfer Cartidge.
+Special thanks to kukiric for helping out with the lua side of things!
 
 ## What does it do?
 You choose points on the F10 map, press a button, and those points will be entered as steerpoints into your plane.  
