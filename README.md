@@ -12,8 +12,8 @@ Multiplayer is supported as long as the server has ownship/player exports turned
 
 ## How to install?
 1. Download the .zip file from the Releases tab and extract it in a convenient location, from which you will run the program. 
-2. Paste the TheWay.lua file from the zip file into `Saved Games/DCS/Scripts`. The `DCS` folder name may be `DCS.openbeta` if you are on the openbeta version of the game.
-3. Edit the Export.lua file and append this line at the end of the file, and save it:
+2. Copy the TheWay.lua file from the zip file and paste it into `Saved Games/DCS/Scripts`. The `DCS` folder name may be `DCS.openbeta` if you are on the openbeta version of the game.
+3. Edit the Export.lua file there and append this line at the end of the file, and save it:
   ```lua
   local TheWayLfs=require('lfs'); dofile(TheWayLfs.writedir()..'Scripts/TheWay.lua')
   ```
