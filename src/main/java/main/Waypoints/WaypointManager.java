@@ -20,6 +20,8 @@ public class WaypointManager {
             if(model.equals("F-16C_50")){
                 String dataToSend = F16.getCommands(coords).toString();
                 PortSender.send(dataToSend);
+            } else if(model.equals("FA-188")){
+
             }
         }
 
