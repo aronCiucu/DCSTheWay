@@ -1,5 +1,5 @@
 # DCSTheWay
-Imports waypoints from DCS F10 map into the plane navigation system, like a Data Transfer Cartidge.
+Imports waypoints from DCS F10 map into the plane navigation system, like a Data Transfer Cartridge.
 Special thanks to kukiric for helping out with the lua side of things!
 
 ## What does it do?
@@ -28,9 +28,9 @@ Video tutorial here:
 Or follow these steps:
 1. Launch `TheWay.exe`.
 2. Click `Start selecting on map`, and a selection dot will show on screen.
-3. Enter the F10 map, position the dot ontop of the desired place you wish to mark, and click `Select point`.
+3. Enter the F10 map, position the dot on top of the desired place you wish to mark, and click `Select point`.
 Repeat this step to mark as many points as you want.
 4. When finished, enter the F1 cockpit view and click `Begin transfer to DCS` to begin the transfering process.
-It is advised that you refrain from additional cockpit inputs until the wapoints have been loaded.
+It is advised that you refrain from additional cockpit inputs until the waypoints have been loaded.
 
 This is the way.
