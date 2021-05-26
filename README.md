@@ -19,7 +19,7 @@ Multiplayer is supported as long as the server has ownship/player exports turned
   ```lua
   local TheWayLfs=require('lfs'); dofile(TheWayLfs.writedir()..'Scripts/TheWay.lua')
   ```
-  If there is no `Export.lua` file already existing there, create it yourself, and it should include only the line above.
+If there is no `Export.lua` file already existing there, create it yourself, and it should include only the line above.
 4. Launch TheWay.exe and go fly!
 
 ## How to use? 
