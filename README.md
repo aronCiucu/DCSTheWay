@@ -8,6 +8,7 @@ You choose points on the F10 map, press a button, and those points will be enter
 ## What is supported?
 Supported modules:
 * F-16 
+* F/A-18 (make sure you don't have any AMPCD menu open)
  
 Multiplayer is supported as long as the server has ownship/player exports turned on.
 
