@@ -46,7 +46,7 @@ public class F18 {
             //increment steerpoint
             commandArray.put(new JSONObject().put("device", "37").put("code", "3022").put("delay", "0").put("activate", "1"));
             //press UFC
-            commandArray.put(new JSONObject().put("device", "37").put("code", "3015").put("delay", "10").put("activate", "1"));
+            commandArray.put(new JSONObject().put("device", "37").put("code", "3015").put("delay", "20").put("activate", "1"));
             // press position 1
             commandArray.put(new JSONObject().put("device", "25").put("code", "3010").put("delay", "40").put("activate", "1"));
             //press N north
