@@ -44,11 +44,11 @@ public class F18 {
 
         for (Coordinate coordinate:coords) {
             //increment steerpoint
-            commandArray.put(new JSONObject().put("device", "37").put("code", "3022").put("delay", "0").put("activate", "1"));
+            commandArray.put(new JSONObject().put("device", "37").put("code", "3022").put("delay", "20").put("activate", "1"));
             //press UFC
             commandArray.put(new JSONObject().put("device", "37").put("code", "3015").put("delay", "20").put("activate", "1"));
             // press position 1
-            commandArray.put(new JSONObject().put("device", "25").put("code", "3010").put("delay", "40").put("activate", "1"));
+            commandArray.put(new JSONObject().put("device", "25").put("code", "3010").put("delay", "80").put("activate", "1"));
             //press N north
             commandArray.put(new JSONObject().put("device", "25").put("code", "3020").put("delay", "0").put("activate", "1"));
             //start entering latitude
