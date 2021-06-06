@@ -23,6 +23,8 @@ Multiplayer is supported as long as the server has ownship/player exports turned
 
 4. Launch TheWay.exe and go fly!
 
+If you are updating from an older version, simply replace your existing `TheWay.lua` and `TheWay.exe` files with the new ones. 
+
 ## How to use? 
 Video tutorial here:
 
