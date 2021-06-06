@@ -63,7 +63,7 @@ public class GUI {
         if(coordinate != null){
             waypoints.add(coordinate);
             noOfWaypoints++;
-            updateTextAreaCount();
+            updateTextArea(noOfWaypoints+" selected for transfer.");
             return true;
         } else {
             return false;
@@ -74,11 +74,11 @@ public class GUI {
     public static void clearCoords(){
         waypoints.clear();
         noOfWaypoints = 0;
-        updateTextAreaCount();
+        updateTextArea(noOfWaypoints+" selected for transfer.");
     }
 
-    private static void updateTextAreaCount(){
-        waypointCountTextArea.setText(noOfWaypoints + " selected for transfer.");
+    public static void updateTextArea(String text){
+        waypointCountTextArea.setText(text);
     }
 
     public static ArrayList<Coordinate> getWaypoints() {

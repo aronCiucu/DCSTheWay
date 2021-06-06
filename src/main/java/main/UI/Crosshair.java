@@ -14,7 +14,7 @@ public class Crosshair {
                 int height = getHeight();
                 g.setColor(Color.MAGENTA);
 
-                g.fillOval(width/2, height/2, 10, 10);
+                g.fillOval(width/2-5, height/2-5, 10, 10);
             }
             @Override
             public void update(Graphics g)

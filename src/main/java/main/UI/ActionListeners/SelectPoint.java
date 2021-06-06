@@ -15,7 +15,9 @@ public class SelectPoint implements ActionListener {
         if(GUI.saveCoord(PortListenerThread.getCoordinate())){
             GUI.getClearPointsButton().setEnabled(true);
             GUI.getTransferToDCSButton().setEnabled(true);
-        };
+        } else {
+            GUI.updateTextArea("No connection to DCS.");
+        }
 
     }
 }

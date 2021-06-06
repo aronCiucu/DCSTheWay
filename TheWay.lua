@@ -23,9 +23,11 @@ local upstreamLuaExportBeforeNextFrame = LuaExportBeforeNextFrame
 
 
 function LuaExportStart()
-    successful, err = pcall(upstreamLuaExportStart)
-    if not successful then
-        log.write("THEWAY", log.ERROR, "Error in upstream LuaExportStart function: "..err) 
+    if upstreamLuaExportStart ~= nil then
+        successful, err = pcall(upstreamLuaExportStart)
+        if not successful then
+            log.write("THEWAY", log.ERROR, "Error in upstream LuaExportStart function"..tostring(err))
+        end
     end
     
 	udpSpeaker = socket.udp()
@@ -37,9 +39,11 @@ function LuaExportStart()
 end
 
 function LuaExportBeforeNextFrame()
-    successful, err = pcall(upstreamLuaExportBeforeNextFrame)
-    if not successful then
-        log.write("THEWAY", log.ERROR, "Error in upstream LuaExportBeforeNextFrame function: "..err) 
+    if upstreamLuaExportBeforeNextFrame ~= nil then
+        successful, err = pcall(upstreamLuaExportBeforeNextFrame)
+        if not successful then
+           log.write("THEWAY", log.ERROR, "Error in upstream LuaExportBeforeNextFrame function"..tostring(err))
+        end
     end
 
     if needDelay then
@@ -76,9 +80,10 @@ function LuaExportBeforeNextFrame()
 				nextIndex = 1
 			end
 		else
-			local client, error = tcpServer:accept()
-            if error ~= nil then
-                log.write("THEWAY", log.ERROR, "Error at accepting connection: "..error)  
+		    local client, err = tcpServer:accept()
+
+            if err ~= nil then
+                log.write("THEWAY", log.ERROR, "Error at accepting connection: "..err)
             end
             if client ~= nil then
                 client:settimeout(10)
@@ -96,10 +101,13 @@ function LuaExportBeforeNextFrame()
 end
 
 function LuaExportAfterNextFrame()
-    successful, err = pcall(upstreamLuaExportAfterNextFrame)
-    if not successful then
-        log.write("THEWAY", log.ERROR, "Error in upstream LuaExprtAfterNextFrame function: "..err) 
+    if upstreamLuaExportAfterNextFrame ~= nil then
+        successful, err = pcall(upstreamLuaExportAfterNextFrame)
+        if not successful then
+            log.write("THEWAY", log.ERROR, "Error in upstream LuaExportAfterNextFrame function"..tostring(err))
+        end
     end
+
 
     local camPos = LoGetCameraPosition()
 	local loX = camPos['p']['x']
