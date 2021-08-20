@@ -46,8 +46,6 @@ public class A10CII {
         for (Coordinate coordinate:coords) {
             //create new WP
             commandArray.put(new JSONObject().put("device", "9").put("code", "3007").put("delay", "0").put("activate", "1"));
-            //goto lat field
-            //commandArray.put(new JSONObject().put("device", "17").put("code", "3035").put("delay", "10").put("activate", "1"));
             //press N
             commandArray.put(new JSONObject().put("device", "9").put("code", "3040").put("delay", "0").put("activate", "1"));
             //start typing latitude
@@ -87,8 +85,6 @@ public class A10CII {
             }
             //enter into field
             commandArray.put(new JSONObject().put("device", "9").put("code", "3003").put("delay", "0").put("activate", "1"));
-            //goto long field
-            //commandArray.put(new JSONObject().put("device", "17").put("code", "3035").put("delay", "10").put("activate", "1"));
             //press E
             commandArray.put(new JSONObject().put("device", "9").put("code", "3031").put("delay", "0").put("activate", "1"));
             //press 0
@@ -130,12 +126,7 @@ public class A10CII {
             }
             //enter into field
             commandArray.put(new JSONObject().put("device", "9").put("code", "3004").put("delay", "0").put("activate", "1"));
-            //goto steerpoint field
-            //commandArray.put(new JSONObject().put("device", "17").put("code", "3034").put("delay", "10").put("activate", "1"));
-            //commandArray.put(new JSONObject().put("device", "17").put("code", "3034").put("delay", "10").put("activate", "1"));
         }
-        //return to main page
-        //commandArray.put(new JSONObject().put("device", "17").put("code", "3032").put("delay", "10").put("activate", "-1"));
 
         return commandArray;
     }
