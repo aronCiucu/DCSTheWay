@@ -12,6 +12,7 @@ public class PortListenerThread implements Runnable {
     private static DatagramSocket socket;
     private static Coordinate coordinate;
     private static String modelName;
+    private static String elevation;
 
     @Override
     public void run() {
@@ -28,7 +29,8 @@ public class PortListenerThread implements Runnable {
                     modelName = jsonObject.getString("model");
                     coordinate = new Coordinate(
                             jsonObject.getJSONObject("coords").getString("lat"),
-                            jsonObject.getJSONObject("coords").getString("long")
+                            jsonObject.getJSONObject("coords").getString("long"),
+                            jsonObject.getString("elev")
                     );
                 }
             }

@@ -21,9 +21,9 @@ public class EndSelection implements ActionListener {
         crosshair.hide();
         ArrayList<Coordinate> wpts = GUI.getWaypoints();
         WaypointManager.send(wpts);
-        GUI.clearCoords();
-        GUI.getTransferToDCSButton().setEnabled(false);
-        GUI.getClearPointsButton().setEnabled(false);
-        GUI.getSelectPointButton().setEnabled(false);
+//        GUI.clearCoords();
+//        GUI.getTransferToDCSButton().setEnabled(false);
+//        GUI.getClearPointsButton().setEnabled(false);
+//        GUI.getSelectPointButton().setEnabled(false);
     }
 }

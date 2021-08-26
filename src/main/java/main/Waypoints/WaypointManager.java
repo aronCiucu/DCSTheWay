@@ -17,7 +17,7 @@ public class WaypointManager {
         String model = PortListenerThread.getPlaneModel();
 
         if(model != null && !decimalCoords.isEmpty()){
-            if(model.equals("F-16C_50")){
+            if(model.equals("F-16C_50")) {
                 ArrayList<Coordinate> coords = convertDDMMmmmCoords(decimalCoords);
                 String dataToSend = F16.getCommands(coords).toString();
                 PortSender.send(dataToSend);
@@ -45,7 +45,11 @@ public class WaypointManager {
             DecimalFormat df = new DecimalFormat("00.000");
             String latitude = DLat+"."+df.format(MmLat);
             String longitude = DLong+"."+df.format(MmLong);
-            finalCoords.add(new Coordinate(latitude, longitude));
+            //convert elevation to ft
+            BigDecimal elevM = new BigDecimal(c.getElevation());
+            BigInteger elevFt = elevM.multiply(new BigDecimal("3.281")).toBigInteger();
+
+            finalCoords.add(new Coordinate(latitude, longitude, elevFt.toString()));
         }
         return finalCoords;
     }
@@ -65,7 +69,11 @@ public class WaypointManager {
             DecimalFormat df = new DecimalFormat("00.00");
             String latitude = DLat+"."+df.format(MmLat);
             String longitude = DLong+"."+df.format(MmLong);
-            finalCoords.add(new Coordinate(latitude, longitude));
+            //convert elevation to ft
+            BigDecimal elevM = new BigDecimal(c.getElevation());
+            BigInteger elevFt = elevM.multiply(new BigDecimal("3.281")).toBigInteger();
+
+            finalCoords.add(new Coordinate(latitude, longitude, elevFt.toString()));
         }
         return finalCoords;
     }

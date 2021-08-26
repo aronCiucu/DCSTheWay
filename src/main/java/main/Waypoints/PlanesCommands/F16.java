@@ -123,7 +123,47 @@ public class F16 {
             }
             //press enter
             commandArray.put(new JSONObject().put("device", "17").put("code", "3016").put("delay", "0").put("activate", "1"));
+            //goto elevation field
+            commandArray.put(new JSONObject().put("device", "17").put("code", "3035").put("delay", "10").put("activate", "-1"));
+            //start entering elevation
+            for(char digit:coordinate.getElevation().toCharArray()){
+                switch (digit){
+                    case '1':
+                        commandArray.put(new JSONObject().put("device", "17").put("code", "3003").put("delay", "0").put("activate", "1"));
+                        break;
+                    case '2':
+                        commandArray.put(new JSONObject().put("device", "17").put("code", "3004").put("delay", "0").put("activate", "1"));
+                        break;
+                    case '3':
+                        commandArray.put(new JSONObject().put("device", "17").put("code", "3005").put("delay", "0").put("activate", "1"));
+                        break;
+                    case '4':
+                        commandArray.put(new JSONObject().put("device", "17").put("code", "3006").put("delay", "0").put("activate", "1"));
+                        break;
+                    case '5':
+                        commandArray.put(new JSONObject().put("device", "17").put("code", "3007").put("delay", "0").put("activate", "1"));
+                        break;
+                    case '6':
+                        commandArray.put(new JSONObject().put("device", "17").put("code", "3008").put("delay", "0").put("activate", "1"));
+                        break;
+                    case '7':
+                        commandArray.put(new JSONObject().put("device", "17").put("code", "3009").put("delay", "0").put("activate", "1"));
+                        break;
+                    case '8':
+                        commandArray.put(new JSONObject().put("device", "17").put("code", "3010").put("delay", "0").put("activate", "1"));
+                        break;
+                    case '9':
+                        commandArray.put(new JSONObject().put("device", "17").put("code", "3011").put("delay", "0").put("activate", "1"));
+                        break;
+                    case '0':
+                        commandArray.put(new JSONObject().put("device", "17").put("code", "3002").put("delay", "0").put("activate", "1"));
+                        break;
+                }
+            }
+            //press enter
+            commandArray.put(new JSONObject().put("device", "17").put("code", "3016").put("delay", "0").put("activate", "1"));
             //goto steerpoint field
+            commandArray.put(new JSONObject().put("device", "17").put("code", "3034").put("delay", "10").put("activate", "1"));
             commandArray.put(new JSONObject().put("device", "17").put("code", "3034").put("delay", "10").put("activate", "1"));
             commandArray.put(new JSONObject().put("device", "17").put("code", "3034").put("delay", "10").put("activate", "1"));
         }

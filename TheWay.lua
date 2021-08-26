@@ -109,13 +109,14 @@ function LuaExportAfterNextFrame()
     end
 
 
-    local camPos = LoGetCameraPosition()
+  local camPos = LoGetCameraPosition()
 	local loX = camPos['p']['x']
 	local loZ = camPos['p']['z']
+	local elevation = LoGetAltitude(loX, loZ)
 	local coords = LoLoCoordinatesToGeoCoordinates(loX, loZ)
 	local model = LoGetSelfData()["Name"];
 
-	local toSend = "{ ".."\"model\": ".."\""..model.."\""..", ".."\"coords\": ".. "{ ".."\"lat\": ".."\""..coords.latitude.."\""..", ".."\"long\": ".."\""..coords.longitude.."\"".."} ".."}"
+	local toSend = "{ ".."\"model\": ".."\""..model.."\""..", ".."\"coords\": ".. "{ ".."\"lat\": ".."\""..coords.latitude.."\""..", ".."\"long\": ".."\""..coords.longitude.."\"".."} "..", ".."\"elev\": ".."\""..elevation.."\"".."}"
 
 	if pcall(function()
 		socket.try(udpSpeaker:sendto(toSend, "127.0.0.1", 42069)) 
