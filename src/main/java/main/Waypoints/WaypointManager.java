@@ -26,7 +26,7 @@ public class WaypointManager {
                 ArrayList<Coordinate> coords = convertDDMMmmmmCoords(waypoints);
                 String dataToSend = F18.getCommands(coords).toString();
                 PortSender.send(dataToSend);
-            } else if(model.equals("A-10C_2")) {
+            } else if(model.equals("A-10C_2") || model.equals("A-10C")) {
                 ArrayList<Coordinate> coords = convertDDMMmmmCoords(waypoints);
                 String dataToSend = A10CII.getCommands(coords).toString();
                 PortSender.send(dataToSend);
