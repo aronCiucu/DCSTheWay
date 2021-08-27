@@ -1,6 +1,6 @@
 package main.Waypoints.PlanesCommands;
 
-import main.models.Coordinate;
+import main.Models.Coordinate;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

@@ -5,14 +5,13 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 
-import main.models.Coordinate;
+import main.Models.Coordinate;
 import org.json.JSONObject;
 
 public class PortListenerThread implements Runnable {
     private static DatagramSocket socket;
     private static Coordinate coordinate;
     private static String modelName;
-    private static String elevation;
 
     @Override
     public void run() {
@@ -34,8 +33,6 @@ public class PortListenerThread implements Runnable {
                     );
                 }
             }
-        } catch (SocketException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

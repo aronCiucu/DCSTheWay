@@ -1,4 +1,4 @@
-package main.models;
+package main.Models;
 
 public final class Coordinate {
 
