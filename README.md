@@ -9,6 +9,7 @@ You choose points on the F10 map, press a button, and those points will be enter
 Supported modules:
 * F-16 
 * F/A-18 (make sure you are not in the TAC menu)
+* A-10C and A-10C2
  
 Multiplayer is supported as long as the server has ownship/player exports turned on.
 
