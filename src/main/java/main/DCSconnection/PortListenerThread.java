@@ -3,9 +3,8 @@ package main.DCSconnection;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.SocketException;
 
-import main.Models.Coordinate;
+import main.models.Coordinate;
 import org.json.JSONObject;
 
 public class PortListenerThread implements Runnable {

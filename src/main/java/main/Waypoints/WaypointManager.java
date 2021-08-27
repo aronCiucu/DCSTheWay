@@ -4,7 +4,7 @@ import main.DCSconnection.PortListenerThread;
 import main.DCSconnection.PortSender;
 import main.Waypoints.PlanesCommands.F16;
 import main.Waypoints.PlanesCommands.F18;
-import main.Models.Coordinate;
+import main.models.Coordinate;
 
 import java.util.ArrayList;
 

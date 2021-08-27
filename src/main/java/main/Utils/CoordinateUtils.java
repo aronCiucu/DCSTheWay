@@ -1,6 +1,6 @@
 package main.Utils;
 
-import main.Models.Coordinate;
+import main.models.Coordinate;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
