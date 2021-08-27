@@ -4,6 +4,7 @@ import main.DCSconnection.PortListenerThread;
 import main.DCSconnection.PortSender;
 import main.Waypoints.PlanesCommands.F16;
 import main.Waypoints.PlanesCommands.F18;
+import main.Waypoints.PlanesCommands.A10CII;
 import main.models.Coordinate;
 
 import java.util.ArrayList;
@@ -24,6 +25,10 @@ public class WaypointManager {
             } else if(model.equals("FA-18C_hornet")){
                 ArrayList<Coordinate> coords = convertDDMMmmmmCoords(waypoints);
                 String dataToSend = F18.getCommands(coords).toString();
+                PortSender.send(dataToSend);
+            } else if(model.equals("A-10C_2")) {
+                ArrayList<Coordinate> coords = convertDDMMmmmCoords(decimalCoords);
+                String dataToSend = A10CII.getCommands(coords).toString();
                 PortSender.send(dataToSend);
             }
         }
