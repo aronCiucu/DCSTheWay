@@ -1,10 +1,17 @@
 package main.UI;
 
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import main.Waypoints.WaypointManager;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 
 public class GUI {
     static private JPanel gui;
@@ -18,9 +25,10 @@ public class GUI {
 
 
     public static void show(){
+        FlatDarkLaf.setup();
         crosshair = new Crosshair();
         gui = new JPanel(new GridLayout(0, 1, 10, 10));
-        gui.setBorder(new EmptyBorder(20, 20, 20, 20));
+        gui.setBorder(new EmptyBorder(10, 10, 10, 10));
         beginSelectionButton = new JButton("Start selecting on map");
         textArea = new JTextArea(1, 10);
         transferToDCSButton = new JButton("Begin transfer to DCS");
@@ -32,6 +40,7 @@ public class GUI {
         });
         transferToDCSButton.addActionListener(e -> {
             WaypointManager.transfer();
+            transferredState();
         });
 
         selectPointButton.addActionListener(e -> {
@@ -39,7 +48,8 @@ public class GUI {
                 refreshWaypointCount();
                 populatedSelectionState();
             } else {
-                textArea.setText("No connection to DCS.");
+                error("No connection to DCS detected.");
+                standbyState();
             }
         });
 
@@ -62,7 +72,45 @@ public class GUI {
         frame.setAlwaysOnTop(true);
         frame.setFocusableWindowState(false);
         frame.pack();
+        frame.setResizable(false);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        frame.setLocation(0, dim.height-frame.getHeight());
+        loadIcon();
         frame.setVisible(true);
+    }
+
+    public static void warning(String text){
+        JDialog dialog = new JDialog(frame, "Heads up!", true);
+        JButton continueButton = new JButton("Continue");
+        continueButton.addActionListener(e -> dialog.dispose());
+        JButton[] option = {continueButton};
+        JOptionPane optionPane = new JOptionPane(text, JOptionPane.WARNING_MESSAGE, JOptionPane.YES_NO_OPTION, null, option, option[0]);
+
+        Point framePoint = frame.getLocation();
+        dialog.setLocation((int) framePoint.getX()+frame.getWidth(), (int)framePoint.getY());
+        dialog.setContentPane(optionPane);
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.setResizable(false);
+        dialog.setFocusableWindowState(false);
+        dialog.pack();
+        dialog.setVisible(true);
+    }
+
+    public static void error(String text){
+        JDialog dialog = new JDialog(frame, "Error", true);
+        JButton continueButton = new JButton("OK");
+        continueButton.addActionListener(e -> dialog.dispose());
+        JButton[] option = {continueButton};
+        JOptionPane optionPane = new JOptionPane(text, JOptionPane.ERROR_MESSAGE, JOptionPane.YES_NO_OPTION, null, option, option[0]);
+
+        Point framePoint = frame.getLocation();
+        dialog.setLocation((int) framePoint.getX()+frame.getWidth(), (int)framePoint.getY());
+        dialog.setContentPane(optionPane);
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.setResizable(false);
+        dialog.setFocusableWindowState(false);
+        dialog.pack();
+        dialog.setVisible(true);
     }
 
     private static void standbyState(){
@@ -84,6 +132,13 @@ public class GUI {
         transferToDCSButton.setEnabled(true);
     }
 
+    private static void transferredState(){
+        crosshair.hide();
+        selectPointButton.setEnabled(false);
+        clearPointsButton.setEnabled(true);
+        beginSelectionButton.setEnabled(false);
+    }
+
     private static void refreshWaypointCount(){
         int count = WaypointManager.getSelectedWaypointsCount();
         if (count>0){
@@ -94,6 +149,15 @@ public class GUI {
             }
         } else {
             textArea.setText("No waypoints selected");
+        }
+    }
+
+    private static void loadIcon() {
+        String iconPath = "resources/TheWayIcon40.png";
+        File iconFile = new File(iconPath);
+        if (iconFile.exists()) {
+            ImageIcon icon = new ImageIcon(iconPath);
+            frame.setIconImage(icon.getImage());
         }
     }
 }

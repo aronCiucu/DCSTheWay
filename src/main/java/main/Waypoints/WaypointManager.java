@@ -2,33 +2,37 @@ package main.Waypoints;
 
 import main.DCSconnection.PortListenerThread;
 import main.DCSconnection.PortSender;
+import main.UI.GUI;
 import main.Waypoints.PlanesCommands.F16;
 import main.Waypoints.PlanesCommands.F18;
 import main.Waypoints.PlanesCommands.A10CII;
-import main.models.Coordinate;
+import main.models.Hemisphere;
+import main.models.Point;
 
 import java.util.ArrayList;
-
-import static main.Utils.CoordinateUtils.*;
+import java.util.List;
 
 public class WaypointManager {
-    static private ArrayList<Coordinate> waypoints = new ArrayList<>();
+    static private ArrayList<Point> waypoints = new ArrayList<>();
 
     public static void transfer(){
         String model = PortListenerThread.getPlaneModel();
 
         if(model != null && !waypoints.isEmpty()){
             if(model.equals("F-16C_50")) {
-                ArrayList<Coordinate> coords = convertDDMMmmmCoords(waypoints);
-                String dataToSend = F16.getCommands(coords).toString();
+                List<Point> f16Coords = F16.getCoords(waypoints);
+                String dataToSend = F16.getCommands(f16Coords).toString();
                 PortSender.send(dataToSend);
             } else if(model.equals("FA-18C_hornet")){
-                ArrayList<Coordinate> coords = convertDDMMmmmmCoords(waypoints);
-                String dataToSend = F18.getCommands(coords).toString();
+                GUI.warning("Please make sure that: \n" +
+                        "1. PRECISE option is boxed in HSI > DATA\n" +
+                        "2. You are not in the TAC menu");
+                ArrayList<Point> f18Coords = F18.getCoords(waypoints);
+                String dataToSend = F18.getCommands(f18Coords).toString();
                 PortSender.send(dataToSend);
             } else if(model.equals("A-10C_2") || model.equals("A-10C")) {
-                ArrayList<Coordinate> coords = convertDDMMmmmCoords(waypoints);
-                String dataToSend = A10CII.getCommands(coords).toString();
+                ArrayList<Point> a10Coords = A10CII.getCoords(waypoints);
+                String dataToSend = A10CII.getCommands(a10Coords).toString();
                 PortSender.send(dataToSend);
             }
         }
@@ -36,9 +40,24 @@ public class WaypointManager {
     }
 
     public static boolean saveWaypointSuccessful(){
-        Coordinate cursorPositionCoordinate = PortListenerThread.getCoordinate();
-        if(cursorPositionCoordinate != null){
-            waypoints.add(cursorPositionCoordinate);
+        String latitude = PortListenerThread.getLatitude();
+        String longitude = PortListenerThread.getLongitude();
+        String elevation = PortListenerThread.getElevation();
+        if(latitude != null && longitude != null && elevation != null){
+            Hemisphere latHem;
+            Hemisphere longHem;
+            if(latitude.contains("-")){
+                latHem = Hemisphere.SOUTH;
+            } else {
+                latHem = Hemisphere.NORTH;
+            }
+            if(longitude.contains("-")){
+                longHem = Hemisphere.WEST;
+            } else {
+                longHem = Hemisphere.EAST;
+            }
+            var point = new Point(latitude.replace("-", ""), longitude.replace("-", ""), elevation, latHem, longHem);
+            waypoints.add(point);
             return true;
         }
         return false;

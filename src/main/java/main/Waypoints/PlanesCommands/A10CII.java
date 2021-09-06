@@ -1,13 +1,20 @@
 package main.Waypoints.PlanesCommands;
 
-import main.models.Coordinate;
+import main.Utils.CoordinateUtils;
+import main.Utils.UnitConvertorUtils;
+import main.models.DMMCoordinate;
+import main.models.Hemisphere;
+import main.models.Point;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 public class A10CII {
-    public static JSONArray getCommands(ArrayList<Coordinate> coords){
+    public static JSONArray getCommands(ArrayList<Point> coords){
             /*
            button list, all are device 9
            LSK 3L  3001
@@ -32,7 +39,9 @@ public class A10CII {
            9       3023
            0       3024
             N       3040
+            S       3045
             E       3031
+            W       3049
 
            */
 
@@ -43,11 +52,17 @@ public class A10CII {
         commandArray.put(new JSONObject().put("device", "9").put("code", "3011").put("delay", "10").put("activate", "1"));
         //goto WAYPOINT page
         commandArray.put(new JSONObject().put("device", "9").put("code", "3005").put("delay", "0").put("activate", "1"));
-        for (Coordinate coordinate:coords) {
+        for (Point coordinate:coords) {
             //create new WP
             commandArray.put(new JSONObject().put("device", "9").put("code", "3007").put("delay", "0").put("activate", "1"));
-            //press N
-            commandArray.put(new JSONObject().put("device", "9").put("code", "3040").put("delay", "0").put("activate", "1"));
+            //check if latitude is N or S
+            if(coordinate.getLatitudeHemisphere()== Hemisphere.NORTH){
+                //press N
+                commandArray.put(new JSONObject().put("device", "9").put("code", "3040").put("delay", "0").put("activate", "1"));
+            } else {
+                //press S
+                commandArray.put(new JSONObject().put("device", "9").put("code", "3045").put("delay", "0").put("activate", "1"));
+            }
             //start typing latitude
             for(char digit:coordinate.getLatitude().toCharArray()){
                 switch (digit){
@@ -85,10 +100,14 @@ public class A10CII {
             }
             //enter into field
             commandArray.put(new JSONObject().put("device", "9").put("code", "3003").put("delay", "0").put("activate", "1"));
-            //press E
-            commandArray.put(new JSONObject().put("device", "9").put("code", "3031").put("delay", "0").put("activate", "1"));
-            //press 0
-            commandArray.put(new JSONObject().put("device", "9").put("code", "3024").put("delay", "0").put("activate", "1"));
+            //check if longitude is E or W
+            if(coordinate.getLongitudeHemisphere()== Hemisphere.EAST){
+                //press E
+                commandArray.put(new JSONObject().put("device", "9").put("code", "3031").put("delay", "0").put("activate", "1"));
+            } else {
+                //press W
+                commandArray.put(new JSONObject().put("device", "9").put("code", "3049").put("delay", "0").put("activate", "1"));
+            }
             //start typing longitude
             for(char digit:coordinate.getLongitude().toCharArray()){
                 switch (digit){
@@ -129,5 +148,29 @@ public class A10CII {
         }
 
         return commandArray;
+    }
+
+    public static ArrayList<Point> getCoords(List<Point> dcsPoints){
+        ArrayList<Point> a10Points = new ArrayList<>();
+        for (Point dcsPoint:dcsPoints){
+            BigDecimal dcsLat = new BigDecimal(dcsPoint.getLatitude());
+            BigDecimal dcsLong = new BigDecimal(dcsPoint.getLongitude());
+            Double dcsElev = Double.parseDouble(dcsPoint.getElevation());
+
+            DMMCoordinate dmmLat = CoordinateUtils.decimalToDMM(dcsLat);
+            DMMCoordinate dmmLong = CoordinateUtils.decimalToDMM(dcsLong);
+
+            DecimalFormat latDegDf = new DecimalFormat("00");
+            DecimalFormat latMinDf = new DecimalFormat("00.000");
+            DecimalFormat longDegDf = new DecimalFormat("000");
+            DecimalFormat longMinDf = new DecimalFormat("00.000");
+            String a10Latitude = latDegDf.format(dmmLat.getDegrees())+latMinDf.format(dmmLat.getMinutes()).replace(".", "");
+            String a10Longitude = longDegDf.format(dmmLong.getDegrees())+longMinDf.format(dmmLong.getMinutes()).replace(".", "");
+            String a10Elevation = String.valueOf(Math.round(UnitConvertorUtils.metersToFeet(dcsElev)));
+
+            var a10Point = new Point(a10Latitude, a10Longitude, a10Elevation, dcsPoint.getLatitudeHemisphere(), dcsPoint.getLongitudeHemisphere());
+            a10Points.add(a10Point);
+        }
+        return a10Points;
     }
 }

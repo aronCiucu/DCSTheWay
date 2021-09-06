@@ -4,12 +4,13 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
-import main.models.Coordinate;
 import org.json.JSONObject;
 
 public class PortListenerThread implements Runnable {
     private static DatagramSocket socket;
-    private static Coordinate coordinate;
+    private static String latitude;
+    private static String longitude;
+    private static String elevation;
     private static String modelName;
 
     @Override
@@ -22,14 +23,12 @@ public class PortListenerThread implements Runnable {
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                 socket.receive(packet);
                 String data = new String(packet.getData());
-                synchronized(this) {
+                synchronized (this) {
                     JSONObject jsonObject = new JSONObject(data);
                     modelName = jsonObject.getString("model");
-                    coordinate = new Coordinate(
-                            jsonObject.getJSONObject("coords").getString("lat"),
-                            jsonObject.getJSONObject("coords").getString("long"),
-                            jsonObject.getString("elev")
-                    );
+                    latitude = jsonObject.getJSONObject("coords").getString("lat");
+                    longitude = jsonObject.getJSONObject("coords").getString("long");
+                    elevation = jsonObject.getString("elev");
                 }
             }
         } catch (IOException e) {
@@ -41,8 +40,16 @@ public class PortListenerThread implements Runnable {
         }
     }
 
-    public static Coordinate getCoordinate() {
-        return coordinate;
+    public static String getLatitude() {
+        return latitude;
+    }
+
+    public static String getLongitude() {
+        return longitude;
+    }
+
+    public static String getElevation() {
+        return elevation;
     }
 
     public static synchronized String getPlaneModel() {
