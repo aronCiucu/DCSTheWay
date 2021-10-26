@@ -6,6 +6,7 @@ import main.UI.GUI;
 import main.Waypoints.PlanesCommands.F16;
 import main.Waypoints.PlanesCommands.F18;
 import main.Waypoints.PlanesCommands.A10CII;
+import main.Waypoints.PlanesCommands.M2000;
 import main.models.Hemisphere;
 import main.models.Point;
 
@@ -33,6 +34,10 @@ public class WaypointManager {
             } else if(model.equals("A-10C_2") || model.equals("A-10C")) {
                 ArrayList<Point> a10Coords = A10CII.getCoords(waypoints);
                 String dataToSend = A10CII.getCommands(a10Coords).toString();
+                PortSender.send(dataToSend);
+            } else if(model.equals("M-2000C")) {
+                List<Point> m2000Coords = M2000.getCoords(waypoints);
+                String dataToSend = M2000.getCommands(m2000Coords).toString();
                 PortSender.send(dataToSend);
             }
         }
