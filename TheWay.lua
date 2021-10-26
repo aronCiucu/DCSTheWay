@@ -1,3 +1,4 @@
+--Version 2
 local tcpServer = nil
 local udpSpeaker = nil
 package.path  = package.path..";"..lfs.currentdir().."/LuaSocket/?.lua"
@@ -15,6 +16,7 @@ local data
 local delay = 0
 local code = ""
 local device = ""
+local addDepress = true
 local nextIndex = 1
 
 local upstreamLuaExportStart = LuaExportStart
@@ -46,13 +48,15 @@ function LuaExportBeforeNextFrame()
         end
     end
 
-    if needDelay then
+  if needDelay then
 		if frameCounter < delay then
 			frameCounter = frameCounter + 1
 		else
 			needDelay = false
 			frameCounter = 0
-			GetDevice(device):performClickableAction(code, 0)
+			if addDepress then
+				GetDevice(device):performClickableAction(code, 0)
+			end
 		end
 	else
 		if keypressinprogress then
@@ -61,6 +65,9 @@ function LuaExportBeforeNextFrame()
 				local keyObj = keys[i]
 				device = keyObj["device"]
 				code = keyObj["code"]
+				local addDepressString = keyObj["addDepress"]
+				local stringtoboolean={ ["true"]=true, ["false"]=false }
+				addDepress = stringtoboolean[addDepressString]
 				delay = tonumber(keyObj["delay"])
 				
 				local activate = tonumber(keyObj["activate"])
@@ -72,7 +79,9 @@ function LuaExportBeforeNextFrame()
 					break
 				else
 					GetDevice(device):performClickableAction(code, activate)
-					GetDevice(device):performClickableAction(code, 0)
+					if addDepress then
+						GetDevice(device):performClickableAction(code, 0)
+					end
 				end
 			end
 			if not needDelay then
@@ -81,10 +90,10 @@ function LuaExportBeforeNextFrame()
 			end
 		else
 		    local client, err = tcpServer:accept()
-
-            if err ~= nil then
-                log.write("THEWAY", log.ERROR, "Error at accepting connection: "..err)
-            end
+						--spams too much
+            -- if err ~= nil then
+            --     log.write("THEWAY", log.ERROR, "Error at accepting connection: "..err)
+            -- end
             if client ~= nil then
                 client:settimeout(10)
 			    data, err = client:receive()
