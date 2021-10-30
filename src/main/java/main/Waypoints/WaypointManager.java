@@ -3,10 +3,7 @@ package main.Waypoints;
 import main.DCSconnection.PortListenerThread;
 import main.DCSconnection.PortSender;
 import main.UI.GUI;
-import main.Waypoints.PlanesCommands.F16;
-import main.Waypoints.PlanesCommands.F18;
-import main.Waypoints.PlanesCommands.A10CII;
-import main.Waypoints.PlanesCommands.M2000;
+import main.Waypoints.PlanesCommands.*;
 import main.models.Hemisphere;
 import main.models.Point;
 
@@ -39,6 +36,10 @@ public class WaypointManager {
             } else if(model.equals("M-2000C")) {
                 List<Point> m2000Coords = M2000.getCoords(waypoints);
                 String dataToSend = M2000.getCommands(m2000Coords).toString();
+                PortSender.send(dataToSend);
+            } else if(model.equals("AV8BNA")) {
+                List<Point> av8bnaCoords = AV8BNA.getCoords(waypoints);
+                String dataToSend = AV8BNA.getCommands(av8bnaCoords).toString();
                 PortSender.send(dataToSend);
             }
         }
