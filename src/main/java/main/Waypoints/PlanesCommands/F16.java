@@ -33,22 +33,21 @@ public class F16 {
            9       3011
            0       3002
            ENTR    3016
-
          */
 
         JSONArray commandArray = new JSONArray();
 
 
         //rtn to main page of DED
-        commandArray.put(new JSONObject().put("device", "17").put("code", "3032").put("delay", "5").put("activate", "-1").put("addDepress", "true"));
+        commandArray.put(new JSONObject().put("device", "17").put("code", "3032").put("delay", "20").put("activate", "-1").put("addDepress", "true"));
         //goto STPT page
         commandArray.put(new JSONObject().put("device", "17").put("code", "3006").put("delay", "0").put("activate", "1").put("addDepress", "true"));
         for (Point coordinate:coords) {
             //increment steerpoint
             commandArray.put(new JSONObject().put("device", "17").put("code", "3030").put("delay", "0").put("activate", "1").put("addDepress", "true"));
             //goto lat field
-            commandArray.put(new JSONObject().put("device", "17").put("code", "3035").put("delay", "5").put("activate", "-1").put("addDepress", "true"));
-            commandArray.put(new JSONObject().put("device", "17").put("code", "3035").put("delay", "5").put("activate", "-1").put("addDepress", "true"));
+            commandArray.put(new JSONObject().put("device", "17").put("code", "3035").put("delay", "20").put("activate", "-1").put("addDepress", "true"));
+            commandArray.put(new JSONObject().put("device", "17").put("code", "3035").put("delay", "20").put("activate", "-1").put("addDepress", "true"));
             //check if latitude is N or S
             if(coordinate.getLatitudeHemisphere()== Hemisphere.NORTH){
                 //press N
@@ -95,7 +94,7 @@ public class F16 {
             //press enter
             commandArray.put(new JSONObject().put("device", "17").put("code", "3016").put("delay", "0").put("activate", "1").put("addDepress", "true"));
             //goto long field
-            commandArray.put(new JSONObject().put("device", "17").put("code", "3035").put("delay", "5").put("activate", "-1").put("addDepress", "true"));
+            commandArray.put(new JSONObject().put("device", "17").put("code", "3035").put("delay", "20").put("activate", "-1").put("addDepress", "true"));
             //check if longitude is E or W
             if(coordinate.getLongitudeHemisphere()== Hemisphere.EAST){
                 //press E
@@ -142,7 +141,7 @@ public class F16 {
             //press enter
             commandArray.put(new JSONObject().put("device", "17").put("code", "3016").put("delay", "0").put("activate", "1").put("addDepress", "true"));
             //goto elevation field
-            commandArray.put(new JSONObject().put("device", "17").put("code", "3035").put("delay", "5").put("activate", "-1").put("addDepress", "true"));
+            commandArray.put(new JSONObject().put("device", "17").put("code", "3035").put("delay", "20").put("activate", "-1").put("addDepress", "true"));
             //start entering elevation
             for(char digit:coordinate.getElevation().toCharArray()){
                 switch (digit){
@@ -181,13 +180,13 @@ public class F16 {
             //press enter
             commandArray.put(new JSONObject().put("device", "17").put("code", "3016").put("delay", "0").put("activate", "1").put("addDepress", "true"));
             //goto steerpoint field
-            commandArray.put(new JSONObject().put("device", "17").put("code", "3034").put("delay", "5").put("activate", "1").put("addDepress", "true"));
-            commandArray.put(new JSONObject().put("device", "17").put("code", "3034").put("delay", "5").put("activate", "1").put("addDepress", "true"));
-            commandArray.put(new JSONObject().put("device", "17").put("code", "3034").put("delay", "5").put("activate", "1").put("addDepress", "true"));
-            commandArray.put(new JSONObject().put("device", "17").put("code", "3034").put("delay", "5").put("activate", "1").put("addDepress", "true"));
+            commandArray.put(new JSONObject().put("device", "17").put("code", "3034").put("delay", "20").put("activate", "1").put("addDepress", "true"));
+            commandArray.put(new JSONObject().put("device", "17").put("code", "3034").put("delay", "20").put("activate", "1").put("addDepress", "true"));
+            commandArray.put(new JSONObject().put("device", "17").put("code", "3034").put("delay", "20").put("activate", "1").put("addDepress", "true"));
+            commandArray.put(new JSONObject().put("device", "17").put("code", "3034").put("delay", "20").put("activate", "1").put("addDepress", "true"));
         }
         //return to main page
-        commandArray.put(new JSONObject().put("device", "17").put("code", "3032").put("delay", "5").put("activate", "-1").put("addDepress", "true"));
+        commandArray.put(new JSONObject().put("device", "17").put("code", "3032").put("delay", "20").put("activate", "-1").put("addDepress", "true"));
 
         return commandArray;
     }
