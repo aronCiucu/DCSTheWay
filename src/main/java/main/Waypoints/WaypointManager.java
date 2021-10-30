@@ -27,7 +27,8 @@ public class WaypointManager {
             } else if(model.equals("FA-18C_hornet")){
                 GUI.warning("Please make sure that: \n" +
                         "1. PRECISE option is boxed in HSI > DATA\n" +
-                        "2. You are not in the TAC menu");
+                        "2. You are not in the TAC menu\n"+
+                        "3. You are in the 00°00.0000' coordinate format");
                 ArrayList<Point> f18Coords = F18.getCoords(waypoints);
                 String dataToSend = F18.getCommands(f18Coords).toString();
                 PortSender.send(dataToSend);
