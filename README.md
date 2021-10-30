@@ -14,7 +14,7 @@ Supported modules:
 Multiplayer is supported as long as the server has ownship/player exports turned on.
 
 ## How to install?
-1. Download the `TheWay.zip` file from the Releases section and extract it in a convenient location, from where you will run the program. 
+1. Download the latest zip file from the Releases section, and extract `The Way` folder inside it in a convenient location, from where you will run the program. 
 2. Copy the `TheWay.lua` file from the folder you just extracted into `Users/YourUsernameHere/Saved Games/DCS/Scripts`. The `DCS` folder name may be `DCS.openbeta` if you are on the openbeta version of the game.
 3. Edit the `Export.lua` file there and append this line at the end of the file, and save it:
   ```lua
@@ -22,7 +22,7 @@ Multiplayer is supported as long as the server has ownship/player exports turned
   ```
    If there is no `Export.lua` file already existing there, create it yourself, and it should include only the line above.
 
-4. Launch TheWay.exe and go fly!
+4. Launch `TheWay.exe` and go fly!
 
 If you are updating from an older version, simply replace your existing `TheWay.lua` and `TheWay.exe` files with the new ones. 
 
