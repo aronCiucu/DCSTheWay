@@ -10,6 +10,9 @@ Supported modules:
 * F-16 
 * F/A-18 (make sure you are not in the TAC menu)
 * A-10C and A-10C2
+* Mirage 2000
+* AV8BNA Harrier
+* Ka-50 Blackshark
  
 Multiplayer is supported as long as the server has ownship/player exports turned on.
 
@@ -24,7 +27,7 @@ Multiplayer is supported as long as the server has ownship/player exports turned
 
 4. Launch `TheWay.exe` and go fly!
 
-If you are updating from an older version, simply replace your existing `TheWay.lua` and `TheWay.exe` files with the new ones. 
+If you are updating from an older version, simply download the newest release, extract your new `The Way` folder ontop of your old one, replacing your existing files with the new ones. Also don't forget to copy your new `TheWay.lua` file into Saved Games, and override your old one there.
 
 ## How to use? 
 Video tutorial here:
