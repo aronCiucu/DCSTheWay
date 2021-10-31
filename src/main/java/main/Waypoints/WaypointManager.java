@@ -45,11 +45,13 @@ public class WaypointManager {
                 if(waypoints.size()>6){
                     GUI.error("The Ka-50 can store a maximum of 6 waypoints. ");
                 } else {
-                    GUI.warning("Please make sure that you are in the DECIMAL coordinate system prior to transfer.");
+                    GUI.warning("Please make sure that you are in the DECIMAL coordinate system prior to closing this dialog.");
                     List<Point> Ka50Coords = Ka50.getCoords(waypoints);
                     String dataToSend = Ka50.getCommands(Ka50Coords).toString();
                     PortSender.send(dataToSend);
                 }
+            } else {
+                GUI.error("You are not flying a supported module.");
             }
         }
 
