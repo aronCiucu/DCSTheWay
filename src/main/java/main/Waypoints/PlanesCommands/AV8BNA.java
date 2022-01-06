@@ -105,8 +105,8 @@ public class AV8BNA {
             }
             //Press ENT
             commandArray.put(new JSONObject().put("device", "23").put("code", "3314").put("delay", "30").put("activate", "1").put("addDepress", "true"));
-            //Select ODU option 2 to enter longitude
-            commandArray.put(new JSONObject().put("device", "24").put("code", "3251").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+            //Select ODU option 2 to enter longitude -- removed
+//            commandArray.put(new JSONObject().put("device", "24").put("code", "3251").put("delay", "0").put("activate", "1").put("addDepress", "true"));
             //check if longitude is E or W
             if(coordinate.getLongitudeHemisphere()==Hemisphere.EAST){
                 //press E
@@ -152,8 +152,8 @@ public class AV8BNA {
             }
             //Press ENT
             commandArray.put(new JSONObject().put("device", "23").put("code", "3314").put("delay", "30").put("activate", "1").put("addDepress", "true"));
-            //Select ODU option 2 to revert to latitude
-            commandArray.put(new JSONObject().put("device", "24").put("code", "3251").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+            //Select ODU option 2 to revert to latitude - removed
+//            commandArray.put(new JSONObject().put("device", "24").put("code", "3251").put("delay", "0").put("activate", "1").put("addDepress", "true"));
             //Select ODU option 1 to revert to waypoint selection mode
             commandArray.put(new JSONObject().put("device", "24").put("code", "3250").put("delay", "0").put("activate", "1").put("addDepress", "true"));
         }
