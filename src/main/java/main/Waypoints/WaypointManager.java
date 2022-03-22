@@ -49,6 +49,10 @@ public class WaypointManager {
                     String dataToSend = Ka50.getCommands(Ka50Coords).toString();
                     PortSender.send(dataToSend);
                 }
+            } else if(model.equals("AH-64D_BLK_II")){
+                List<Point> ah64Coords = AH64.getCoords(waypoints);
+                String dataToSend = AH64.getCommands(ah64Coords).toString();
+                PortSender.send(dataToSend);
             } else {
                 GUI.error("You are not flying a supported module.");
             }
