@@ -45,120 +45,120 @@ public class AV8BNA {
         JSONArray commandArray = new JSONArray();
 
         //Enter NAV master mode
-        commandArray.put(new JSONObject().put("device", "12").put("code", "3282").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+        commandArray.put(new JSONObject().put("device", "12").put("code", "3282").put("delay", "10").put("activate", "1").put("addDepress", "true"));
         //Enter left MFD menu
-        commandArray.put(new JSONObject().put("device", "26").put("code", "3217").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+        commandArray.put(new JSONObject().put("device", "26").put("code", "3217").put("delay", "10").put("activate", "1").put("addDepress", "true"));
         //Select EHSD
-        commandArray.put(new JSONObject().put("device", "26").put("code", "3201").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+        commandArray.put(new JSONObject().put("device", "26").put("code", "3201").put("delay", "10").put("activate", "1").put("addDepress", "true"));
         //Select DATA sub menu
-        commandArray.put(new JSONObject().put("device", "26").put("code", "3201").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+        commandArray.put(new JSONObject().put("device", "26").put("code", "3201").put("delay", "10").put("activate", "1").put("addDepress", "true"));
         for (Point coordinate:coords) {
             //Enter 99 to increment waypoint
-            commandArray.put(new JSONObject().put("device", "23").put("code", "3312").put("delay", "0").put("activate", "1").put("addDepress", "true"));
-            commandArray.put(new JSONObject().put("device", "23").put("code", "3312").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+            commandArray.put(new JSONObject().put("device", "23").put("code", "3312").put("delay", "10").put("activate", "1").put("addDepress", "true"));
+            commandArray.put(new JSONObject().put("device", "23").put("code", "3312").put("delay", "10").put("activate", "1").put("addDepress", "true"));
             //Press ENT
             commandArray.put(new JSONObject().put("device", "23").put("code", "3314").put("delay", "30").put("activate", "1").put("addDepress", "true"));
             //Select ODU option 2 to enter latitude
-            commandArray.put(new JSONObject().put("device", "24").put("code", "3251").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+            commandArray.put(new JSONObject().put("device", "24").put("code", "3251").put("delay", "10").put("activate", "1").put("addDepress", "true"));
             //check if latitude is N or S
             if(coordinate.getLatitudeHemisphere()== Hemisphere.NORTH){
                 //press N
-                commandArray.put(new JSONObject().put("device", "23").put("code", "3303").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+                commandArray.put(new JSONObject().put("device", "23").put("code", "3303").put("delay", "10").put("activate", "1").put("addDepress", "true"));
             } else {
                 //press S
-                commandArray.put(new JSONObject().put("device", "23").put("code", "3311").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+                commandArray.put(new JSONObject().put("device", "23").put("code", "3311").put("delay", "10").put("activate", "1").put("addDepress", "true"));
             }
             //start typing latitude
             for(char digit:coordinate.getLatitude().toCharArray()){
                 switch (digit){
                     case '1':
-                        commandArray.put(new JSONObject().put("device", "23").put("code", "3302").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+                        commandArray.put(new JSONObject().put("device", "23").put("code", "3302").put("delay", "10").put("activate", "1").put("addDepress", "true"));
                         break;
                     case '2':
-                        commandArray.put(new JSONObject().put("device", "23").put("code", "3303").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+                        commandArray.put(new JSONObject().put("device", "23").put("code", "3303").put("delay", "10").put("activate", "1").put("addDepress", "true"));
                         break;
                     case '3':
-                        commandArray.put(new JSONObject().put("device", "23").put("code", "3304").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+                        commandArray.put(new JSONObject().put("device", "23").put("code", "3304").put("delay", "10").put("activate", "1").put("addDepress", "true"));
                         break;
                     case '4':
-                        commandArray.put(new JSONObject().put("device", "23").put("code", "3306").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+                        commandArray.put(new JSONObject().put("device", "23").put("code", "3306").put("delay", "10").put("activate", "1").put("addDepress", "true"));
                         break;
                     case '5':
-                        commandArray.put(new JSONObject().put("device", "23").put("code", "3307").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+                        commandArray.put(new JSONObject().put("device", "23").put("code", "3307").put("delay", "10").put("activate", "1").put("addDepress", "true"));
                         break;
                     case '6':
-                        commandArray.put(new JSONObject().put("device", "23").put("code", "3308").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+                        commandArray.put(new JSONObject().put("device", "23").put("code", "3308").put("delay", "10").put("activate", "1").put("addDepress", "true"));
                         break;
                     case '7':
-                        commandArray.put(new JSONObject().put("device", "23").put("code", "3310").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+                        commandArray.put(new JSONObject().put("device", "23").put("code", "3310").put("delay", "10").put("activate", "1").put("addDepress", "true"));
                         break;
                     case '8':
-                        commandArray.put(new JSONObject().put("device", "23").put("code", "3311").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+                        commandArray.put(new JSONObject().put("device", "23").put("code", "3311").put("delay", "10").put("activate", "1").put("addDepress", "true"));
                         break;
                     case '9':
-                        commandArray.put(new JSONObject().put("device", "23").put("code", "3312").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+                        commandArray.put(new JSONObject().put("device", "23").put("code", "3312").put("delay", "10").put("activate", "1").put("addDepress", "true"));
                         break;
                     case '0':
-                        commandArray.put(new JSONObject().put("device", "23").put("code", "3315").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+                        commandArray.put(new JSONObject().put("device", "23").put("code", "3315").put("delay", "10").put("activate", "1").put("addDepress", "true"));
                         break;
                 }
             }
             //Press ENT
             commandArray.put(new JSONObject().put("device", "23").put("code", "3314").put("delay", "30").put("activate", "1").put("addDepress", "true"));
             //Select ODU option 2 to enter longitude -- removed
-//            commandArray.put(new JSONObject().put("device", "24").put("code", "3251").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+//            commandArray.put(new JSONObject().put("device", "24").put("code", "3251").put("delay", "10").put("activate", "1").put("addDepress", "true"));
             //check if longitude is E or W
             if(coordinate.getLongitudeHemisphere()==Hemisphere.EAST){
                 //press E
-                commandArray.put(new JSONObject().put("device", "23").put("code", "3308").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+                commandArray.put(new JSONObject().put("device", "23").put("code", "3308").put("delay", "10").put("activate", "1").put("addDepress", "true"));
             } else {
                 //press W
-                commandArray.put(new JSONObject().put("device", "23").put("code", "3306").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+                commandArray.put(new JSONObject().put("device", "23").put("code", "3306").put("delay", "10").put("activate", "1").put("addDepress", "true"));
             }
             //start typing longitude
             for(char digit:coordinate.getLongitude().toCharArray()){
                 switch (digit){
                     case '1':
-                        commandArray.put(new JSONObject().put("device", "23").put("code", "3302").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+                        commandArray.put(new JSONObject().put("device", "23").put("code", "3302").put("delay", "10").put("activate", "1").put("addDepress", "true"));
                         break;
                     case '2':
-                        commandArray.put(new JSONObject().put("device", "23").put("code", "3303").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+                        commandArray.put(new JSONObject().put("device", "23").put("code", "3303").put("delay", "10").put("activate", "1").put("addDepress", "true"));
                         break;
                     case '3':
-                        commandArray.put(new JSONObject().put("device", "23").put("code", "3304").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+                        commandArray.put(new JSONObject().put("device", "23").put("code", "3304").put("delay", "10").put("activate", "1").put("addDepress", "true"));
                         break;
                     case '4':
-                        commandArray.put(new JSONObject().put("device", "23").put("code", "3306").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+                        commandArray.put(new JSONObject().put("device", "23").put("code", "3306").put("delay", "10").put("activate", "1").put("addDepress", "true"));
                         break;
                     case '5':
-                        commandArray.put(new JSONObject().put("device", "23").put("code", "3307").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+                        commandArray.put(new JSONObject().put("device", "23").put("code", "3307").put("delay", "10").put("activate", "1").put("addDepress", "true"));
                         break;
                     case '6':
-                        commandArray.put(new JSONObject().put("device", "23").put("code", "3308").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+                        commandArray.put(new JSONObject().put("device", "23").put("code", "3308").put("delay", "10").put("activate", "1").put("addDepress", "true"));
                         break;
                     case '7':
-                        commandArray.put(new JSONObject().put("device", "23").put("code", "3310").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+                        commandArray.put(new JSONObject().put("device", "23").put("code", "3310").put("delay", "10").put("activate", "1").put("addDepress", "true"));
                         break;
                     case '8':
-                        commandArray.put(new JSONObject().put("device", "23").put("code", "3311").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+                        commandArray.put(new JSONObject().put("device", "23").put("code", "3311").put("delay", "10").put("activate", "1").put("addDepress", "true"));
                         break;
                     case '9':
-                        commandArray.put(new JSONObject().put("device", "23").put("code", "3312").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+                        commandArray.put(new JSONObject().put("device", "23").put("code", "3312").put("delay", "10").put("activate", "1").put("addDepress", "true"));
                         break;
                     case '0':
-                        commandArray.put(new JSONObject().put("device", "23").put("code", "3315").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+                        commandArray.put(new JSONObject().put("device", "23").put("code", "3315").put("delay", "10").put("activate", "1").put("addDepress", "true"));
                         break;
                 }
             }
             //Press ENT
             commandArray.put(new JSONObject().put("device", "23").put("code", "3314").put("delay", "30").put("activate", "1").put("addDepress", "true"));
             //Select ODU option 2 to revert to latitude - removed
-//            commandArray.put(new JSONObject().put("device", "24").put("code", "3251").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+//            commandArray.put(new JSONObject().put("device", "24").put("code", "3251").put("delay", "10").put("activate", "1").put("addDepress", "true"));
             //Select ODU option 1 to revert to waypoint selection mode
-            commandArray.put(new JSONObject().put("device", "24").put("code", "3250").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+            commandArray.put(new JSONObject().put("device", "24").put("code", "3250").put("delay", "10").put("activate", "1").put("addDepress", "true"));
         }
         //Deselect EHSD DATA sub menu
-        commandArray.put(new JSONObject().put("device", "26").put("code", "3201").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+        commandArray.put(new JSONObject().put("device", "26").put("code", "3201").put("delay", "10").put("activate", "1").put("addDepress", "true"));
 
         return commandArray;
     }
