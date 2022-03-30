@@ -12,6 +12,10 @@ public class PortListenerThread implements Runnable {
     private static String longitude;
     private static String elevation;
     private static String modelName;
+    private static Double x;
+    private static Double z;
+    private static Double selfX;
+    private static Double selfZ;
 
     @Override
     public void run() {
@@ -29,6 +33,14 @@ public class PortListenerThread implements Runnable {
                     latitude = jsonObject.getJSONObject("coords").getString("lat");
                     longitude = jsonObject.getJSONObject("coords").getString("long");
                     elevation = jsonObject.getString("elev");
+                    // avoid crashing if the export script is of older version which does not provide x/y
+                    if (jsonObject.has("self"))
+                    {
+                        x = jsonObject.getJSONObject("coords").getDouble("x");
+                        z = jsonObject.getJSONObject("coords").getDouble("z");
+                        selfX = jsonObject.getJSONObject("self").getDouble("x");
+                        selfZ = jsonObject.getJSONObject("self").getDouble("z");
+                    }
                 }
             }
         } catch (IOException e) {
@@ -55,4 +67,20 @@ public class PortListenerThread implements Runnable {
     public static synchronized String getPlaneModel() {
         return modelName;
     }
+    
+    public static Double getX() {
+        return x;
+    }
+
+    public static Double getZ() {
+        return z;
+    }    
+
+    public static Double getSelfX() {
+        return selfX;
+    }    
+        
+    public static Double getSelfZ() {
+        return selfZ;
+    }    
 }

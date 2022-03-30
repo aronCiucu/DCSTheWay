@@ -8,6 +8,8 @@ public class Point {
     private final String elevation;
     private final Hemisphere latitudeHemisphere;
     private final Hemisphere longitudeHemisphere;
+    private final Double x;
+    private final Double z;
 
     public Point(String latitude, String longitude, String elevation, Hemisphere latitudeHemisphere, Hemisphere longitudeHemisphere) {
         this.latitude = latitude;
@@ -15,8 +17,21 @@ public class Point {
         this.elevation = elevation;
         this.latitudeHemisphere = latitudeHemisphere;
         this.longitudeHemisphere = longitudeHemisphere;
+        this.x = null;
+        this.z = null;
     }
 
+    public Point(String latitude, String longitude, String elevation, Hemisphere latitudeHemisphere, Hemisphere longitudeHemisphere, Double x, Double z) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.elevation = elevation;
+        this.latitudeHemisphere = latitudeHemisphere;
+        this.longitudeHemisphere = longitudeHemisphere;
+        this.x = x;
+        this.z = z;
+    }
+    
+    
     public String getLatitude() {
         return latitude;
     }
@@ -37,6 +52,14 @@ public class Point {
         return longitudeHemisphere;
     }
 
+    public Double getX() {
+        return x;
+    }
+    
+    public Double getZ() {
+        return z;
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -58,6 +81,8 @@ public class Point {
                 ", elevation='" + elevation + '\'' +
                 ", latitudeHemisphere=" + latitudeHemisphere +
                 ", longitudeHemisphere=" + longitudeHemisphere +
+                ", x=" + x +
+                ", z=" + z +
                 '}';
     }
 }

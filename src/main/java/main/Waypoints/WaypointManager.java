@@ -12,6 +12,10 @@ import java.util.List;
 
 public class WaypointManager {
     static private ArrayList<Point> waypoints = new ArrayList<>();
+    static private Double x;
+    static private Double z;
+    static private Double selfX;
+    static private Double selfZ;
 
     public static void transfer(){
         String model = PortListenerThread.getPlaneModel();
@@ -46,9 +50,13 @@ public class WaypointManager {
                     GUI.error("The Ka-50 can store a maximum of 6 waypoints. ");
                 } else {
                     List<Point> Ka50Coords = Ka50.getCoords(waypoints);
-                    String dataToSend = Ka50.getCommands(Ka50Coords).toString();
+                    String dataToSend = Ka50.getCommands(Ka50Coords, selfX, selfZ).toString();
                     PortSender.send(dataToSend);
                 }
+            } else if(model.equals("AH-64D_BLK_II")){
+                List<Point> ah64Coords = AH64.getCoords(waypoints);
+                String dataToSend = AH64.getCommands(ah64Coords).toString();
+                PortSender.send(dataToSend);
             } else {
                 GUI.error("You are not flying a supported module.");
             }
@@ -60,6 +68,10 @@ public class WaypointManager {
         String latitude = PortListenerThread.getLatitude();
         String longitude = PortListenerThread.getLongitude();
         String elevation = PortListenerThread.getElevation();
+        x = PortListenerThread.getX();
+        z = PortListenerThread.getZ();
+        selfX = PortListenerThread.getSelfX();
+        selfZ = PortListenerThread.getSelfZ();
         if(latitude != null && longitude != null && elevation != null){
             Hemisphere latHem;
             Hemisphere longHem;
@@ -73,7 +85,7 @@ public class WaypointManager {
             } else {
                 longHem = Hemisphere.EAST;
             }
-            var point = new Point(latitude.replace("-", ""), longitude.replace("-", ""), elevation, latHem, longHem);
+            var point = new Point(latitude.replace("-", ""), longitude.replace("-", ""), elevation, latHem, longHem, x, z);
             waypoints.add(point);
             return true;
         }
@@ -82,6 +94,8 @@ public class WaypointManager {
 
     public static void clearWaypoints(){
         waypoints.clear();
+        x = null;
+        z = null;
     }
 
     public static int getSelectedWaypointsCount(){

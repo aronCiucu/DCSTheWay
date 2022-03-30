@@ -31,7 +31,7 @@ function LuaExportStart()
             log.write("THEWAY", log.ERROR, "Error in upstream LuaExportStart function"..tostring(err))
         end
     end
-    
+
 	udpSpeaker = socket.udp()
 	udpSpeaker:settimeout(0)
 	tcpServer = socket.tcp()
@@ -69,7 +69,7 @@ function LuaExportBeforeNextFrame()
 				local stringtoboolean={ ["true"]=true, ["false"]=false }
 				addDepress = stringtoboolean[addDepressString]
 				delay = tonumber(keyObj["delay"])
-				
+
 				local activate = tonumber(keyObj["activate"])
 
 				if delay > 0 then
@@ -98,10 +98,10 @@ function LuaExportBeforeNextFrame()
                 client:settimeout(10)
 			    data, err = client:receive()
 			    if err then
-				    log.write("THEWAY", log.ERROR, "Error at receiving: "..err)  
+				    log.write("THEWAY", log.ERROR, "Error at receiving: "..err)
 			    end
 
-			    if data then 
+			    if data then
 				    keypressinprogress = true
 			    end
             end
@@ -118,19 +118,37 @@ function LuaExportAfterNextFrame()
     end
 
 
-  local camPos = LoGetCameraPosition()
-	local loX = camPos['p']['x']
-	local loZ = camPos['p']['z']
-	local elevation = LoGetAltitude(loX, loZ)
-	local coords = LoLoCoordinatesToGeoCoordinates(loX, loZ)
-	local model = LoGetSelfData()["Name"];
+    local camPos = LoGetCameraPosition()
+    local loX = camPos['p']['x']
+    local loZ = camPos['p']['z']
+    local elevation = LoGetAltitude(loX, loZ)
+    local coords = LoLoCoordinatesToGeoCoordinates(loX, loZ)
+    local selfData = LoGetSelfData()
+    local model = selfData["Name"]
+    local selfLoX = selfData["Position"]["x"]
+    local selfLoZ = selfData["Position"]["z"]
 
-	local toSend = "{ ".."\"model\": ".."\""..model.."\""..", ".."\"coords\": ".. "{ ".."\"lat\": ".."\""..coords.latitude.."\""..", ".."\"long\": ".."\""..coords.longitude.."\"".."} "..", ".."\"elev\": ".."\""..elevation.."\"".."}"
-
-	if pcall(function()
-		socket.try(udpSpeaker:sendto(toSend, "127.0.0.1", 42069)) 
-	end) then
-	else
-		log.write("THEWAY", log.ERROR, "Unable to send data")
-	end
+    -- log.write("THEWAY", log.INFO, "Encoding message")
+    -- assemble message dictionary
+    local message = {}
+    message["model"] = model
+    message["coords"] = {}
+    message["coords"]["lat"] = tostring(coords.latitude)
+    message["coords"]["long"] = tostring(coords.longitude)
+    message["coords"]["x"] = loX
+    message["coords"]["z"] = loZ
+    message["self"] = {}
+    message["self"]["x"] = selfLoX
+    message["self"]["z"] = selfLoZ
+    message["elev"] = tostring(elevation)
+    -- encode message into JSON format
+    local toSend = JSON:encode(message)
+    -- log.write("THEWAY", log.INFO, "Encoded messsage: \n"..toSend)
+  	-- local toSend = "{ ".."\"model\": ".."\""..model.."\""..", ".."\"coords\": ".. "{ ".."\"lat\": ".."\""..coords.latitude.."\""..", ".."\"long\": ".."\""..coords.longitude.."\"".."} "..", ".."\"elev\": ".."\""..elevation.."\"".."}"
+  	if pcall(function()
+  		socket.try(udpSpeaker:sendto(toSend, "127.0.0.1", 42069))
+  	end) then
+  	else
+  		log.write("THEWAY", log.ERROR, "Unable to send data")
+  	end
 end

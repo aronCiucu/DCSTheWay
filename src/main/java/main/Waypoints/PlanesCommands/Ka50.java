@@ -14,13 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Ka50 {
-    public static JSONArray getCommands(List<Point> coords) {
+    public static JSONArray getCommands(List<Point> coords, Double selfLocationX, Double selfLocationZ) {
         /*
            button list, all are device 20
-           Waypoint button 	3011
-		   Enter 			3018
-		   PVI mode ENT 	3026 rotary value 0.2
-           PVI Mode OPER 	3026 rotary value 0.3
+           Waypoint button     3011
+           Enter             3018
+           PVI mode ENT     3026 rotary value 0.2
+           PVI Mode OPER     3026 rotary value 0.3
 
            0/+     3001 +for north and east
            1/-     3002 -for south and west
@@ -155,7 +155,186 @@ public class Ka50 {
         //PVI to OPER
         commandArray.put(new JSONObject().put("device", "20").put("code", "3026").put("delay", "0").put("activate", "0.3").put("addDepress", "false"));
 
+        // PVI: press waypoint button to start defining steer points
+        commandArray.put(new JSONObject().put("device", "20").put("code", "3011").put("delay", "1").put("activate", "0").put("addDepress", "true"));
+        // PVI: press waypoint button to start defining steer points
+        commandArray.put(new JSONObject().put("device", "20").put("code", "3011").put("delay", "1").put("activate", "0").put("addDepress", "true"));
+        commandArray.put(new JSONObject().put("device", "20").put("code", "3019").put("delay", "0").put("activate", "10").put("addDepress", "true"));
+        
+        // PVI: enter each waypoint as steer point
+        for (int i = 0; i < coords.size(); i++) {
+            // PVI: select steer point
+            commandArray.put(new JSONObject().put("device", "20").put("code", Integer.toString(3002 + i)).put("delay", "10").put("activate", "1").put("addDepress", "true"));
+            // PVI: conform steer point
+            commandArray.put(new JSONObject().put("device", "20").put("code", "3018").put("delay", "0").put("activate", "10").put("addDepress", "true"));
+        }
+        // PVI: activate steerpoint 1
+        commandArray.put(new JSONObject().put("device", "20").put("code", Integer.toString(3002)).put("delay", "0").put("activate", "1").put("addDepress", "true"));
+
+//
+//        // turn waypoint button off
+//        commandArray.put(new JSONObject().put("device", "20").put("code", "3011").put("delay", "1").put("activate", "0").put("addDepress", "true"));
+//        // turn waypoint button on
+//        commandArray.put(new JSONObject().put("device", "20").put("code", "3011").put("delay", "1").put("activate", "0").put("addDepress", "true"));
+//        // select first waypoint
+//        commandArray.put(new JSONObject().put("device", "20").put("code", Integer.toString(3002)).put("delay", "0" ).put("activate", "1").put("addDepress", "true"));
+
+//        for(int i = 0; i < 4; i++)
+//            commandArray.put(new JSONObject().put("device", "09").put("code", "3005").put("delay", "1").put("activate", "1").put("addDepress", "true"));
+
+        // Make sure there is no route loaded
+        abrisUnloadRoute(commandArray);
+        // Start entering
+        abrisStartRouteEntry(commandArray);
+        // Enter waypoints
+        abrisEnterRouteWaypoints(coords, selfLocationX, selfLocationZ, commandArray);
+        // Complete and store route
+        abrisCompleteRouteEntry(commandArray);
+
         return commandArray;
+    }
+    private static void abrisEnterRouteWaypoints(List<Point> coords, Double selfLocationX, Double selfLocationZ, JSONArray commandArray) {
+        //waypoints are entered relative to the last waypoint. Initially we start with aircraft current location
+        Point priorCoord = new Point(null, null, null, null, null, selfLocationX, selfLocationZ);
+        // first waypoint is already marked at our current location
+        // that was easy: complete entry of current location
+        // abrisStartNextWaypoint(commandArray);
+        // abrisStartNextWaypoint(commandArray);
+        for(int i = 0; i < coords.size(); i++) {
+            Point coord = coords.get(i);
+            System.out.println(coord);
+            if (i == 0)
+                abrisAddWaypoint(commandArray, coord, priorCoord, false);
+            else
+                abrisAddWaypoint(commandArray, coord, priorCoord, true);
+            priorCoord = coord;
+        }
+    }
+
+    private static void abrisStartNextWaypoint(JSONArray commandArray) {
+        // ABRIS: edit
+        commandArray.put(new JSONObject().put("device", "09").put("code", "3001").put("delay", "1").put("activate", "1").put("addDepress", "true"));
+        // ABRIS: add
+        commandArray.put(new JSONObject().put("device", "09").put("code", "3001").put("delay", "1").put("activate", "1").put("addDepress", "true"));
+    }
+
+    private static void abrisAddWaypoint(JSONArray commandArray, Point coord, Point priorCoord, boolean needsEditInsert) {
+        // Calculate deltaX and deltaY to the prior coordinate
+        Double deltaX = coord.getX() - priorCoord.getX();
+        Double deltaZ = coord.getZ() - priorCoord.getZ();
+        System.out.println("DeltaX: " + deltaX + " DeltaZ: " + deltaZ);
+
+        // ABRIS: start entry of waypoint, by default Z coordinate (west -> east) is the first 
+        if(needsEditInsert)
+            abrisStartNextWaypoint(commandArray);
+        
+        // determine the smallest bounding Z range
+        ABRISZoomRange range = findSmallestBoundingZRange(priorCoord, coord);    
+        // ABRIS: zoom to the bounding range
+        abrisZoomToRange(commandArray, range.getLevel());
+        // calculate number of dial rotations
+        Double rotationsZ = range.toRotationsZ(deltaZ);
+        System.out.println("Level: " + range.getLevel() + " Z rotations: " + rotationsZ);
+        // ABRIS: rotate dial for Z
+        commandArray.put(new JSONObject().put("device", "09").put("code", "3006").put("delay", "1").put("activate", Double.toString(rotationsZ)).put("addDepress", "true"));
+
+        // ABRIS: switch to X
+        commandArray.put(new JSONObject().put("device", "09").put("code", "3007").put("delay", "1").put("activate", "1").put("addDepress", "true"));
+
+        // determine the smallest bounding X range
+        range = findSmallestBoundingXRange(priorCoord, coord);
+        // ABRIS: zoom to the bounding range
+        abrisZoomToRange(commandArray, range.getLevel());
+        // calculate number of dial rotations
+        Double rotationsX = range.toRotationsX(deltaX);
+        System.out.println("Level: " + range.getLevel() + " X revolutions: " + rotationsX);
+        // ABRIS: rotate dial for X
+        commandArray.put(new JSONObject().put("device", "09").put("code", "3006").put("delay", "1").put("activate", Double.toString(rotationsX)).put("addDepress", "true"));
+
+        // ABRIS: complete entry of waypoint
+        abrisStartNextWaypoint(commandArray);
+    }
+
+    private static void abrisCompleteRouteEntry(JSONArray commandArray) {
+        // ABRIS: switch back to PLAN
+        commandArray.put(new JSONObject().put("device", "09").put("code", "3005").put("delay", "1").put("activate", "1").put("addDepress", "true"));
+        // ABRIS: activate the route
+        commandArray.put(new JSONObject().put("device", "09").put("code", "3004").put("delay", "1").put("activate", "1").put("addDepress", "true"));
+    }
+
+    private static void abrisStartRouteEntry(JSONArray commandArray) {
+        // ABRIS: plan mode
+        commandArray.put(new JSONObject().put("device", "09").put("code", "3003").put("delay", "10").put("activate", "1").put("addDepress", "true"));
+        // ABRIS: activate EDIT menu
+        commandArray.put(new JSONObject().put("device", "09").put("code", "3002").put("delay", "10").put("activate", "1").put("addDepress", "true"));
+        // ABRIS: zoom in to maximum to make sure we start with known zoom level 0        
+        abrisFullZoom(commandArray);
+    }
+
+    private static void abrisZoomIn(JSONArray commandArray, int relativeZoomLevel) {
+        if (relativeZoomLevel < 0)
+            return;
+        for(int i = 0; i < relativeZoomLevel; i++)
+            commandArray.put(new JSONObject().put("device", "09").put("code", "3003").put("delay", "1").put("activate", "1").put("addDepress", "true"));
+        zoomLevel = zoomLevel - relativeZoomLevel;
+    }
+
+    private static void abrisZoomOut(JSONArray commandArray, int relativeZoomLevel) {
+        if (relativeZoomLevel < 0)
+            return;
+        for(int i = 0; i < relativeZoomLevel; i++)
+            commandArray.put(new JSONObject().put("device", "09").put("code", "3004").put("delay", "1").put("activate", "1").put("addDepress", "true"));
+        zoomLevel = java.lang.Math.min(zoomLevel + relativeZoomLevel, Ka50.ranges.size());
+    }
+
+    private static void abrisZoomToRange(JSONArray commandArray, int level) {
+        int delta = level - zoomLevel;
+        if (delta < 0)
+            abrisZoomIn(commandArray, -delta);
+        else if (delta > 0){
+            abrisZoomOut(commandArray, delta);
+        }
+        
+    }
+    
+    private static void abrisFullZoom(JSONArray commandArray) {
+        abrisZoomIn(commandArray, Ka50.ranges.size());
+        zoomLevel = 0;
+    }
+
+    private static ABRISZoomRange findSmallestBoundingXRange(Point current, Point next) {
+        for(ABRISZoomRange range: ranges) {
+            if(range.areBothPointsWithinXRange(current, next))
+                return range;
+        }
+        return null;
+    }
+
+    private static ABRISZoomRange findSmallestBoundingZRange(Point current, Point next) {
+        for(ABRISZoomRange range: ranges) {
+            if(range.areBothPointsWithinZRange(current, next))
+                return range;
+        }
+        return null;
+    }
+
+    private static void abrisUnloadRoute(JSONArray commandArray) {
+        // ABRIS: plan mode
+        commandArray.put(new JSONObject().put("device", "09").put("code", "3003").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+        // ABRIS: activate select menu
+        commandArray.put(new JSONObject().put("device", "09").put("code", "3001").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+        // ABRIS: select menu move down 2 entries (this will be split into 4 increments of 0.4)
+        for(int i = 0; i < 4; i++)
+            commandArray.put(new JSONObject().put("device", "09").put("code", "3006").put("delay", "0").put("activate", "0.4").put("addDepress", "false"));
+        // ABRIS: activate unload option
+        commandArray.put(new JSONObject().put("device", "09").put("code", "3001").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+        // ABRIS: activate select menu again
+        commandArray.put(new JSONObject().put("device", "09").put("code", "3001").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+        // now move back 2 entries up
+        for(int i = 0; i < 4; i++)
+            commandArray.put(new JSONObject().put("device", "09").put("code", "3006").put("delay", "0").put("activate", "-0.4").put("addDepress", "false"));
+        // now switch to menu mode again
+        commandArray.put(new JSONObject().put("device", "09").put("code", "3005").put("delay", "0").put("activate", "1").put("addDepress", "true"));
     }
 
     public static List<Point> getCoords(List<Point> dcsPoints) {
@@ -176,9 +355,85 @@ public class Ka50 {
             String Ka50Longitude = longDegDf.format(dmmLong.getDegrees()) + longMinDf.format(dmmLong.getMinutes()).replace(".", "");
             String Ka50Elevation = String.valueOf(Math.round(UnitConvertorUtils.metersToFeet(dcsElev)));
 
-            var Ka50Point = new Point(Ka50Latitude, Ka50Longitude, Ka50Elevation, dcsPoint.getLatitudeHemisphere(), dcsPoint.getLongitudeHemisphere());
+            var Ka50Point = new Point(Ka50Latitude, Ka50Longitude, Ka50Elevation, dcsPoint.getLatitudeHemisphere(), dcsPoint.getLongitudeHemisphere(), dcsPoint.getX(), dcsPoint.getZ());
             Ka50Points.add(Ka50Point);
         }
         return Ka50Points;
+    }
+
+    // static list holding the zoom ranges
+    private static List<ABRISZoomRange> ranges;
+    // current zoomLevel
+    private static int zoomLevel = 10;
+    static {
+        // create a list of ABRIS zoom ranges
+        ranges = new ArrayList<ABRISZoomRange>();
+        ranges.add(new ABRISZoomRange(150.00));
+        ranges.add(new ABRISZoomRange(200.00));
+        ranges.add(new ABRISZoomRange(250.00));
+        ranges.add(new ABRISZoomRange(300.00));
+        ranges.add(new ABRISZoomRange(500.00));
+        ranges.add(new ABRISZoomRange(600.00));
+        ranges.add(new ABRISZoomRange(750.00));
+        ranges.add(new ABRISZoomRange(1000.00));
+        ranges.add(new ABRISZoomRange(1250.00));
+        ranges.add(new ABRISZoomRange(1500.00));
+        ranges.add(new ABRISZoomRange(2000.00));
+        ranges.add(new ABRISZoomRange(2500.00));
+        ranges.add(new ABRISZoomRange(3000.00));
+        ranges.add(new ABRISZoomRange(4000.00));
+        ranges.add(new ABRISZoomRange(5000.00));
+        ranges.add(new ABRISZoomRange(6000.00));
+        ranges.add(new ABRISZoomRange(7500.00));
+        ranges.add(new ABRISZoomRange(10000.00));
+        ranges.add(new ABRISZoomRange(12500.00));
+        ranges.add(new ABRISZoomRange(15000.00));
+        ranges.add(new ABRISZoomRange(20000.00));
+        ranges.add(new ABRISZoomRange(25000.00));
+        ranges.add(new ABRISZoomRange(30000.00));
+        ranges.add(new ABRISZoomRange(40000.00));
+        ranges.add(new ABRISZoomRange(50000.00));
+        ranges.add(new ABRISZoomRange(100000.00));
+    }
+
+    private static class ABRISZoomRange {
+        private static final double ROTATION_TO_SCREEN_FACTOR = 1.23456;
+        private static final double HORIZONTAL_ROTATIONS = 10.0;
+        private static final double VERTICAL_ROTATIONS = 8.0;
+        private int level;
+        private static int nextRangeLevel = 0; 
+        public ABRISZoomRange(Double scale) {
+            // in any scale it takes 8 revolutions for vertical coordinate to reach edge (X axis)
+            // horizontal distance is somewhat larger (Z axis)
+            // calculate distance from center point toward edges of the screen in m
+            this.vertical = scale * VERTICAL_ROTATIONS / ROTATION_TO_SCREEN_FACTOR;
+            // this.horizontal = vertical * 1.25;
+            this.horizontal = scale * HORIZONTAL_ROTATIONS / ROTATION_TO_SCREEN_FACTOR;
+            level = nextRangeLevel++;
+            System.out.println("Level: " + level +  " scale: " + scale + " horizontal: " + horizontal + " vertical: " + vertical);
+        }
+        public boolean areBothPointsWithinXRange(Point current, Point next) {
+          return java.lang.Math.abs(next.getX() - current.getX()) <= vertical;
+        }
+
+        public boolean areBothPointsWithinZRange(Point current, Point next) {
+            Double delta = java.lang.Math.abs(next.getZ() - current.getZ());
+            return  delta <= horizontal;
+        }
+
+        public int getLevel() {
+            return level;
+        }
+
+        public Double toRotationsX(Double deltaX) {
+            return VERTICAL_ROTATIONS * deltaX / vertical;
+        }
+
+        public Double toRotationsZ(Double deltaZ) {
+            return HORIZONTAL_ROTATIONS * deltaZ / horizontal;
+        }
+
+        private Double horizontal;
+        private Double vertical;
     }
 }

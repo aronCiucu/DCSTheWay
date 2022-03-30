@@ -5,14 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>DCS The Way</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>DCSTheWay</artifactId>
+    <version>1.0.0.0</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.json</groupId>
@@ -32,4 +31,87 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
+    <build>
+        <!-- include all resources files -->
+        <resources>
+            <resource>
+                <directory>resources</directory>
+                <targetPath>resources</targetPath>
+            </resource>
+        </resources>
+        <plugins>
+            <!-- For bundling of exe we need to get rid of -SNAPSHOT from version -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <configuration>                
+                    <removeSnapshot>true</removeSnapshot>
+                </configuration>
+            </plugin>
+           <!-- create jar with dependencies bundled inside-->
+           <plugin>
+              <artifactId>maven-assembly-plugin</artifactId>
+              <configuration>
+                <archive>
+                  <manifest>
+                    <mainClass>main.Main</mainClass>
+                  </manifest>
+                </archive>
+                <descriptorRefs>
+                  <descriptorRef>jar-with-dependencies</descriptorRef>
+                </descriptorRefs>
+              </configuration>
+                <executions>
+                  <!-- invoke during package phase -->
+                  <execution>
+                    <id>assemble-all</id>
+                    <phase>package</phase>
+                    <goals>
+                      <goal>single</goal>
+                    </goals>
+                  </execution>
+                </executions>
+            </plugin>
+            <!-- create exe from the -->
+            <plugin>
+              <groupId>com.akathist.maven.plugins.launch4j</groupId>
+              <artifactId>launch4j-maven-plugin</artifactId>
+              <executions>
+                <execution>
+                  <id>l4j-clui</id>
+                  <phase>package</phase>
+                  <goals><goal>launch4j</goal></goals>
+                  <configuration>
+                    <headerType>gui</headerType>
+                    <outfile>target/TheWay.exe</outfile>
+                    <jar>target/${project.artifactId}-${project.version}-jar-with-dependencies.jar</jar>
+                    <errTitle>The Way</errTitle>
+                    <icon>resources\TheWayIcon40.ico</icon>
+                    <classPath>
+                      <mainClass>main.Main</mainClass>
+                      <addDependencies>true</addDependencies>
+                      <preCp>anything</preCp>
+                    </classPath>
+                    <jre>
+                      <minVersion>11</minVersion>
+                      <opts>
+                      </opts>
+                    </jre>
+                    <versionInfo>
+                      <fileVersion>${project.version}</fileVersion>
+                      <txtFileVersion>${project.version}</txtFileVersion>
+                      <fileDescription>Tool for loading waypoints into DCS World</fileDescription>
+                      <copyright>?</copyright>
+                      <productVersion>${project.version}</productVersion>
+                      <txtProductVersion>${project.version}</txtProductVersion>
+                      <productName>DCS The Way</productName>
+                      <internalName>DCS The Way</internalName>
+                      <originalFilename>TheWay.exe</originalFilename>
+                    </versionInfo>
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin>
+        </plugins>
+	</build>
 </project>
