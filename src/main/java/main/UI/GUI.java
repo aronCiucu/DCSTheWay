@@ -108,6 +108,23 @@ public class GUI {
         dialog.setVisible(true);
     }
 
+    public static void choice(String question, String option1, String option2){
+        JDialog dialog = new JDialog(frame, "Choose", true);
+//        JButton continueButton = new JButton("OK");
+//        continueButton.addActionListener(e -> dialog.dispose());
+//        JButton[] option = {continueButton};
+//        JOptionPane optionPane = new JOptionPane(text, JOptionPane.ERROR_MESSAGE, JOptionPane.YES_NO_OPTION, null, option, option[0]);
+//
+//        Point framePoint = frame.getLocation();
+//        dialog.setLocation((int) framePoint.getX()+frame.getWidth(), (int)framePoint.getY());
+//        dialog.setContentPane(optionPane);
+//        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+//        dialog.setResizable(false);
+//        dialog.setFocusableWindowState(false);
+//        dialog.pack();
+//        dialog.setVisible(true);
+    }
+
     private static void standbyState(){
         crosshair.hide();
         beginSelectionButton.setEnabled(true);
