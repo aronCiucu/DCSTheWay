@@ -1,6 +1,7 @@
 package main.DCSconnection;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
@@ -12,10 +13,10 @@ public class PortListenerThread implements Runnable {
     private static String longitude;
     private static String elevation;
     private static String modelName;
-    private static Double x;
-    private static Double z;
-    private static Double selfX;
-    private static Double selfZ;
+    private static BigDecimal x;
+    private static BigDecimal z;
+    private static BigDecimal selfX;
+    private static BigDecimal selfZ;
 
     @Override
     public void run() {
@@ -36,10 +37,10 @@ public class PortListenerThread implements Runnable {
                     // avoid crashing if the export script is of older version which does not provide x/y
                     if (jsonObject.has("self"))
                     {
-                        x = jsonObject.getJSONObject("coords").getDouble("x");
-                        z = jsonObject.getJSONObject("coords").getDouble("z");
-                        selfX = jsonObject.getJSONObject("self").getDouble("x");
-                        selfZ = jsonObject.getJSONObject("self").getDouble("z");
+                        x = jsonObject.getJSONObject("coords").getBigDecimal("x");
+                        z = jsonObject.getJSONObject("coords").getBigDecimal("z");
+                        selfX = jsonObject.getJSONObject("self").getBigDecimal("x");
+                        selfZ = jsonObject.getJSONObject("self").getBigDecimal("z");
                     }
                 }
             }
@@ -52,15 +53,15 @@ public class PortListenerThread implements Runnable {
         }
     }
 
-    public static String getLatitude() {
+    public static synchronized String getLatitude() {
         return latitude;
     }
 
-    public static String getLongitude() {
+    public static synchronized String getLongitude() {
         return longitude;
     }
 
-    public static String getElevation() {
+    public static synchronized String getElevation() {
         return elevation;
     }
 
@@ -68,19 +69,19 @@ public class PortListenerThread implements Runnable {
         return modelName;
     }
     
-    public static Double getX() {
+    public static synchronized BigDecimal getX() {
         return x;
     }
 
-    public static Double getZ() {
+    public static synchronized BigDecimal getZ() {
         return z;
     }    
 
-    public static Double getSelfX() {
+    public static synchronized BigDecimal getSelfX() {
         return selfX;
     }    
         
-    public static Double getSelfZ() {
+    public static synchronized BigDecimal getSelfZ() {
         return selfZ;
     }    
 }

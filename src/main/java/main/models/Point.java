@@ -1,5 +1,6 @@
 package main.models;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Point {
@@ -8,8 +9,8 @@ public class Point {
     private final String elevation;
     private final Hemisphere latitudeHemisphere;
     private final Hemisphere longitudeHemisphere;
-    private final Double x;
-    private final Double z;
+    private final BigDecimal x;
+    private final BigDecimal z;
 
     public Point(String latitude, String longitude, String elevation, Hemisphere latitudeHemisphere, Hemisphere longitudeHemisphere) {
         this.latitude = latitude;
@@ -21,7 +22,7 @@ public class Point {
         this.z = null;
     }
 
-    public Point(String latitude, String longitude, String elevation, Hemisphere latitudeHemisphere, Hemisphere longitudeHemisphere, Double x, Double z) {
+    public Point(String latitude, String longitude, String elevation, Hemisphere latitudeHemisphere, Hemisphere longitudeHemisphere, BigDecimal x, BigDecimal z) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.elevation = elevation;
@@ -52,11 +53,11 @@ public class Point {
         return longitudeHemisphere;
     }
 
-    public Double getX() {
+    public BigDecimal getX() {
         return x;
     }
     
-    public Double getZ() {
+    public BigDecimal getZ() {
         return z;
     }
     

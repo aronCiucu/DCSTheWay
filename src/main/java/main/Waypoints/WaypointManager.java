@@ -7,15 +7,16 @@ import main.Waypoints.PlanesCommands.*;
 import main.models.Hemisphere;
 import main.models.Point;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 public class WaypointManager {
     static private ArrayList<Point> waypoints = new ArrayList<>();
-    static private Double x;
-    static private Double z;
-    static private Double selfX;
-    static private Double selfZ;
+    static private BigDecimal x;
+    static private BigDecimal z;
+    static private BigDecimal selfX;
+    static private BigDecimal selfZ;
 
     public static void transfer(){
         String model = PortListenerThread.getPlaneModel();
