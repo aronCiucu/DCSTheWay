@@ -17,6 +17,19 @@ Supported modules:
  
 Multiplayer is supported as long as the server has ownship/player exports turned on.
 
+### Ka-50 notes
+The following devices are supported:
+- PVI-800
+- ABRIS
+
+PVI-800 features:
+- entry of up to 6 waypoints
+- entry of steer points (your flight plan / route)
+ABRIS features:
+- entry of up to 6 waypoints (current limit is 6)
+- automatic switch to MENU-PLAN-EDIT mode
+- automatic switch to NAV mode
+
 ## How to install?
 1. Download the latest zip file from the Releases section, and extract `The Way` folder inside it in a convenient location, from where you will run the program. 
 2. Copy the `TheWay.lua` file from the folder you just extracted into `Users/YourUsernameHere/Saved Games/DCS/Scripts`. The `DCS` folder name may be `DCS.openbeta` if you are on the openbeta version of the game.
