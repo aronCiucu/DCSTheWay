@@ -65,7 +65,7 @@
                   <!-- invoke during package phase -->
                   <execution>
                     <id>assemble-all</id>
-                    <phase>package</phase>
+                    <phase>prepare-package</phase>
                     <goals>
                       <goal>single</goal>
                     </goals>
@@ -79,7 +79,7 @@
               <executions>
                 <execution>
                   <id>l4j-clui</id>
-                  <phase>package</phase>
+                  <phase>prepare-package</phase>
                   <goals><goal>launch4j</goal></goals>
                   <configuration>
                     <headerType>gui</headerType>
@@ -112,6 +112,21 @@
                 </execution>
               </executions>
             </plugin>
+        <plugin>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>assembly</id>
+              <phase>package</phase>
+              <goals><goal>single</goal></goals>
+              <configuration>
+                <descriptors>
+                  <descriptor>assembly.xml</descriptor>
+                </descriptors>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
         </plugins>
 	</build>
 </project>

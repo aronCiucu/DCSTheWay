@@ -30,6 +30,19 @@ Multiplayer is supported as long as the server has ownship/player exports turned
 
 If you are updating from an older version, simply download the newest release, extract your new `The Way` folder ontop of your old one, replacing your existing files with the new ones. Also don't forget to copy your new `TheWay.lua` file into Saved Games, and override your old one there.
 
+## How to build from source?
+1. install dependencies:
+- java JDK
+- maven
+2. clone this repository
+3. start command prompt
+4. cd into cloned repository
+5. run
+```
+mvn clean package
+```
+6. Find the zip archive in target subfolder: DCSTheWay-VERSION.zip
+
 ## How to use? 
 Video tutorial here:
 
