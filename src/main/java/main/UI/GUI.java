@@ -6,6 +6,8 @@ import main.Waypoints.WaypointManager;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -108,6 +110,33 @@ public class GUI {
         dialog.setFocusableWindowState(false);
         dialog.pack();
         dialog.setVisible(true);
+    }
+
+    public static String choice(String question, String option1, String option2){
+        JDialog dialog = new JDialog(frame, "Choose an option", true);
+        Object[] options = {option1, option2};
+        JOptionPane optionPane = new JOptionPane(question, JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION, null, options, options[0]);
+
+        Point framePoint = frame.getLocation();
+        dialog.setLocation((int) framePoint.getX()+frame.getWidth(), (int)framePoint.getY());
+        dialog.setContentPane(optionPane);
+        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        dialog.setResizable(false);
+        dialog.setFocusableWindowState(false);
+
+        optionPane.addPropertyChangeListener(
+                e -> {
+                    String prop = e.getPropertyName();
+                    if (dialog.isVisible()
+                            && (e.getSource() == optionPane)
+                            && (prop.equals(JOptionPane.VALUE_PROPERTY))) {
+                        dialog.setVisible(false);
+                    }
+                });
+
+        dialog.pack();
+        dialog.setVisible(true);
+        return (String) optionPane.getValue();
     }
 
     private static void standbyState(){

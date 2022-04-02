@@ -13,6 +13,7 @@ Supported modules:
 * Mirage 2000
 * AV8BNA Harrier
 * Ka-50 Blackshark
+* AH-64D Apache 
  
 Multiplayer is supported as long as the server has ownship/player exports turned on.
 
