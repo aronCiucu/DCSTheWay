@@ -141,8 +141,18 @@ function LuaExportAfterNextFrame()
     message["self"]["x"] = selfLoX
     message["self"]["z"] = selfLoZ
     message["elev"] = tostring(elevation)
+
+    -- Include aircraft/sernsor specific information
+    if model == 'Ka-50' then
+      message['aircraftSpecificData'] = {}
+      message['aircraftSpecificData']['ABRIS'] = {}
+      message['aircraftSpecificData']['ABRIS']['mode'] = GetDevice(9):get_mode()
+    end
+
     -- encode message into JSON format
     local toSend = JSON:encode(message)
+    -- log.write("THEWAY", log.ERROR, "Message: \n"..toSend)
+
     -- log.write("THEWAY", log.INFO, "Encoded messsage: \n"..toSend)
   	-- local toSend = "{ ".."\"model\": ".."\""..model.."\""..", ".."\"coords\": ".. "{ ".."\"lat\": ".."\""..coords.latitude.."\""..", ".."\"long\": ".."\""..coords.longitude.."\"".."} "..", ".."\"elev\": ".."\""..elevation.."\"".."}"
   	if pcall(function()

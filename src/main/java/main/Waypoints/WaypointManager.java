@@ -11,13 +11,11 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
+
 public class WaypointManager {
     static private ArrayList<Point> waypoints = new ArrayList<>();
-    static private BigDecimal x;
-    static private BigDecimal z;
-    static private BigDecimal selfX;
-    static private BigDecimal selfZ;
-
+    
     public static void transfer(){
         String model = PortListenerThread.getPlaneModel();
 
@@ -51,7 +49,9 @@ public class WaypointManager {
                     GUI.error("The Ka-50 can store a maximum of 6 waypoints. ");
                 } else {
                     List<Point> Ka50Coords = Ka50.getCoords(waypoints);
-                    String dataToSend = Ka50.getCommands(Ka50Coords, selfX, selfZ).toString();
+                    BigDecimal selfX = PortListenerThread.getSelfX();
+                    BigDecimal selfZ = PortListenerThread.getSelfZ();                    
+                    String dataToSend = Ka50.getCommands(Ka50Coords, selfX, selfZ, PortListenerThread.getAircraftSpecificData()).toString();
                     PortSender.send(dataToSend);
                 }
             } else if(model.equals("AH-64D_BLK_II")){
@@ -76,10 +76,8 @@ public class WaypointManager {
         String latitude = PortListenerThread.getLatitude();
         String longitude = PortListenerThread.getLongitude();
         String elevation = PortListenerThread.getElevation();
-        x = PortListenerThread.getX();
-        z = PortListenerThread.getZ();
-        selfX = PortListenerThread.getSelfX();
-        selfZ = PortListenerThread.getSelfZ();
+        BigDecimal x = PortListenerThread.getX();
+        BigDecimal z = PortListenerThread.getZ();
         if(latitude != null && longitude != null && elevation != null){
             Hemisphere latHem;
             Hemisphere longHem;
@@ -102,8 +100,6 @@ public class WaypointManager {
 
     public static void clearWaypoints(){
         waypoints.clear();
-        x = null;
-        z = null;
     }
 
     public static int getSelectedWaypointsCount(){

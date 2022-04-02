@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Ka50 {
-    public static JSONArray getCommands(List<Point> coords, BigDecimal selfX, BigDecimal selfZ) {
+    public static JSONArray getCommands(List<Point> coords, BigDecimal selfX, BigDecimal selfZ, JSONObject aircraftSpecificData) {
         /*
            button list, all are device 20
            Waypoint button     3011
@@ -156,11 +156,6 @@ public class Ka50 {
         //PVI to OPER
         commandArray.put(new JSONObject().put("device", "20").put("code", "3026").put("delay", "0").put("activate", "0.3").put("addDepress", "false"));
 
-        // PVI: press waypoint button to start defining steer points
-//        commandArray.put(new JSONObject().put("device", "20").put("code", "3011").put("delay", "1").put("activate", "0").put("addDepress", "true"));
-//        commandArray.put(new JSONObject().put("device", "20").put("code", "3002").put("delay", "0").put("activate", "1").put("addDepress", "true"));
-        // commandArray.put(new JSONObject().put("device", "20").put("code", "3019").put("delay", "0").put("activate", "10").put("addDepress", "true"));
-//        
         // PVI: enter each waypoint as steer point
         for (int i = 0; i < coords.size(); i++) {
             // PVI: select steer point
@@ -170,25 +165,17 @@ public class Ka50 {
         }
         // PVI: activate steerpoint 1
         commandArray.put(new JSONObject().put("device", "20").put("code", Integer.toString(3002)).put("delay", "0").put("activate", "1").put("addDepress", "true"));
+        //Press waypoint button
+        commandArray.put(new JSONObject().put("device", "20").put("code", "3011").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+        //Press waypoint button
+        commandArray.put(new JSONObject().put("device", "20").put("code", "3011").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+        // PVI: activate steerpoint 1
+        commandArray.put(new JSONObject().put("device", "20").put("code", Integer.toString(3002)).put("delay", "0").put("activate", "1").put("addDepress", "true"));
 
-//
-//        // turn waypoint button off
-//        commandArray.put(new JSONObject().put("device", "20").put("code", "3011").put("delay", "1").put("activate", "0").put("addDepress", "true"));
-//        // turn waypoint button on
-//        commandArray.put(new JSONObject().put("device", "20").put("code", "3011").put("delay", "1").put("activate", "0").put("addDepress", "true"));
-//        // select first waypoint
-//        commandArray.put(new JSONObject().put("device", "20").put("code", Integer.toString(3002)).put("delay", "0" ).put("activate", "1").put("addDepress", "true"));
-
-//        for(int i = 0; i < 4; i++)
-//            commandArray.put(new JSONObject().put("device", "09").put("code", "3005").put("delay", "1").put("activate", "1").put("addDepress", "true"));
-        ArrayList<Point> dummy = new ArrayList<Point>();
-        dummy.add(new Point(null, null, null, null, null, selfX, selfZ));
-        abrisUnloadRoute(commandArray);
-        abrisStartRouteEntry(commandArray);
-        abrisEnterRouteWaypoints(dummy, selfX, selfZ, commandArray);
-        abrisCompleteRouteEntry(commandArray);
-        for(int i = 0; i < 3; i++ )
-            commandArray.put(new JSONObject().put("device", "09").put("code", "3005").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+        // Place ABRIS into MENU mode, no matter in which mode it is currently in
+        abrisCycleToMenuMode(commandArray, aircraftSpecificData);
+        // Workaround ABRIS/SNS drift (this occurs only on the first usage, but for simplicity we will repeat it every time)
+        abrisWorkaroundInitialSNSDrift(commandArray, selfX, selfZ);
         // Make sure there is no route loaded
         abrisUnloadRoute(commandArray);
         // Start entering
@@ -200,6 +187,104 @@ public class Ka50 {
 
         return commandArray;
     }
+
+    private static void abrisCycleToMenuMode(JSONArray commandArray, JSONObject aircraftSpecificData) {
+        int cycleNumber = determineNumberOfModePresses(aircraftSpecificData);
+        System.out.println("Cycle number: " + cycleNumber);
+        for (int i = 0; i < cycleNumber; i++) 
+            commandArray.put(new JSONObject().put("device", "09").put("code", "3005").put("delay", "10").put("activate", "1").put("addDepress", "true"));
+    }
+    
+    private static int determineNumberOfModePresses(JSONObject aircraftSpecificData) {
+        // this function is based on Ka-50/Cockpit/Scripts/ABRIS/ABRIS_init.lua which contains definition of mode structure. Please refer to line containing: ABRIS modes
+        // please note that DCS actually reduces each value by 1, despite the definitions in the file
+        JSONObject modeStruct = aircraftSpecificData.getJSONObject("ABRIS").getJSONObject("mode");
+        int master = modeStruct.getInt("master");
+        int level_2 = modeStruct.getInt("level_2");
+        int level_3 = modeStruct.getInt("level_3");
+        int level_4 = modeStruct.getInt("level_4");
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(master);
+        stringBuilder.append(level_2);
+        stringBuilder.append(level_3);
+        stringBuilder.append(level_4);
+        String mode = stringBuilder.toString();
+        System.out.println("Found: '" + mode + "'");
+
+        if (mode.equals("0000"))
+            return 0;
+        // if already in men just cycle 
+        if(mode.startsWith("5") == false)
+            return 4;
+        if(mode.equals("5000"))
+            return 3;
+        if(mode.equals("5500"))
+            return 2;
+        if(mode.equals("5100"))
+            return 1;
+        if(mode.equals("5400"))
+            return 4;
+        if(mode.equals("5310"))
+            return 4;
+        if(mode.equals("5200"))
+            return 4;
+        if(mode.equals("5430"))
+            return 4;
+        if(mode.equals("5240"))
+            return 4;
+        
+
+        // if we are in MENU, no actions are needed
+//        if (master == 0 && level_2 == 0 && level_3 == 0 && level_4 == 0)
+//            return 0;
+//        // if we are not in one of MENU submodes, the easist is just to fully cycle 
+//        if (master != 5)
+//            return 4;
+//        if (level_2 == 0)
+//            if (level_3 == 0)
+//                return 4;
+//            else
+//                return 3;
+//        if (level_2 == 2)
+//            return 4;
+//        if (level_2 == 3)
+//            if (level_3 == 0)
+//                return 3;
+//            else
+//                return 4;        
+//        if (level_2 == 4)
+//            if (level_3 == 0)
+//                return 4;
+//            else
+//                return 3;
+//        if (level_2 == 5)
+//            return 2;
+//        if (level_2 == 1)
+//            return 1;
+        System.out.println("Unprocessed: " + mode);
+        return 4;
+    }
+
+    private static void abrisWorkaroundInitialSNSDrift(JSONArray commandArray, BigDecimal selfX, BigDecimal selfZ) {
+        // on the first route entry, initial point can be set to one of the following cases:
+        // 1. center of map, e.g. in case of Caucasus, the center is on Crimea
+        // 2. early SNS results that may drift few km from actual position
+        // 3. correct position (rarely)
+        // To deal with this method will:
+        // 1. enter first a dummy navpoint consisting of a single point (current location)
+        // 2. initiate navigation
+        // 3. return the ABRIS to MENU mode
+        // Starting from this point ABRIS will not drift anymore and real route will be entered
+        ArrayList<Point> dummy = new ArrayList<Point>();
+        dummy.add(new Point(null, null, null, null, null, selfX, selfZ));
+        abrisUnloadRoute(commandArray);
+        abrisStartRouteEntry(commandArray);
+        abrisEnterRouteWaypoints(dummy, selfX, selfZ, commandArray);
+        abrisCompleteRouteEntry(commandArray);
+        for(int i = 0; i < 3; i++ )
+            commandArray.put(new JSONObject().put("device", "09").put("code", "3005").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+    }
+    
     private static void abrisEnterRouteWaypoints(List<Point> coords, BigDecimal selfX, BigDecimal selfZ, JSONArray commandArray) {
         //waypoints are entered relative to the last waypoint. Initially we start with aircraft current location
         Point priorCoord = new Point(null, null, null, null, null, selfX, selfZ);
@@ -345,14 +430,12 @@ public class Ka50 {
         commandArray.put(new JSONObject().put("device", "09").put("code", "3005").put("delay", "0").put("activate", "1").put("addDepress", "true"));
     }
     
-    private static void abrisPrepareMapZoom(JSONArray commandArray ) {
-        commandArray.put(new JSONObject().put("device", "09").put("code", "3005").put("delay", "0").put("activate", "1").put("addDepress", "true"));
-        commandArray.put(new JSONObject().put("device", "09").put("code", "3002").put("delay", "0").put("activate", "1").put("addDepress", "true"));
-        abrisFullZoom(commandArray);
-        // ABRIS: cycle back to MENU mode
-        for(int i = 0; i < 4; i++ )
-            commandArray.put(new JSONObject().put("device", "09").put("code", "3005").put("delay", "0").put("activate", "1").put("addDepress", "true"));
-    }
+//    private static void abrisPrepareMapZoom(JSONArray commandArray ) {
+//        commandArray.put(new JSONObject().put("device", "09").put("code", "3005").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+//        commandArray.put(new JSONObject().put("device", "09").put("code", "3002").put("delay", "0").put("activate", "1").put("addDepress", "true"));
+//        abrisFullZoom(commandArray);
+//        abrisCycleToMenuMode(commandArray);
+//    }
 
     public static List<Point> getCoords(List<Point> dcsPoints) {
         List<Point> Ka50Points = new ArrayList<>();

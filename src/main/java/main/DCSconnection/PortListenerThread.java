@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.json.JSONObject;
 
@@ -17,6 +19,7 @@ public class PortListenerThread implements Runnable {
     private static BigDecimal z;
     private static BigDecimal selfX;
     private static BigDecimal selfZ;
+    private static JSONObject aircraftSpecificData;
 
     @Override
     public void run() {
@@ -41,6 +44,10 @@ public class PortListenerThread implements Runnable {
                         z = jsonObject.getJSONObject("coords").getBigDecimal("z");
                         selfX = jsonObject.getJSONObject("self").getBigDecimal("x");
                         selfZ = jsonObject.getJSONObject("self").getBigDecimal("z");
+                    }
+                    
+                    if (jsonObject.has("aircraftSpecificData")) {
+                        aircraftSpecificData = jsonObject.getJSONObject("aircraftSpecificData");
                     }
                 }
             }
@@ -80,8 +87,12 @@ public class PortListenerThread implements Runnable {
     public static synchronized BigDecimal getSelfX() {
         return selfX;
     }    
-        
+
     public static synchronized BigDecimal getSelfZ() {
         return selfZ;
-    }    
+    }
+
+    public static JSONObject getAircraftSpecificData() {
+        return aircraftSpecificData;
+    }
 }
