@@ -189,12 +189,13 @@ public class Ka50 {
     }
 
     private static void abrisCycleToMenuMode(JSONArray commandArray, JSONObject aircraftSpecificData) {
+        // we need to know how many times the button 5 needs to be pressed to get to the MENU mode
         int cycleNumber = determineNumberOfModePresses(aircraftSpecificData);
         System.out.println("Cycle number: " + cycleNumber);
         for (int i = 0; i < cycleNumber; i++) 
             commandArray.put(new JSONObject().put("device", "09").put("code", "3005").put("delay", "10").put("activate", "1").put("addDepress", "true"));
     }
-    
+
     private static int determineNumberOfModePresses(JSONObject aircraftSpecificData) {
         // this function is based on Ka-50/Cockpit/Scripts/ABRIS/ABRIS_init.lua which contains definition of mode structure. Please refer to line containing: ABRIS modes
         // please note that DCS actually reduces each value by 1, despite the definitions in the file
@@ -232,35 +233,7 @@ public class Ka50 {
             return 4;
         if(mode.equals("5240"))
             return 4;
-        
 
-        // if we are in MENU, no actions are needed
-//        if (master == 0 && level_2 == 0 && level_3 == 0 && level_4 == 0)
-//            return 0;
-//        // if we are not in one of MENU submodes, the easist is just to fully cycle 
-//        if (master != 5)
-//            return 4;
-//        if (level_2 == 0)
-//            if (level_3 == 0)
-//                return 4;
-//            else
-//                return 3;
-//        if (level_2 == 2)
-//            return 4;
-//        if (level_2 == 3)
-//            if (level_3 == 0)
-//                return 3;
-//            else
-//                return 4;        
-//        if (level_2 == 4)
-//            if (level_3 == 0)
-//                return 4;
-//            else
-//                return 3;
-//        if (level_2 == 5)
-//            return 2;
-//        if (level_2 == 1)
-//            return 1;
         System.out.println("Unprocessed: " + mode);
         return 4;
     }
@@ -365,37 +338,43 @@ public class Ka50 {
     }
 
     private static void abrisZoomIn(JSONArray commandArray, int relativeZoomLevel) {
+        // negative zoom in value: ignore
         if (relativeZoomLevel < 0)
             return;
+        // zoom in of the defined number of levels
         for(int i = 0; i < relativeZoomLevel; i++)
             commandArray.put(new JSONObject().put("device", "09").put("code", "3003").put("delay", "1").put("activate", "1").put("addDepress", "true"));
         zoomLevel = zoomLevel - relativeZoomLevel;
     }
 
     private static void abrisZoomOut(JSONArray commandArray, int relativeZoomLevel) {
+        // negative zoom out value: ignore
         if (relativeZoomLevel < 0)
             return;
+        // zoom out of the defined number of levels
         for(int i = 0; i < relativeZoomLevel; i++)
             commandArray.put(new JSONObject().put("device", "09").put("code", "3004").put("delay", "1").put("activate", "1").put("addDepress", "true"));
         zoomLevel = java.lang.Math.min(zoomLevel + relativeZoomLevel, Ka50.ranges.size());
     }
 
     private static void abrisZoomToRange(JSONArray commandArray, int level) {
+        // calculate difference between desired and current zoom
         int delta = level - zoomLevel;
+        // zoom in or zoom out
         if (delta < 0)
             abrisZoomIn(commandArray, -delta);
         else if (delta > 0){
             abrisZoomOut(commandArray, delta);
         }
-        
     }
-    
+
     private static void abrisFullZoom(JSONArray commandArray) {
         abrisZoomIn(commandArray, Ka50.ranges.size());
         zoomLevel = 0;
     }
 
     private static ABRISZoomRange findSmallestBoundingXRange(Point current, Point next) {
+        // for precision we search for the smallest possible range where X coordinates of both points are. Otherwise ABRIS will misbehave!
         for(ABRISZoomRange range: ranges) {
             if(range.areBothPointsWithinXRange(current, next))
                 return range;
@@ -404,6 +383,7 @@ public class Ka50 {
     }
 
     private static ABRISZoomRange findSmallestBoundingZRange(Point current, Point next) {
+        // for precision we search for the smallest possible range where Z coordinates of both points are. Otherwise ABRIS will misbehave!
         for(ABRISZoomRange range: ranges) {
             if(range.areBothPointsWithinZRange(current, next))
                 return range;
@@ -429,13 +409,6 @@ public class Ka50 {
         // now switch to menu mode again
         commandArray.put(new JSONObject().put("device", "09").put("code", "3005").put("delay", "0").put("activate", "1").put("addDepress", "true"));
     }
-    
-//    private static void abrisPrepareMapZoom(JSONArray commandArray ) {
-//        commandArray.put(new JSONObject().put("device", "09").put("code", "3005").put("delay", "0").put("activate", "1").put("addDepress", "true"));
-//        commandArray.put(new JSONObject().put("device", "09").put("code", "3002").put("delay", "0").put("activate", "1").put("addDepress", "true"));
-//        abrisFullZoom(commandArray);
-//        abrisCycleToMenuMode(commandArray);
-//    }
 
     public static List<Point> getCoords(List<Point> dcsPoints) {
         List<Point> Ka50Points = new ArrayList<>();
