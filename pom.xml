@@ -5,12 +5,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>DCSTheWay</artifactId>
-    <version>1.0.0.0</version>
+    <artifactId>dcstheway</artifactId>
+    <version>0.0.0</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <!-- the following values will be overriden by of github actions based on tag -->
+        <tag_version>0.0.0</tag_version>
+        <file_version>0.0.0.0</file_version>
+        <release_url>https://github.com/aronCiucu/DCSTheWay/releases</release_url>
     </properties>
     <dependencies>
         <dependency>
@@ -40,15 +44,7 @@
             </resource>
         </resources>
         <plugins>
-            <!-- For bundling of exe we need to get rid of -SNAPSHOT from version -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>versions-maven-plugin</artifactId>
-                <configuration>                
-                    <removeSnapshot>true</removeSnapshot>
-                </configuration>
-            </plugin>
-           <!-- create jar with dependencies bundled inside-->
+           <!-- create jar with dependencies bundled -->
            <plugin>
               <artifactId>maven-assembly-plugin</artifactId>
               <configuration>
@@ -72,7 +68,7 @@
                   </execution>
                 </executions>
             </plugin>
-            <!-- create exe from the -->
+            <!-- create exe from the bundled jar -->
             <plugin>
               <groupId>com.akathist.maven.plugins.launch4j</groupId>
               <artifactId>launch4j-maven-plugin</artifactId>
@@ -98,12 +94,12 @@
                       </opts>
                     </jre>
                     <versionInfo>
-                      <fileVersion>${project.version}</fileVersion>
-                      <txtFileVersion>${project.version}</txtFileVersion>
-                      <fileDescription>Tool for loading waypoints into DCS World</fileDescription>
-                      <copyright>?</copyright>
-                      <productVersion>${project.version}</productVersion>
-                      <txtProductVersion>${project.version}</txtProductVersion>
+                      <fileVersion>${file_version}</fileVersion>
+                      <txtFileVersion>${tag_version}</txtFileVersion>
+                      <fileDescription>${release_url}</fileDescription>
+                      <copyright>GPLv3</copyright>
+                      <productVersion>${file_version}</productVersion>
+                      <txtProductVersion>${tag_version}</txtProductVersion>
                       <productName>DCS The Way</productName>
                       <internalName>DCS The Way</internalName>
                       <originalFilename>TheWay.exe</originalFilename>
@@ -112,21 +108,22 @@
                 </execution>
               </executions>
             </plugin>
-        <plugin>
-          <artifactId>maven-assembly-plugin</artifactId>
-          <executions>
-            <execution>
-              <id>assembly</id>
-              <phase>package</phase>
-              <goals><goal>single</goal></goals>
-              <configuration>
-                <descriptors>
-                  <descriptor>assembly.xml</descriptor>
-                </descriptors>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
+            <!-- create zip archive contaning the exe, README.md and lua file -->
+            <plugin>
+              <artifactId>maven-assembly-plugin</artifactId>
+              <executions>
+                <execution>
+                  <id>assembly</id>
+                  <phase>package</phase>
+                  <goals><goal>single</goal></goals>
+                  <configuration>
+                    <descriptors>
+                      <descriptor>assembly.xml</descriptor>
+                    </descriptors>
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin>
         </plugins>
-	</build>
+    </build>
 </project>
