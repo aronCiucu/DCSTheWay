@@ -1,8 +1,11 @@
 package main.DCSconnection;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.json.JSONObject;
 
@@ -12,6 +15,11 @@ public class PortListenerThread implements Runnable {
     private static String longitude;
     private static String elevation;
     private static String modelName;
+    private static BigDecimal x;
+    private static BigDecimal z;
+    private static BigDecimal selfX;
+    private static BigDecimal selfZ;
+    private static JSONObject aircraftSpecificData;
 
     @Override
     public void run() {
@@ -29,6 +37,18 @@ public class PortListenerThread implements Runnable {
                     latitude = jsonObject.getJSONObject("coords").getString("lat");
                     longitude = jsonObject.getJSONObject("coords").getString("long");
                     elevation = jsonObject.getString("elev");
+                    // avoid crashing if the export script is of older version which does not provide x/y
+                    if (jsonObject.has("self"))
+                    {
+                        x = jsonObject.getJSONObject("coords").getBigDecimal("x");
+                        z = jsonObject.getJSONObject("coords").getBigDecimal("z");
+                        selfX = jsonObject.getJSONObject("self").getBigDecimal("x");
+                        selfZ = jsonObject.getJSONObject("self").getBigDecimal("z");
+                    }
+                    
+                    if (jsonObject.has("aircraftSpecificData")) {
+                        aircraftSpecificData = jsonObject.getJSONObject("aircraftSpecificData");
+                    }
                 }
             }
         } catch (IOException e) {
@@ -40,19 +60,39 @@ public class PortListenerThread implements Runnable {
         }
     }
 
-    public static String getLatitude() {
+    public static synchronized String getLatitude() {
         return latitude;
     }
 
-    public static String getLongitude() {
+    public static synchronized String getLongitude() {
         return longitude;
     }
 
-    public static String getElevation() {
+    public static synchronized String getElevation() {
         return elevation;
     }
 
     public static synchronized String getPlaneModel() {
         return modelName;
+    }
+    
+    public static synchronized BigDecimal getX() {
+        return x;
+    }
+
+    public static synchronized BigDecimal getZ() {
+        return z;
+    }    
+
+    public static synchronized BigDecimal getSelfX() {
+        return selfX;
+    }    
+
+    public static synchronized BigDecimal getSelfZ() {
+        return selfZ;
+    }
+
+    public static JSONObject getAircraftSpecificData() {
+        return aircraftSpecificData;
     }
 }

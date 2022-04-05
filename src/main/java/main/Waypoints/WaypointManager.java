@@ -7,12 +7,15 @@ import main.Waypoints.PlanesCommands.*;
 import main.models.Hemisphere;
 import main.models.Point;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
+
 public class WaypointManager {
     static private ArrayList<Point> waypoints = new ArrayList<>();
-
+    
     public static void transfer(){
         String model = PortListenerThread.getPlaneModel();
 
@@ -46,7 +49,9 @@ public class WaypointManager {
                     GUI.error("The Ka-50 can store a maximum of 6 waypoints. ");
                 } else {
                     List<Point> Ka50Coords = Ka50.getCoords(waypoints);
-                    String dataToSend = Ka50.getCommands(Ka50Coords).toString();
+                    BigDecimal selfX = PortListenerThread.getSelfX();
+                    BigDecimal selfZ = PortListenerThread.getSelfZ();                    
+                    String dataToSend = Ka50.getCommands(Ka50Coords, selfX, selfZ, PortListenerThread.getAircraftSpecificData()).toString();
                     PortSender.send(dataToSend);
                 }
             } else if(model.equals("AH-64D_BLK_II")){
@@ -71,6 +76,8 @@ public class WaypointManager {
         String latitude = PortListenerThread.getLatitude();
         String longitude = PortListenerThread.getLongitude();
         String elevation = PortListenerThread.getElevation();
+        BigDecimal x = PortListenerThread.getX();
+        BigDecimal z = PortListenerThread.getZ();
         if(latitude != null && longitude != null && elevation != null){
             Hemisphere latHem;
             Hemisphere longHem;
@@ -84,7 +91,7 @@ public class WaypointManager {
             } else {
                 longHem = Hemisphere.EAST;
             }
-            var point = new Point(latitude.replace("-", ""), longitude.replace("-", ""), elevation, latHem, longHem);
+            var point = new Point(latitude.replace("-", ""), longitude.replace("-", ""), elevation, latHem, longHem, x, z);
             waypoints.add(point);
             return true;
         }

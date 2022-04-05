@@ -1,0 +1,51 @@
+name: TheWay -> comile, test, package, create realase(on tag)
+on: push
+jobs:
+  publish:
+    runs-on: ubuntu-latest 
+    permissions: 
+      contents: write
+      packages: write
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+      - name: Prepare versions for EXE file 
+        uses: actions/github-script@v6
+        id: set_version
+        with:
+          script: |
+            const tag = context.ref.substring(10)
+            const no_v = tag.replace(/[^\d.-]/g, '')
+            const dash_index = no_v.lastIndexOf('-')
+            const no_dash = (dash_index > -1) ?  no_v.substring(0, dash_index) : no_v
+            var file_version = no_dash
+            components = no_dash.split('.')
+            console.log(no_dash)
+            for (let i = 0; i < (4 - components.length); i++) {
+              file_version = file_version + '.0'
+            }
+            console.log(file_version)            
+            core.setOutput('tag', tag)
+            core.setOutput('tag-no-v', no_v)
+            core.setOutput('tag-no-dash', no_dash)
+            core.setOutput('file-version', file_version)
+        if: startsWith(github.ref, 'refs/tags/')            
+      - name: Maven -> set version based on tag
+        run: mvn --batch-mode versions:set -DnewVersion="${{ steps.set_version.outputs.tag-no-dash }}"
+        if: startsWith(github.ref, 'refs/tags/')
+      - name: Maven -> compile and test
+        run: mvn --batch-mode compile test
+      - name: Maven -> package
+        run: mvn --batch-mode package -Dfile_version="${{ steps.set_version.outputs.file-version }}" -Dtag_version="${{ steps.set_version.outputs.tag }}" -Drelease_url="${{ github.server_url }}/${{github.repository}}/releases/tag/${{ github.ref_name }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: startsWith(github.ref, 'refs/tags/')          
+      - name: Create release and upload asset
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: target/dcstheway-${{ steps.set_version.outputs.tag-no-dash }}.zip
+          repo-token: ${{ secrets.GITHUB_TOKEN }}          

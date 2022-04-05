@@ -9,6 +9,8 @@ import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class GUI {
     static private JPanel gui;
@@ -182,6 +184,16 @@ public class GUI {
         if (iconFile.exists()) {
             ImageIcon icon = new ImageIcon(iconPath);
             frame.setIconImage(icon.getImage());
+        }
+        else {
+            InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(iconPath);
+            try {    
+                ImageIcon icon = new ImageIcon(inputStream.readAllBytes());
+                frame.setIconImage(icon.getImage());
+            } 
+            catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

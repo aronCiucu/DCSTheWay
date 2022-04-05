@@ -5,14 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>DCS The Way</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>dcstheway</artifactId>
+    <version>0.0.0</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <!-- the following values will be overriden by of github actions based on tag -->
+        <tag_version>0.0.0</tag_version>
+        <file_version>0.0.0.0</file_version>
+        <release_url>https://github.com/aronCiucu/DCSTheWay/releases</release_url>
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.json</groupId>
@@ -32,4 +35,95 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
+    <build>
+        <!-- include all resources files -->
+        <resources>
+            <resource>
+                <directory>resources</directory>
+                <targetPath>resources</targetPath>
+            </resource>
+        </resources>
+        <plugins>
+           <!-- create jar with dependencies bundled -->
+           <plugin>
+              <artifactId>maven-assembly-plugin</artifactId>
+              <configuration>
+                <archive>
+                  <manifest>
+                    <mainClass>main.Main</mainClass>
+                  </manifest>
+                </archive>
+                <descriptorRefs>
+                  <descriptorRef>jar-with-dependencies</descriptorRef>
+                </descriptorRefs>
+              </configuration>
+                <executions>
+                  <!-- invoke during package phase -->
+                  <execution>
+                    <id>assemble-all</id>
+                    <phase>prepare-package</phase>
+                    <goals>
+                      <goal>single</goal>
+                    </goals>
+                  </execution>
+                </executions>
+            </plugin>
+            <!-- create exe from the bundled jar -->
+            <plugin>
+              <groupId>com.akathist.maven.plugins.launch4j</groupId>
+              <artifactId>launch4j-maven-plugin</artifactId>
+              <executions>
+                <execution>
+                  <id>l4j-clui</id>
+                  <phase>prepare-package</phase>
+                  <goals><goal>launch4j</goal></goals>
+                  <configuration>
+                    <headerType>gui</headerType>
+                    <outfile>target/TheWay.exe</outfile>
+                    <jar>target/${project.artifactId}-${project.version}-jar-with-dependencies.jar</jar>
+                    <errTitle>The Way</errTitle>
+                    <icon>resources\TheWayIcon40.ico</icon>
+                    <classPath>
+                      <mainClass>main.Main</mainClass>
+                      <addDependencies>true</addDependencies>
+                      <preCp>anything</preCp>
+                    </classPath>
+                    <jre>
+                      <minVersion>11</minVersion>
+                      <opts>
+                      </opts>
+                    </jre>
+                    <versionInfo>
+                      <fileVersion>${file_version}</fileVersion>
+                      <txtFileVersion>${tag_version}</txtFileVersion>
+                      <fileDescription>${release_url}</fileDescription>
+                      <copyright>GPLv3</copyright>
+                      <productVersion>${file_version}</productVersion>
+                      <txtProductVersion>${tag_version}</txtProductVersion>
+                      <productName>DCS The Way</productName>
+                      <internalName>DCS The Way</internalName>
+                      <originalFilename>TheWay.exe</originalFilename>
+                    </versionInfo>
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin>
+            <!-- create zip archive contaning the exe, README.md and lua file -->
+            <plugin>
+              <artifactId>maven-assembly-plugin</artifactId>
+              <executions>
+                <execution>
+                  <id>assembly</id>
+                  <phase>package</phase>
+                  <goals><goal>single</goal></goals>
+                  <configuration>
+                    <descriptors>
+                      <descriptor>assembly.xml</descriptor>
+                    </descriptors>
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
