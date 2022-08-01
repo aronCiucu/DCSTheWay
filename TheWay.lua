@@ -19,6 +19,9 @@ local device = ""
 local addDepress = true
 local nextIndex = 1
 
+local model
+local lastSend = ""
+
 local upstreamLuaExportStart = LuaExportStart
 local upstreamLuaExportAfterNextFrame = LuaExportAfterNextFrame
 local upstreamLuaExportBeforeNextFrame = LuaExportBeforeNextFrame
@@ -31,7 +34,7 @@ function LuaExportStart()
             log.write("THEWAY", log.ERROR, "Error in upstream LuaExportStart function"..tostring(err))
         end
     end
-    
+    model = LoGetSelfData()["Name"];
 	udpSpeaker = socket.udp()
 	udpSpeaker:settimeout(0)
 	tcpServer = socket.tcp()
@@ -123,14 +126,15 @@ function LuaExportAfterNextFrame()
 	local loZ = camPos['p']['z']
 	local elevation = LoGetAltitude(loX, loZ)
 	local coords = LoLoCoordinatesToGeoCoordinates(loX, loZ)
-	local model = LoGetSelfData()["Name"];
 
 	local toSend = "{ ".."\"model\": ".."\""..model.."\""..", ".."\"coords\": ".. "{ ".."\"lat\": ".."\""..coords.latitude.."\""..", ".."\"long\": ".."\""..coords.longitude.."\"".."} "..", ".."\"elev\": ".."\""..elevation.."\"".."}"
-
-	if pcall(function()
-		socket.try(udpSpeaker:sendto(toSend, "127.0.0.1", 42069)) 
-	end) then
-	else
-		log.write("THEWAY", log.ERROR, "Unable to send data")
+    if toSend ~= lastSend then 
+		if pcall(function()
+			socket.try(udpSpeaker:sendto(toSend, "127.0.0.1", 42069)) 
+		end) then
+			lastSend = toSend
+		else
+			log.write("THEWAY", log.ERROR, "Unable to send data")
+		end
 	end
 end
