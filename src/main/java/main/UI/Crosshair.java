@@ -22,8 +22,17 @@ public class Crosshair {
             @Override
             public void paint(Graphics g)
             {
-                int width = uiAreaAdjustment.width == 0 ? getWidth()-uiAreaAdjustment.x:uiAreaAdjustment.width;
-                int height = uiAreaAdjustment.height == 0 ? getHeight()-uiAreaAdjustment.y:uiAreaAdjustment.height;
+                int width = getWidth();
+                int height = getHeight();
+
+                if(uiAreaAdjustment.width==0 && uiAreaAdjustment.x < width && uiAreaAdjustment.x >= 0 ) uiAreaAdjustment.width = width - uiAreaAdjustment.x ;
+                if(uiAreaAdjustment.x < 0 || uiAreaAdjustment.x + uiAreaAdjustment.width >= width ) uiAreaAdjustment.x = 0 ;
+                if(uiAreaAdjustment.height==0 && uiAreaAdjustment.y < height && uiAreaAdjustment.y >= 0 ) uiAreaAdjustment.height = height - uiAreaAdjustment.y ;
+                if(uiAreaAdjustment.y < 0 || uiAreaAdjustment.y + uiAreaAdjustment.height >= height ) uiAreaAdjustment.y = 0 ;
+
+                width = uiAreaAdjustment.width;
+                height = uiAreaAdjustment.height;
+
                 g.setColor(Color.MAGENTA);
                 g.drawLine(width/2 -10 + uiAreaAdjustment.x,height/2 + uiAreaAdjustment.y,width/2 - 2 + uiAreaAdjustment.x,height/2 + uiAreaAdjustment.y);
                 g.drawLine(width/2 +10 + uiAreaAdjustment.x,height/2 + uiAreaAdjustment.y,width/2 + 2 + uiAreaAdjustment.x,height/2 + uiAreaAdjustment.y);
@@ -31,7 +40,7 @@ public class Crosshair {
                 g.drawLine(width/2 + uiAreaAdjustment.x ,height/2 +10 + uiAreaAdjustment.y,width/2 + uiAreaAdjustment.x,height/2 + 2 + uiAreaAdjustment.y);
                 g.drawOval(width/2-5 + uiAreaAdjustment.x, height/2-5 + uiAreaAdjustment.y, 10, 10);
                 g.drawOval(width/2-6 + uiAreaAdjustment.x, height/2-6 + uiAreaAdjustment.y, 12, 12);
-                if(!uiAreaAdjustment.equals(new Rectangle(0,0,0,0))){
+                if(!uiAreaAdjustment.equals(new Rectangle(0,0, getWidth(),getHeight()))){
                     g.drawRect(uiAreaAdjustment.x,uiAreaAdjustment.y,width,height);
                 }
             }
