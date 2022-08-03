@@ -61,8 +61,10 @@ public class GUI {
         gui.add(selectPointButton);
         gui.add(clearPointsButton);
         gui.add(transferToDCSButton);
-
         standbyState();
+
+        refreshWaypointCount();
+
         frame = new JFrame("The Way");
         frame.add(gui);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -166,13 +168,14 @@ public class GUI {
     private static void refreshWaypointCount(){
         int count = WaypointManager.getSelectedWaypointsCount();
         if (count>0){
+            transferToDCSButton.setEnabled(true);
             if (count==1){
-                textArea.setText("1 waypoint selected");
+                textArea.setText("1 waypoint available");
             } else {
-                textArea.setText(count+" waypoints selected");
+                textArea.setText(count+" waypoints available");
             }
         } else {
-            textArea.setText("No waypoints selected");
+            textArea.setText("No waypoints available");
         }
     }
 

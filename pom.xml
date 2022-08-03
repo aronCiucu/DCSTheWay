@@ -6,7 +6,7 @@
 
     <groupId>org.example</groupId>
     <artifactId>DCS-The-Way</artifactId>
-    <version>1.5.1.1</version>
+    <version>1.5.1.2</version>
     <build>
       <plugins>
         <plugin>
@@ -61,12 +61,12 @@
                     </opts>
                     </jre>
                     <versionInfo>
-                    <fileVersion>1.5.1.1</fileVersion>
-                    <txtFileVersion>1.5.1.1</txtFileVersion>
+                    <fileVersion>1.5.1.2</fileVersion>
+                    <txtFileVersion>1.5.1.2</txtFileVersion>
                     <fileDescription>DCS The Way imports waypoints from DCS F10 map into the plane navigation system, like a Data Transfer Cartridge</fileDescription>
                     <copyright>Aron Daniel and DCSTheWay Project Contributors</copyright>
-                    <productVersion>1.5.1.1</productVersion>
-                    <txtProductVersion>1.5.1.1</txtProductVersion>
+                    <productVersion>1.5.1.2</productVersion>
+                    <txtProductVersion>1.5.1.2</txtProductVersion>
                     <productName>DCS The Way</productName>
                     <internalName>TheWay</internalName>
                     <originalFilename>${project.build.finalName}.exe</originalFilename>

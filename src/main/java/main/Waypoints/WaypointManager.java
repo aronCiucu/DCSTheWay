@@ -7,16 +7,28 @@ import main.Waypoints.PlanesCommands.*;
 import main.models.Hemisphere;
 import main.models.Point;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class WaypointManager {
     static private ArrayList<Point> waypoints = new ArrayList<>();
+    static private boolean _noDcsOutput = false;
 
     public static void transfer(){
+
+
+        if(!waypoints.isEmpty() && FileInteraction.getWriteWaypoints()){
+            try{
+                FileInteraction.Write(waypoints);
+            } catch(IOException ex){
+                ex.printStackTrace();
+            }
+        }
         String model = PortListenerThread.getPlaneModel();
 
-        if(model != null && !waypoints.isEmpty()){
+        if(model != null && !waypoints.isEmpty() && !_noDcsOutput){
             if(model.equals("F-16C_50")) {
                 List<Point> f16Coords = F16.getCoords(waypoints);
                 String dataToSend = F16.getCommands(f16Coords).toString();
@@ -91,11 +103,22 @@ public class WaypointManager {
         return false;
     }
 
+    public static void restoreWaypointsFromFile(){
+        try{
+            waypoints = FileInteraction.Read();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public static void clearWaypoints(){
         waypoints.clear();
     }
 
     public static int getSelectedWaypointsCount(){
         return waypoints.size();
+    }
+    public static void setNoDcsOutput(boolean value){
+        _noDcsOutput = value;
     }
 }

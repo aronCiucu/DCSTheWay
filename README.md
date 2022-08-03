@@ -45,12 +45,23 @@ It is advised that you refrain from additional cockpit inputs until the waypoint
 
 ### Notes
 1. For those with non-standard monitor configurations, especially those where the UI is displayed on a different monitor to DCS (and/or different size to DCS), then the following command line options for `TheWay.exe` should allow the crosshair to appear in the correct location.
+2. Specifying an `outputfilename` will save waypoints collected by TheWay to the external file specified when the `Begin transfer to DCS` button is pressed.
+3. `suppressdcsoutput` will not send data to DCS when the `Begin transfer to DCS` button is pressed.  (only makes sense in conjunction with `outputfilename`)
+4. Specifying an `inputfilename` will process waypoints stored in the external file specified. 
+5. Unfortunately stdout does not currently display output due to the way that `TheWay.exe` is built so the help is shown below.
 ```
+usage: Help
  -?,--help                            Show Help
  -d,--displaynumber <displaynumber>   Number of the display device used
                                       for the F10 screen
  -h,--height <height>                 Height of the UI display area used
                                       for the F10 map
+ -i,--inputfilename <filename>        filename of the file containing
+                                      saved waypoints.
+ -o,--outputfilename <filename>       filename of the file which will
+                                      contain the collected waypoints.
+ -s,--suppressdcsoutput               Used to stop waypoints being sent to
+                                      DCS.
  -w,--width <width>                   Width of the UI display area used
                                       for the F10 map
  -x,--left <left>                     Left position of the start of the UI
