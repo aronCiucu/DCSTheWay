@@ -43,4 +43,21 @@ Repeat this step to mark as many points as you want.
 4. When finished, enter the F1 cockpit view and click `Begin transfer to DCS` to begin the transfering process.
 It is advised that you refrain from additional cockpit inputs until the waypoints have been loaded.
 
+### Notes
+1. For those with non-standard monitor configurations, especially those where the UI is displayed on a different monitor to DCS (and/or different size to DCS), then the following command line options for `TheWay.exe` should allow the crosshair to appear in the correct location.
+```
+ -?,--help                            Show Help
+ -d,--displaynumber <displaynumber>   Number of the display device used
+                                      for the F10 screen
+ -h,--height <height>                 Height of the UI display area used
+                                      for the F10 map
+ -w,--width <width>                   Width of the UI display area used
+                                      for the F10 map
+ -x,--left <left>                     Left position of the start of the UI
+                                      display area used for the F10 map
+ -y,--top <top>                       Top position of the start of the UI
+                                      display area used for the F10 map
+```
+The `displaynumber` parameter will not necessary be the same number that appears in the Windows `Display Settings` panel so a little experimentation might be necessary
+
 This is the way.

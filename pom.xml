@@ -7,13 +7,13 @@
     <groupId>org.example</groupId>
     <artifactId>DCS-The-Way</artifactId>
     <version>1.5.1.1</version>
-     <build>
+    <build>
       <plugins>
         <plugin>
             <artifactId>maven-assembly-plugin</artifactId>
             <executions>
                 <execution>
-                    <phase>package</phase>
+                    <phase>prepare-package</phase>
                     <goals>
                         <goal>single</goal>
                     </goals>
@@ -32,7 +32,7 @@
             <executions>
                 <execution>
                 <id>jar-to-exe</id>
-                <phase>package</phase>
+                <phase>prepare-package</phase>
                 <goals>
                     <goal>launch4j</goal>
                 </goals>
@@ -40,7 +40,7 @@
                     <headerType>gui</headerType>
                     <stayAlive>true</stayAlive>
                     <jar>${project.build.directory}/${project.build.finalName}-jar-with-dependencies.jar</jar>
-                    <outfile>${project.build.directory}/${project.build.finalName}.exe</outfile>
+                    <outfile>${project.build.directory}/TheWay.exe</outfile>
                     <icon>${project.basedir}/resources/TheWayIcon64.ico</icon>
                     <classPath>
                         <mainClass>main.Main</mainClass>
