@@ -5,12 +5,55 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>DCS The Way</artifactId>
+    <artifactId>DCS-The-Way</artifactId>
     <version>1.0-SNAPSHOT</version>
+     <build>
+      <plugins>
+        <plugin>
+        <groupId>com.akathist.maven.plugins.launch4j</groupId>
+        <artifactId>launch4j-maven-plugin</artifactId>
+        <version>2.1.1</version>
+        <executions>
+            <execution>
+            <id>jar-to-exe</id>
+            <phase>package</phase>
+            <goals>
+                <goal>launch4j</goal>
+            </goals>
+            <configuration>
+                <headerType>gui</headerType>
+                <stayAlive>true</stayAlive>
+                <jar>${project.build.directory}/${project.build.finalName}.jar</jar>
+                <outfile>${project.build.directory}/${project.build.finalName}.exe</outfile>
+                <classPath>
+                <!-- The main class to invoke on executing the .exe -->
+                    <mainClass>main.Main</mainClass>
+                    <addDependencies>true</addDependencies>
+                    <preCp>anything</preCp>
+                </classPath>
+                <jre>
+                <minVersion>1.8.0</minVersion>
+                <jdkPreference>preferJre</jdkPreference>
+
+                <!-- Relative path to the JRE in the final zip bundle, to launch the exe/jar-->
+                <path>./jre</path>
+
+                <!-- Runtime arguments -->
+                <opts>
+                    <!-- Run time arguments can be passed using <opt> as below -->
+                    <!--<opt>-Dparam=value</opt>-->
+                </opts>
+                </jre>
+            </configuration>
+            </execution>
+        </executions>
+        </plugin>
+      </plugins>
+    </build>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -18,6 +61,11 @@
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20160810</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-cli</groupId>
+            <artifactId>commons-cli</artifactId>
+            <version>1.5.0</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

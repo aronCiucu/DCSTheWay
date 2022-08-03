@@ -6,8 +6,6 @@ import main.Waypoints.WaypointManager;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 
 public class GUI {
@@ -19,11 +17,13 @@ public class GUI {
     static private JButton selectPointButton;
     static private JButton transferToDCSButton;
     static private JButton clearPointsButton;
-
+    static private int screenDeviceIndex = 0;
+    static private Rectangle uiAreaAdjustment;
 
     public static void show(){
         FlatDarkLaf.setup();
-        crosshair = new Crosshair();
+        crosshair = new Crosshair(screenDeviceIndex);
+        crosshair.SetUiAreaAdjustment(uiAreaAdjustment);
         gui = new JPanel(new GridLayout(0, 1, 10, 10));
         gui.setBorder(new EmptyBorder(10, 10, 10, 10));
         beginSelectionButton = new JButton("Start selecting on map");
@@ -183,5 +183,15 @@ public class GUI {
             ImageIcon icon = new ImageIcon(iconPath);
             frame.setIconImage(icon.getImage());
         }
+    }
+
+    public static int GetScreenDeviceIndex(){
+        return screenDeviceIndex + 1;
+    }
+    public static void SetScreenDeviceIndex(int value){
+        screenDeviceIndex = value > 0 ? value - 1: 0;
+    }
+    public static void SetUiAreaAdjustment(Rectangle rect){
+        uiAreaAdjustment = rect;
     }
 }
