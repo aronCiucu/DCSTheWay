@@ -111,6 +111,16 @@ public class CliArguments {
         .desc("Top position of the start of the UI display area used for the F10 map" )
         .build();
         options.addOption(topOption);
+        Option windowPositionOption = Option.builder("c")
+        .longOpt("cornerposition")
+        .argName("TL | TR | BL | BR" )
+        .required(false)
+        .hasArg()
+        .valueSeparator()
+        .numberOfArgs(1)
+        .desc("Corner position where the \"The Way\" window is placed.  <TopLeft | TopRight | BottomLeft | BottomRight>" )
+        .build();
+        options.addOption(windowPositionOption);
         options.addOption("?","help",false,"Show Help");
         return options;
     }
@@ -120,7 +130,7 @@ public class CliArguments {
 
         if(cmd != null){
             if(cmd.hasOption("i")){
-                    FileInteraction.setReadWaypoints(Paths.get(cmd.getOptionValue("i")));
+                FileInteraction.setReadWaypoints(Paths.get(cmd.getOptionValue("i")));
                 WaypointManager.restoreWaypointsFromFile();
             }
 
@@ -130,6 +140,30 @@ public class CliArguments {
 
             if(cmd.hasOption("s")){
                 WaypointManager.setNoDcsOutput(true);
+            }
+
+            if(cmd.hasOption("c")){
+                String windowPosition = cmd.getOptionValue("c").toUpperCase();
+                switch(windowPosition){
+                    case "TL":
+                    case "TOPLEFT":
+                        GUI.SetWindowPosition(3);
+                    break;
+                    case "BL":
+                    case "BOTLEFT":
+                    case "BOTTOMLEFT":
+                        GUI.SetWindowPosition(0);
+                    break;
+                    case "TR":
+                    case "TOPRIGHT":
+                        GUI.SetWindowPosition(2);
+                    break;
+                    case "BR":
+                    case "BOTRIGHT":
+                    case "BOTTOMRIGHT":
+                        GUI.SetWindowPosition(1);
+                    break;
+                }
             }
 
             if(cmd.hasOption("d")){

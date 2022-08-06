@@ -2,6 +2,7 @@ package main.Waypoints;
 
 import main.models.Point;
 import main.models.Hemisphere;
+import main.DCSconnection.PortListenerThread;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -38,21 +39,22 @@ public class FileInteraction {
         _points = pointList;
         JSONObject outputJsonObject = new JSONObject();
         outputJsonObject.put("source","DCS The Way");
-        outputJsonObject.put("version","1.5.1.2");
+        outputJsonObject.put("version","1.5.1.3");
         outputJsonObject.put("type","");
         outputJsonObject.put("commit","");
-        outputJsonObject.put("module","");
+        outputJsonObject.put("module",PortListenerThread.getPlaneModel());
         outputJsonObject.put("vehicles",new JSONArray());
         outputJsonObject.put("comments","");
         outputJsonObject.put("waypoints",_points);
         Files.writeString(_outfile,outputJsonObject.toString(), StandardCharsets.UTF_8, StandardOpenOption.CREATE);
         System.out.println("Waypoint Data written to " + _outfile.toString() + ":");
-        System.out.println(outputJsonObject);
+        // System.out.println(outputJsonObject);
     }
 
     public static ArrayList<Point> Read() throws IOException {
         ArrayList<Point> points = new ArrayList<>();
         JSONObject fileContents = new JSONObject(Files.readString(_infile, StandardCharsets.UTF_8));
+        WaypointManager.setModel(fileContents.getString("module"));
         JSONArray waypoints = (JSONArray) fileContents.get("waypoints");
         waypoints.forEach(wp -> {
             JSONObject jwp = (JSONObject) wp;
@@ -68,7 +70,7 @@ public class FileInteraction {
             points.add(p);
         });
         System.out.println("Waypoint Data read in from " + _infile.toString() + ":");
-        System.out.println(waypoints.toString());
+        // System.out.println(waypoints.toString());
         return points;
     }
 

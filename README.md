@@ -51,23 +51,30 @@ It is advised that you refrain from additional cockpit inputs until the waypoint
 5. Unfortunately stdout does not currently display output due to the way that `TheWay.exe` is built so the help is shown below.
 ```
 usage: Help
- -?,--help                            Show Help
- -d,--displaynumber <displaynumber>   Number of the display device used
-                                      for the F10 screen
- -h,--height <height>                 Height of the UI display area used
-                                      for the F10 map
- -i,--inputfilename <filename>        filename of the file containing
-                                      saved waypoints.
- -o,--outputfilename <filename>       filename of the file which will
-                                      contain the collected waypoints.
- -s,--suppressdcsoutput               Used to stop waypoints being sent to
-                                      DCS.
- -w,--width <width>                   Width of the UI display area used
-                                      for the F10 map
- -x,--left <left>                     Left position of the start of the UI
-                                      display area used for the F10 map
- -y,--top <top>                       Top position of the start of the UI
-                                      display area used for the F10 map
+ -?,--help                                 Show Help
+ -c,--cornerposition <TL | TR | BL | BR>   Corner position where the "The
+                                           Way" window is placed.
+                                           <TopLeft | TopRight |
+                                           BottomLeft | BottomRight>
+ -d,--displaynumber <displaynumber>        Number of the display device
+                                           used for the F10 screen
+ -h,--height <height>                      Height of the UI display area
+                                           used for the F10 map
+ -i,--inputfilename <filename>             filename of the file containing
+                                           saved waypoints.
+ -o,--outputfilename <filename>            filename of the file which will
+                                           contain the collected
+                                           waypoints.
+ -s,--suppressdcsoutput                    Used to stop waypoints being
+                                           sent to DCS.
+ -w,--width <width>                        Width of the UI display area
+                                           used for the F10 map
+ -x,--left <left>                          Left position of the start of
+                                           the UI display area used for
+                                           the F10 map
+ -y,--top <top>                            Top position of the start of
+                                           the UI display area used for
+                                           the F10 map
 ```
 The `displaynumber` parameter will not necessary be the same number that appears in the Windows `Display Settings` panel so a little experimentation might be necessary
 

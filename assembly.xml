@@ -32,6 +32,20 @@
             <outputDirectory>resources</outputDirectory>
             <includes>
                 <include>*.png</include>
+                <include>*.abr.json</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>${project.basedir}/resources/DCSInterfaces</directory>
+            <outputDirectory>resources/DCSInterfaces</outputDirectory>
+            <includes>
+                <include>Helios.AH64D.*.json</include>
+                <include>Helios.A10C*.*.json</include>
+                <include>Helios.KA50.*.json</include>
+                <include>DCS.F-16C_50.*.json</include>
+                <include>DCS.M-2000C.*.json</include>
+                <include>Helios.AV8B.*.json</include>
+                <include>Helios.FA18C.*.json</include>
             </includes>
         </fileSet>
     </fileSets>

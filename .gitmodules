@@ -1,0 +1,3 @@
+[submodule "resources/DCSInterfaces"]
+	path = resources/DCSInterfaces
+	url = https://github.com/HeliosVirtualCockpit/HeliosInterfaces.git

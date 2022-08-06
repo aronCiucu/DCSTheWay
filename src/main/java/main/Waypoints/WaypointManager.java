@@ -15,6 +15,7 @@ import java.util.List;
 public class WaypointManager {
     static private ArrayList<Point> waypoints = new ArrayList<>();
     static private boolean _noDcsOutput = false;
+    static private String _model = "";
 
     public static void transfer(){
 
@@ -27,6 +28,7 @@ public class WaypointManager {
             }
         }
         String model = PortListenerThread.getPlaneModel();
+        if ((model == "" || model == null) && _model !="") model = _model;  
 
         if(model != null && !waypoints.isEmpty() && !_noDcsOutput){
             if(model.equals("F-16C_50")) {
@@ -121,4 +123,8 @@ public class WaypointManager {
     public static void setNoDcsOutput(boolean value){
         _noDcsOutput = value;
     }
+    public static void setModel(String value){
+        _model = value;
+    }    
 }
+

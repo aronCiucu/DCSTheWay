@@ -17,8 +17,9 @@ public class GUI {
     static private JButton selectPointButton;
     static private JButton transferToDCSButton;
     static private JButton clearPointsButton;
-    static private int screenDeviceIndex = 0;
-    static private Rectangle uiAreaAdjustment;
+    private static int screenDeviceIndex = 0;
+    private static Rectangle uiAreaAdjustment;
+    private static int _windowPosition = 0;
 
     public static void show(){
         FlatDarkLaf.setup();
@@ -73,7 +74,20 @@ public class GUI {
         frame.pack();
         frame.setResizable(false);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setLocation(0, dim.height-frame.getHeight());
+        switch(_windowPosition){
+            case 0:
+                frame.setLocation(0, dim.height-frame.getHeight());
+            break;
+            case 1:
+                frame.setLocation(dim.width-frame.getWidth(), dim.height-frame.getHeight());
+            break;
+            case 2:
+                frame.setLocation(dim.width-frame.getWidth(), 0);
+            break;
+            case 3:
+                frame.setLocation(0, 0);
+            break;
+        }
         loadIcon();
         frame.setVisible(true);
     }
@@ -196,5 +210,8 @@ public class GUI {
     }
     public static void SetUiAreaAdjustment(Rectangle rect){
         uiAreaAdjustment = rect;
+    }
+    public static void SetWindowPosition(int value){
+        _windowPosition = value;
     }
 }
