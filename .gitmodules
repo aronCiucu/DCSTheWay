@@ -1,3 +1,6 @@
 [submodule "resources/DCSInterfaces"]
 	path = resources/DCSInterfaces
 	url = https://github.com/HeliosVirtualCockpit/HeliosInterfaces.git
+[submodule "DCS-The-Way-Changer"]
+	path = DCS-The-Way-Changer
+	url = https://github.com/BlueFinBima/DCS-The-Way-Changer.git
