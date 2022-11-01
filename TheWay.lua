@@ -118,12 +118,13 @@ function LuaExportAfterNextFrame()
     end
 
 
-  local camPos = LoGetCameraPosition()
+	local camPos = LoGetCameraPosition()
 	local loX = camPos['p']['x']
 	local loZ = camPos['p']['z']
 	local elevation = LoGetAltitude(loX, loZ)
 	local coords = LoLoCoordinatesToGeoCoordinates(loX, loZ)
-	local model = LoGetSelfData()["Name"];
+	local selfData = LoGetSelfData()
+	local model = selfData and selfData['Name'] or ''
 
 	local toSend = "{ ".."\"model\": ".."\""..model.."\""..", ".."\"coords\": ".. "{ ".."\"lat\": ".."\""..coords.latitude.."\""..", ".."\"long\": ".."\""..coords.longitude.."\"".."} "..", ".."\"elev\": ".."\""..elevation.."\"".."}"
 
