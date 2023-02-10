@@ -124,11 +124,16 @@ function LuaExportAfterNextFrame()
     local elevation = LoGetAltitude(loX, loZ)
     local coords = LoLoCoordinatesToGeoCoordinates(loX, loZ)
     local selfData = LoGetSelfData()
+    if(selfData == nil) then
+      -- selfData is nil, which means module is not ready yet.
+      -- The processing for this frame will be skipped.
+      return
+    end
     local model = selfData["Name"]
     local selfLoX = selfData["Position"]["x"]
     local selfLoZ = selfData["Position"]["z"]
 
-    -- log.write("THEWAY", log.INFO, "Encoding message")
+
     -- assemble message dictionary
     local message = {}
     message["model"] = model
@@ -143,7 +148,7 @@ function LuaExportAfterNextFrame()
     message["elev"] = tostring(elevation)
 
     -- Include aircraft/sernsor specific information
-    if model == 'Ka-50' then
+    if model == 'Ka-50' or model == 'Ka-50_3' then
       message['aircraftSpecificData'] = {}
       message['aircraftSpecificData']['ABRIS'] = {}
       message['aircraftSpecificData']['ABRIS']['mode'] = GetDevice(9):get_mode()
@@ -151,10 +156,7 @@ function LuaExportAfterNextFrame()
 
     -- encode message into JSON format
     local toSend = JSON:encode(message)
-    -- log.write("THEWAY", log.ERROR, "Message: \n"..toSend)
 
-    -- log.write("THEWAY", log.INFO, "Encoded messsage: \n"..toSend)
-  	-- local toSend = "{ ".."\"model\": ".."\""..model.."\""..", ".."\"coords\": ".. "{ ".."\"lat\": ".."\""..coords.latitude.."\""..", ".."\"long\": ".."\""..coords.longitude.."\"".."} "..", ".."\"elev\": ".."\""..elevation.."\"".."}"
   	if pcall(function()
   		socket.try(udpSpeaker:sendto(toSend, "127.0.0.1", 42069))
   	end) then

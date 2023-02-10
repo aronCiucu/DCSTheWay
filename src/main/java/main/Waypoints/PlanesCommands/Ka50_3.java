@@ -14,7 +14,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Ka50 {
+public class Ka50_3 {
     public static JSONArray getCommands(List<Point> coords, BigDecimal selfX, BigDecimal selfZ, JSONObject aircraftSpecificData) {
         /*
            button list, all are device 20
@@ -154,8 +154,8 @@ public class Ka50 {
             commandArray.put(new JSONObject().put("device", "20").put("code", "3018").put("delay", "0").put("activate", "1").put("addDepress", "true"));
         }
         //PVI to OPER
-        commandArray.put(new JSONObject().put("device", "20").put("code", "3026").put("delay", "0").put("activate", "0.3").put("addDepress", "false"));
-
+        commandArray.put(new JSONObject().put("device", "20").put("code", "3026").put("delay", "20").put("activate", "0.3").put("addDepress", "false"));
+        
         int i = 0;
         // PVI: enter each waypoint as steer point
         for (i = 0; i < coords.size(); i++) {
@@ -217,28 +217,30 @@ public class Ka50 {
 
         if (mode.equals("0000"))
             return 0;
+        if(mode.equals("9000"))
+            return 1;
         // if already in men just cycle 
         if(mode.startsWith("5") == false)
             return 4;
         if(mode.equals("5000"))
-            return 3;
+            return 4;
         if(mode.equals("5500"))
-            return 2;
+            return 3;
         if(mode.equals("5100"))
-            return 1;
+            return 2;
         if(mode.equals("5400"))
-            return 4;
+            return 5;
         if(mode.equals("5310"))
-            return 4;
+            return 5;
         if(mode.equals("5200"))
-            return 4;
+            return 5;
         if(mode.equals("5430"))
-            return 4;
+            return 5;
         if(mode.equals("5240"))
-            return 4;
+            return 5;
 
         System.out.println("Unprocessed: " + mode);
-        return 4;
+        return 5;
     }
 
     private static void abrisWorkaroundInitialSNSDrift(JSONArray commandArray, BigDecimal selfX, BigDecimal selfZ) {
@@ -257,7 +259,7 @@ public class Ka50 {
         abrisStartRouteEntry(commandArray);
         abrisEnterRouteWaypoints(dummy, selfX, selfZ, commandArray);
         abrisCompleteRouteEntry(commandArray);
-        for(int i = 0; i < 3; i++ )
+        for(int i = 0; i < 4; i++ )
             commandArray.put(new JSONObject().put("device", "09").put("code", "3005").put("delay", "0").put("activate", "1").put("addDepress", "true"));
     }
     
@@ -357,7 +359,7 @@ public class Ka50 {
         // zoom out of the defined number of levels
         for(int i = 0; i < relativeZoomLevel; i++)
             commandArray.put(new JSONObject().put("device", "09").put("code", "3004").put("delay", "1").put("activate", "1").put("addDepress", "true"));
-        zoomLevel = java.lang.Math.min(zoomLevel + relativeZoomLevel, Ka50.ranges.size());
+        zoomLevel = java.lang.Math.min(zoomLevel + relativeZoomLevel, Ka50_3.ranges.size());
     }
 
     private static void abrisZoomToRange(JSONArray commandArray, int level) {
@@ -372,7 +374,7 @@ public class Ka50 {
     }
 
     private static void abrisFullZoom(JSONArray commandArray) {
-        abrisZoomIn(commandArray, Ka50.ranges.size());
+        abrisZoomIn(commandArray, Ka50_3.ranges.size());
         zoomLevel = 0;
     }
 

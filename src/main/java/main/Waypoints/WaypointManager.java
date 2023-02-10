@@ -54,6 +54,16 @@ public class WaypointManager {
                     String dataToSend = Ka50.getCommands(Ka50Coords, selfX, selfZ, PortListenerThread.getAircraftSpecificData()).toString();
                     PortSender.send(dataToSend);
                 }
+            } else if(model.equals("Ka-50_3")) {
+                if(waypoints.size()>6){
+                    GUI.error("The Ka-50 can store a maximum of 6 waypoints. ");
+                } else {
+                    List<Point> Ka50Coords = Ka50_3.getCoords(waypoints);
+                    BigDecimal selfX = PortListenerThread.getSelfX();
+                    BigDecimal selfZ = PortListenerThread.getSelfZ();                    
+                    String dataToSend = Ka50_3.getCommands(Ka50Coords, selfX, selfZ, PortListenerThread.getAircraftSpecificData()).toString();
+                    PortSender.send(dataToSend);
+                }
             } else if(model.equals("AH-64D_BLK_II")){
                 String choice = GUI.choice("Are you in the pilot seat?", "Yes", "No, I am CPG");
                 if (choice.equals("Yes")){
