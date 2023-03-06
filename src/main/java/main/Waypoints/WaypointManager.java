@@ -21,6 +21,10 @@ public class WaypointManager {
                 List<Point> f16Coords = F16.getCoords(waypoints);
                 String dataToSend = F16.getCommands(f16Coords).toString();
                 PortSender.send(dataToSend);
+            } else if(model.equals("F-16I")) {
+                List<Point> f16i_sufaCoords = F16ISUFA.getCoords(waypoints);
+                String dataToSend = F16ISUFA.getCommands(f16i_sufaCoords).toString();
+                PortSender.send(dataToSend);
             } else if(model.equals("FA-18C_hornet")){
                 GUI.warning("Please make sure that: \n" +
                         "1. PRECISE option is boxed in HSI > DATA\n" +
@@ -61,6 +65,7 @@ public class WaypointManager {
                     PortSender.send(dataToSend);
                 }
             } else {
+            	GUI.error(model);
                 GUI.error("You are not flying a supported module.");
             }
         }
