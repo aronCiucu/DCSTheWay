@@ -7,7 +7,8 @@ You choose points on the F10 map, press a button, and those points will be enter
 
 ## What is supported?
 Supported modules:
-* F-16 
+* F-16
+* F-16 I Sufa mod (For both pilot and WSO) 
 * F/A-18 (make sure you are not in the TAC menu)
 * A-10C and A-10C2
 * Mirage 2000
