@@ -65,7 +65,6 @@ public class WaypointManager {
                     PortSender.send(dataToSend);
                 }
             } else {
-            	GUI.error(model);
                 GUI.error("You are not flying a supported module.");
             }
         }
