@@ -17,13 +17,9 @@ public class WaypointManager {
         String model = PortListenerThread.getPlaneModel();
 
         if(model != null && !waypoints.isEmpty()){
-            if(model.equals("F-16C_50")) {
+            if(model.equals("F-16C_50") || model.equals("F-16I")) {
                 List<Point> f16Coords = F16.getCoords(waypoints);
                 String dataToSend = F16.getCommands(f16Coords).toString();
-                PortSender.send(dataToSend);
-            } else if(model.equals("F-16I")) {
-                List<Point> f16i_sufaCoords = F16ISUFA.getCoords(waypoints);
-                String dataToSend = F16ISUFA.getCommands(f16i_sufaCoords).toString();
                 PortSender.send(dataToSend);
             } else if(model.equals("FA-18C_hornet")){
                 GUI.warning("Please make sure that: \n" +
@@ -45,7 +41,7 @@ public class WaypointManager {
                 List<Point> av8bnaCoords = AV8BNA.getCoords(waypoints);
                 String dataToSend = AV8BNA.getCommands(av8bnaCoords).toString();
                 PortSender.send(dataToSend);
-            } else if(model.equals("Ka-50")) {
+            } else if(model.equals("Ka-50") || model.equals("Ka-50_3")) {
                 if(waypoints.size()>6){
                     GUI.error("The Ka-50 can store a maximum of 6 waypoints. ");
                 } else {
