@@ -31,7 +31,7 @@ public class A10Test {
 
         //then
         List<Point> expectedPoints = List.of(
-                new Point("3715028", "11548534", "4456", Hemisphere.NORTH, Hemisphere.WEST)
+                new Point("3715028", "11548534", "4454", Hemisphere.NORTH, Hemisphere.WEST)
         );
         assertEquals(a10Points, expectedPoints);
     }

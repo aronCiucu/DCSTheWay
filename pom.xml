@@ -5,9 +5,94 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>DCS The Way</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>DCS-The-Way</artifactId>
+    <version>1.5.1.1</version>
+    <build>
+      <plugins>
+        <plugin>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <executions>
+                <execution>
+                    <phase>prepare-package</phase>
+                    <goals>
+                        <goal>single</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+                <descriptorRefs>
+                    <descriptorRef>jar-with-dependencies</descriptorRef>
+                </descriptorRefs>
+            </configuration>
+        </plugin>
+        <plugin>
+            <groupId>com.akathist.maven.plugins.launch4j</groupId>
+            <artifactId>launch4j-maven-plugin</artifactId>
+            <version>2.1.1</version>
+            <executions>
+                <execution>
+                <id>jar-to-exe</id>
+                <phase>prepare-package</phase>
+                <goals>
+                    <goal>launch4j</goal>
+                </goals>
+                <configuration>
+                    <headerType>gui</headerType>
+                    <stayAlive>true</stayAlive>
+                    <jar>${project.build.directory}/${project.build.finalName}-jar-with-dependencies.jar</jar>
+                    <outfile>${project.build.directory}/TheWay.exe</outfile>
+                    <icon>${project.basedir}/resources/TheWayIcon64.ico</icon>
+                    <classPath>
+                        <mainClass>main.Main</mainClass>
+                        <addDependencies>true</addDependencies>
+                        <preCp>anything</preCp>
+                    </classPath>
+                    <jre>
+                    <minVersion>11</minVersion>
+                    <jdkPreference>preferJre</jdkPreference>
 
+                    <!-- Relative path to the JRE in the final zip bundle, to launch the exe/jar-->
+                    <path>./jre</path>
+
+                    <!-- Runtime arguments -->
+                    <opts>
+                        <!-- Run time arguments can be passed using <opt> as below -->
+                        <!--<opt>-Dparam=value</opt>-->
+                    </opts>
+                    </jre>
+                    <versionInfo>
+                    <fileVersion>1.5.1.0</fileVersion>
+                    <txtFileVersion>1.5.1.0</txtFileVersion>
+                    <fileDescription>DCS The Way imports waypoints from DCS F10 map into the plane navigation system, like a Data Transfer Cartridge</fileDescription>
+                    <copyright>Aron Daniel and DCSTheWay Project Contributors</copyright>
+                    <productVersion>1.5.1.0</productVersion>
+                    <txtProductVersion>1.5.1.0</txtProductVersion>
+                    <productName>DCS The Way</productName>
+                    <internalName>TheWay</internalName>
+                    <originalFilename>${project.build.finalName}.exe</originalFilename>
+                    </versionInfo>
+                </configuration>
+                </execution>
+            </executions>
+        </plugin>
+        <plugin>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>assembly</id>
+              <phase>package</phase>
+              <goals><goal>single</goal></goals>
+              <configuration>
+                <descriptors>
+                  <descriptor>assembly.xml</descriptor>
+                </descriptors>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </build>
+    
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
