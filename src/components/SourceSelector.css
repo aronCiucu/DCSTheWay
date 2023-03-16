@@ -1,0 +1,13 @@
+.parent-container{
+    position: relative;
+}
+.image-container{
+    width: 100%;
+    mask-image: linear-gradient(white 0%, transparent 80%);
+}
+.selection-method{
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+
+}
