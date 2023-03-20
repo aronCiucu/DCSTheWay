@@ -1,54 +1,52 @@
 import {
-  Box,
   Button,
-  Card,
-  Grid,
   IconButton,
+  ListItem,
+  ListItemText,
+  Input,
   Stack,
-  Typography,
+  Box,
 } from "@mui/material";
-import { DragHandle, ArrowDropDown } from "@mui/icons-material";
-import { grey } from "@mui/material/colors";
+import { DragHandle, ArrowDropDown, ArrowDropUp } from "@mui/icons-material";
+import { useState } from "react";
 
 const WaypointItem = (props) => {
-  const handleSave = () => {};
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const handleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
 
   return (
-    <Card
-      sx={{ borderRadius: "10px", backgroundColor: grey[800], margin: "6px" }}
-    >
-      <Box sx={{ padding: "12px" }}>
-        <Grid container justifyContent="space-between" alignItems="center">
-          <Grid item>
-            <Grid container direction="column">
-              <Grid item>
-                <Typography variant="button">{props.name}</Typography>
-              </Grid>
-              <Grid item>
-                <Typography variant="caption" color={grey[500]}>
-                  N042.06.969 E045.34.464
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-
-          <Grid item>
+    <ListItem>
+      <Stack direction="column" style={{ width: "100%" }}>
+        <Stack direction="row" justifyContent="space-between">
+          <ListItemText>{props.name}</ListItemText>
+          <Box>
             {props.pending ? (
               <Button variant="contained" onClick={props.onSave}>
                 Save
               </Button>
             ) : (
-              <Stack direction="row" alignItems="center">
-                <IconButton>
-                  <ArrowDropDown />
+              <>
+                <IconButton onClick={handleExpand}>
+                  {isExpanded ? <ArrowDropUp /> : <ArrowDropDown />}
                 </IconButton>
                 <DragHandle />
-              </Stack>
+              </>
             )}
-          </Grid>
-        </Grid>
-      </Box>
-    </Card>
+          </Box>
+        </Stack>
+        {isExpanded && (
+          <>
+            <Input value={props.name}></Input>
+            <Input value={props.lat}></Input>
+            <Input value={props.long}></Input>
+            <Input value={props.elev}></Input>
+          </>
+        )}
+      </Stack>
+    </ListItem>
   );
 };
 

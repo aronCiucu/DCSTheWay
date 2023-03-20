@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import dcsReducer from "./dcs";
+import dcsReducer from "./dcsPoint";
 import uiReducer from "./ui";
 import waypointsReducer from "./waypoints";
 
 const index = configureStore({
   reducer: {
-    dcs: dcsReducer,
+    dcsPoint: dcsReducer,
     ui: uiReducer,
     waypoints: waypointsReducer,
   },

@@ -2,7 +2,7 @@ import { MenuItem, Select, Stack, Card, Fab, Grid } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./SourceSelector.css";
 import InputMethod from "../model/InputMethod";
@@ -18,26 +18,38 @@ const inputMethods = [
 const SourceSelector = () => {
   const [inputMethod, setInputMethod] = useState(InputMethod.F10_MAP);
   const [isSelecting, setIsSelecting] = useState(false);
+  const module = useSelector((state) => state.dcsPoint.module);
   const dispatch = useDispatch();
   const handleInputMethodChange = (event) => {
     setInputMethod(event.target.value);
   };
-  const handleStartSelection = () => {
-    if (inputMethod === InputMethod.F10_MAP) {
-      ipcRenderer.send("f10Start");
-      dispatch(uiActions.changePendingWaypoint(true));
-      setIsSelecting(true);
-    } else if (inputMethod === InputMethod.FILE) {
-      //file input
-    } else if (inputMethod === InputMethod.MANUAL) {
-      //manual input
+  const handleFab = () => {
+    if (!isSelecting) {
+      if (inputMethod === InputMethod.F10_MAP) {
+        ipcRenderer.send("f10Start");
+        dispatch(uiActions.changePendingWaypoint(true));
+        setIsSelecting(true);
+      } else if (inputMethod === InputMethod.FILE) {
+        //file input
+      } else if (inputMethod === InputMethod.MANUAL) {
+        //manual input
+      }
+    } else {
+      if (inputMethod === InputMethod.F10_MAP) {
+        ipcRenderer.send("f10Stop");
+        dispatch(uiActions.changePendingWaypoint(false));
+        setIsSelecting(false);
+      }
     }
   };
 
   return (
     <>
       <div className="parent-container">
-        <img className="image-container" src="/assets/moduleImages/f16.png" />
+        <img
+          className="image-container"
+          src={`/assets/moduleImages/${module}.png`}
+        />
         <div className="selection-method">
           <Grid
             container
@@ -64,7 +76,7 @@ const SourceSelector = () => {
               <Fab
                 color={isSelecting ? "secondary" : "primary"}
                 aria-label={isSelecting ? "Stop selection" : "Begin selection"}
-                onClick={handleStartSelection}
+                onClick={handleFab}
               >
                 {isSelecting ? <CloseIcon /> : <AddIcon />}
               </Fab>

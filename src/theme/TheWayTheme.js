@@ -13,7 +13,7 @@ const theWayTheme = {
   typography: {
     fontSize: 12,
   },
-  spacing: 6,
+  // spacing: 6,
 };
 
 export default theWayTheme;

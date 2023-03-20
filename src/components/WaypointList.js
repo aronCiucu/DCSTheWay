@@ -1,19 +1,21 @@
-import { Card } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Card, List } from "@mui/material";
 import WaypointItem from "./WaypointItem";
 import { useDispatch, useSelector } from "react-redux";
-import { waypointsActions } from "../store/waypoints";
+import { addAndConvert } from "../store/waypoints";
 
 const WaypointList = () => {
   const isPending = useSelector((state) => state.ui.pendingWaypoint);
-  const { lat, long, elev } = useSelector((state) => state.dcs);
-  const waypoints = useSelector((state) => state.waypoints.waypointList);
+  const { lat, long, elev } = useSelector((state) => state.dcsPoint);
+  const moduleWaypoints = useSelector(
+    (state) => state.waypoints.moduleWaypoints
+  );
 
   const dispatch = useDispatch();
+
   const saveWaypointHandler = () => {
     dispatch(
-      waypointsActions.addWaypoint({
-        name: `Waypoint ${waypoints.length + 1}`,
+      addAndConvert({
+        name: `Waypoint ${moduleWaypoints.length + 1}`,
         lat,
         long,
         elev,
@@ -22,27 +24,30 @@ const WaypointList = () => {
   };
 
   return (
-    <Card sx={{ borderRadius: "10px" }}>
-      {waypoints.map((wp) => (
-        <WaypointItem
-          key={wp.name}
-          pending={false}
-          name={wp.name}
-          lat={wp.lat}
-          long={wp.long}
-          elev={wp.elev}
-        />
-      ))}
-      {isPending && (
-        <WaypointItem
-          pending={true}
-          name={`Waypoint ${waypoints.length + 1}`}
-          lat={null}
-          long={null}
-          elev={null}
-          onSave={saveWaypointHandler}
-        />
-      )}
+    <Card sx={{ borderRadius: "10px", height: "100%" }}>
+      <List style={{ maxHeight: "100%", overflow: "auto", padding: 0 }}>
+        {moduleWaypoints.map((wp) => (
+          <WaypointItem
+            key={wp.name}
+            pending={false}
+            name={wp.name}
+            lat={wp.lat}
+            long={wp.long}
+            elev={wp.elev}
+          />
+        ))}
+
+        {isPending && (
+          <WaypointItem
+            pending={true}
+            name={`Waypoint ${moduleWaypoints.length + 1}`}
+            lat={null}
+            long={null}
+            elev={null}
+            onSave={saveWaypointHandler}
+          />
+        )}
+      </List>
     </Card>
   );
 };

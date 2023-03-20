@@ -1,11 +1,12 @@
-import { createTheme, CssBaseline, Grid, ThemeProvider } from "@mui/material";
+import { Box, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 import SourceSelector from "./components/SourceSelector";
 import WaypointList from "./components/WaypointList";
-import { dcsActions } from "./store/dcs";
+import { dcsPointActions } from "./store/dcsPoint";
 import theWayTheme from "./theme/TheWayTheme";
+import TransferControls from "./components/TransferControls";
 
 const { ipcRenderer } = window.require("electron");
 
@@ -16,22 +17,25 @@ function App() {
 
   useEffect(() => {
     ipcRenderer.on("dataReceived", (event, msg) => {
-      dispatch(dcsActions.changeCoords(JSON.parse(msg)));
+      dispatch(dcsPointActions.changeCoords(JSON.parse(msg)));
     });
   }, [dispatch]);
 
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
+      <CssBaseline enableColorScheme />
 
-      <Grid container direction="column">
-        <Grid item>
+      <Box sx={{ height: "100vh" }}>
+        <Box sx={{ height: "25%" }}>
           <SourceSelector />
-        </Grid>
-        <Grid item>
+        </Box>
+        <Box sx={{ height: "60%", paddingX: 2 }}>
           <WaypointList />
-        </Grid>
-      </Grid>
+        </Box>
+        <Box sx={{ height: "15%" }}>
+          <TransferControls />
+        </Box>
+      </Box>
     </ThemeProvider>
   );
 }
