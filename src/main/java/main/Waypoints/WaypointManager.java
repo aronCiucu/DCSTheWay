@@ -41,7 +41,7 @@ public class WaypointManager {
                 List<Point> av8bnaCoords = AV8BNA.getCoords(waypoints);
                 String dataToSend = AV8BNA.getCommands(av8bnaCoords).toString();
                 PortSender.send(dataToSend);
-            } else if(model.equals("Ka-50")) {
+            } else if(model.equals("Ka-50_3")) {
                 if(waypoints.size()>6){
                     GUI.error("The Ka-50 can store a maximum of 6 waypoints. ");
                 } else {
