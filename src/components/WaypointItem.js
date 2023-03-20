@@ -3,9 +3,9 @@ import {
   IconButton,
   ListItem,
   ListItemText,
-  Input,
   Stack,
-  Box,
+  Grid,
+  TextField,
 } from "@mui/material";
 import { DragHandle, ArrowDropDown, ArrowDropUp } from "@mui/icons-material";
 import { useState } from "react";
@@ -19,33 +19,38 @@ const WaypointItem = (props) => {
 
   return (
     <ListItem>
-      <Stack direction="column" style={{ width: "100%" }}>
-        <Stack direction="row" justifyContent="space-between">
-          <ListItemText>{props.name}</ListItemText>
-          <Box>
-            {props.pending ? (
-              <Button variant="contained" onClick={props.onSave}>
-                Save
-              </Button>
-            ) : (
-              <>
-                <IconButton onClick={handleExpand}>
-                  {isExpanded ? <ArrowDropUp /> : <ArrowDropDown />}
-                </IconButton>
-                <DragHandle />
-              </>
-            )}
-          </Box>
-        </Stack>
-        {isExpanded && (
-          <>
-            <Input value={props.name}></Input>
-            <Input value={props.lat}></Input>
-            <Input value={props.long}></Input>
-            <Input value={props.elev}></Input>
-          </>
-        )}
-      </Stack>
+      <Grid container>
+        <Grid item xs={8}>
+          {isExpanded ? (
+            <>
+              <TextField size="small" value={props.name}></TextField>
+              <TextField size="small" value={props.lat}></TextField>
+              <TextField size="small" value={props.long}></TextField>
+              <TextField size="small" value={props.elev}></TextField>
+            </>
+          ) : (
+            <ListItemText>{props.name}</ListItemText>
+          )}
+        </Grid>
+        <Grid item xs={4}>
+          {props.pending ? (
+            <Button variant="contained" onClick={props.onSave}>
+              Save
+            </Button>
+          ) : (
+            <Stack
+              direction="row"
+              justifyContent="flex-end"
+              alignItems="center"
+            >
+              <IconButton onClick={handleExpand}>
+                {isExpanded ? <ArrowDropUp /> : <ArrowDropDown />}
+              </IconButton>
+              <DragHandle />
+            </Stack>
+          )}
+        </Grid>
+      </Grid>
     </ListItem>
   );
 };
