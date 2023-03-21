@@ -3,7 +3,7 @@ import SendIcon from "@mui/icons-material/Send";
 import { useSelector } from "react-redux";
 
 const TransferControls = () => {
-  const waypointList = useSelector((state) => state.waypoints.moduleWaypoints);
+  const waypointList = useSelector((state) => state.waypoints.dcsWaypoints);
   let showButton = waypointList.length > 0;
 
   return (

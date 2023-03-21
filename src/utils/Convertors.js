@@ -8,6 +8,9 @@ class Convertors {
   static mToF(m) {
     return m * 3.280839895;
   }
+  static fToM(f) {
+    return f / 3.280839895;
+  }
 }
 
 export default Convertors;

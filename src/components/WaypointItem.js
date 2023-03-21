@@ -6,8 +6,15 @@ import {
   Stack,
   Grid,
   TextField,
+  Typography,
+  Input,
 } from "@mui/material";
-import { DragHandle, ArrowDropDown, ArrowDropUp } from "@mui/icons-material";
+import {
+  DragHandle,
+  ArrowDropDown,
+  ArrowDropUp,
+  Delete,
+} from "@mui/icons-material";
 import { useState } from "react";
 
 const WaypointItem = (props) => {
@@ -20,19 +27,27 @@ const WaypointItem = (props) => {
   return (
     <ListItem>
       <Grid container>
-        <Grid item xs={8}>
+        <Grid item xs={7}>
           {isExpanded ? (
-            <>
-              <TextField size="small" value={props.name}></TextField>
-              <TextField size="small" value={props.lat}></TextField>
-              <TextField size="small" value={props.long}></TextField>
-              <TextField size="small" value={props.elev}></TextField>
-            </>
+            <Stack>
+              <TextField
+                size="small"
+                defaultValue={props.name}
+                onChange={(e) => props.onRename(e, props.id)}
+              ></TextField>
+
+              <Input disabled value={props.latHem + " " + props.lat}></Input>
+              <Input disabled value={props.longHem + " " + props.long}></Input>
+              <Input
+                value={props.elev}
+                onChange={(e) => props.onElevation(e, props.id)}
+              ></Input>
+            </Stack>
           ) : (
             <ListItemText>{props.name}</ListItemText>
           )}
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={5}>
           {props.pending ? (
             <Button variant="contained" onClick={props.onSave}>
               Save
@@ -43,6 +58,9 @@ const WaypointItem = (props) => {
               justifyContent="flex-end"
               alignItems="center"
             >
+              <IconButton onClick={(e) => props.onDelete(e, props.id)}>
+                <Delete />
+              </IconButton>
               <IconButton onClick={handleExpand}>
                 {isExpanded ? <ArrowDropUp /> : <ArrowDropDown />}
               </IconButton>
