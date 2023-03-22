@@ -6,12 +6,13 @@ class MainWindow extends BrowserWindow {
       height: 500,
       x: 0,
       y: screen.getPrimaryDisplay().workAreaSize.height - 500,
-      maximizable: false,
-      resizable: false,
       webPreferences: {
         nodeIntegration: true,
         contextIsolation: false,
       },
+      maximizable: false,
+      resizable: false,
+      // focusable: false,
     });
 
     this.setMenu(null);

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { arrayMove } from "@dnd-kit/sortable";
 
-const initialState = { dcsWaypoints: [] };
+const initialState = { dcsWaypoints: [], idCounter: 1 };
 
 const waypointsSlice = createSlice({
   name: "waypoints",
@@ -11,12 +11,13 @@ const waypointsSlice = createSlice({
       const payload = action.payload;
 
       state.dcsWaypoints.push({
-        id: payload.id,
-        name: payload.name,
+        id: state.idCounter,
+        name: `Waypoint ${state.idCounter}`,
         lat: payload.lat,
         long: payload.long,
         elev: payload.elev,
       });
+      state.idCounter++;
     },
     changeName(state, action) {
       const index = state.dcsWaypoints.findIndex(

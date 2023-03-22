@@ -8,7 +8,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { useState } from "react";
+import { useId, useState } from "react";
 
 const WaypointList = () => {
   const isPending = useSelector((state) => state.ui.pendingWaypoint);
@@ -86,8 +86,6 @@ const WaypointList = () => {
   const saveWaypointHandler = () => {
     dispatch(
       waypointsActions.addDcsWaypoint({
-        id: dcsWaypoints.length + 1,
-        name: `Waypoint ${dcsWaypoints.length + 1}`,
         lat,
         long,
         elev,
@@ -148,7 +146,7 @@ const WaypointList = () => {
             {isPending && (
               <WaypointItem
                 pending={true}
-                name={`Waypoint ${selectModuleCoordinates().length + 1}`}
+                name={"New Waypoint"}
                 lat={null}
                 long={null}
                 elev={null}
