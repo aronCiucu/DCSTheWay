@@ -1,0 +1,3 @@
+.dragHandle:hover{
+    cursor: ns-resize;
+}

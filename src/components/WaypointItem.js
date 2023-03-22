@@ -6,8 +6,8 @@ import {
   Stack,
   Grid,
   TextField,
-  Typography,
   Input,
+  Box,
 } from "@mui/material";
 import {
   DragHandle,
@@ -16,16 +16,25 @@ import {
   Delete,
 } from "@mui/icons-material";
 import { useState } from "react";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+
+import "./WaypointItem.css";
 
 const WaypointItem = (props) => {
   const [isExpanded, setIsExpanded] = useState(false);
-
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id: props.id });
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
   const handleExpand = () => {
     setIsExpanded(!isExpanded);
   };
 
   return (
-    <ListItem>
+    <ListItem ref={setNodeRef} style={style} {...attributes}>
       <Grid container>
         <Grid item xs={7}>
           {isExpanded ? (
@@ -64,7 +73,9 @@ const WaypointItem = (props) => {
               <IconButton onClick={handleExpand}>
                 {isExpanded ? <ArrowDropUp /> : <ArrowDropDown />}
               </IconButton>
-              <DragHandle />
+              <Box className="dragHandle" {...listeners}>
+                <DragHandle />
+              </Box>
             </Stack>
           )}
         </Grid>

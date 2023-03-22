@@ -3,6 +3,12 @@ import WaypointItem from "./WaypointItem";
 import { useDispatch, useSelector } from "react-redux";
 import { waypointsActions } from "../store/waypoints";
 import Convertors from "../utils/Convertors";
+import { closestCenter, DndContext } from "@dnd-kit/core";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { useState } from "react";
 
 const WaypointList = () => {
   const isPending = useSelector((state) => state.ui.pendingWaypoint);
@@ -80,7 +86,7 @@ const WaypointList = () => {
   const saveWaypointHandler = () => {
     dispatch(
       waypointsActions.addDcsWaypoint({
-        id: dcsWaypoints.length,
+        id: dcsWaypoints.length + 1,
         name: `Waypoint ${dcsWaypoints.length + 1}`,
         lat,
         long,
@@ -102,38 +108,57 @@ const WaypointList = () => {
     dispatch(waypointsActions.changeElevation({ id, elev }));
   };
 
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+    if (active.id !== over.id) {
+      dispatch(
+        waypointsActions.changeOrder({ active: active.id, over: over.id })
+      );
+    }
+  };
+
   return (
     <Card sx={{ borderRadius: "10px", height: "100%" }}>
       <List style={{ maxHeight: "100%", overflow: "auto", padding: 0 }}>
-        {selectModuleCoordinates().map((wp) => (
-          <WaypointItem
-            key={wp.id}
-            id={wp.id}
-            pending={false}
-            name={wp.name}
-            lat={wp.lat}
-            long={wp.long}
-            elev={wp.elev}
-            latHem={wp.latHem}
-            longHem={wp.longHem}
-            onRename={renameHandler}
-            onElevation={elevationHandler}
-            onDelete={deleteHandler}
-          />
-        ))}
+        <DndContext
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext
+            items={selectModuleCoordinates()}
+            strategy={verticalListSortingStrategy}
+          >
+            {selectModuleCoordinates().map((wp) => (
+              <WaypointItem
+                key={wp.id}
+                id={wp.id}
+                pending={false}
+                name={wp.name}
+                lat={wp.lat}
+                long={wp.long}
+                elev={wp.elev}
+                latHem={wp.latHem}
+                longHem={wp.longHem}
+                onRename={renameHandler}
+                onElevation={elevationHandler}
+                onDelete={deleteHandler}
+              />
+            ))}
 
-        {isPending && (
-          <WaypointItem
-            pending={true}
-            name={`Waypoint ${selectModuleCoordinates().length + 1}`}
-            lat={null}
-            long={null}
-            elev={null}
-            latHem={null}
-            longHem={null}
-            onSave={saveWaypointHandler}
-          />
-        )}
+            {isPending && (
+              <WaypointItem
+                pending={true}
+                name={`Waypoint ${selectModuleCoordinates().length + 1}`}
+                lat={null}
+                long={null}
+                elev={null}
+                latHem={null}
+                longHem={null}
+                onSave={saveWaypointHandler}
+              />
+            )}
+          </SortableContext>
+        </DndContext>
       </List>
     </Card>
   );
