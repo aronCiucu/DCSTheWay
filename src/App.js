@@ -22,6 +22,8 @@ function App() {
     });
   }, [dispatch]);
 
+  const handleTransfer = () => {};
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline enableColorScheme />
@@ -34,7 +36,7 @@ function App() {
           <WaypointList />
         </Box>
         <Box sx={{ height: "15%" }}>
-          <TransferControls />
+          <TransferControls onTransfer={handleTransfer} />
         </Box>
       </Box>
     </ThemeProvider>

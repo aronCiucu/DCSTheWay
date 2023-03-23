@@ -1,5 +1,5 @@
 const path = require("path");
-const { app, session, BrowserWindow, globalShortcut } = require("electron");
+const { app, session } = require("electron");
 const isDev = require("electron-is-dev");
 const UDPListener = require("./UDPListener.js");
 const SelectionHandler = require("./SelectionHandler.js");

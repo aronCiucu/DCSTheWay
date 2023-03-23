@@ -2,7 +2,7 @@ import { Fab, Grid, Typography } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { useSelector } from "react-redux";
 
-const TransferControls = () => {
+const TransferControls = (props) => {
   const waypointList = useSelector((state) => state.waypoints.dcsWaypoints);
   let showButton = waypointList.length > 0;
 
@@ -16,7 +16,7 @@ const TransferControls = () => {
           style={{ height: "100%" }}
         >
           <Grid item>
-            <Fab variant="extended" color="primary">
+            <Fab variant="extended" color="primary" onClick={props.onTransfer}>
               <Typography variant="button" pr={2}>
                 <b>Transfer to DCS</b>
               </Typography>
