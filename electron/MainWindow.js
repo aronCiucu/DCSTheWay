@@ -1,4 +1,5 @@
-const { BrowserWindow, screen } = require("electron");
+const { BrowserWindow, screen, ipcMain } = require("electron");
+
 class MainWindow extends BrowserWindow {
   constructor() {
     super({
@@ -12,11 +13,30 @@ class MainWindow extends BrowserWindow {
       },
       maximizable: false,
       resizable: false,
-      // focusable: false,
+      frame: false,
+      focusable: false,
     });
 
     this.setMenu(null);
-    this.setAlwaysOnTop(true, "screen");
+    this.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
+    this.setAlwaysOnTop(true, "screen-saver");
+
+    ipcMain.on("minimize", () => {
+      this.setFocusable(true);
+      this.minimize();
+    });
+    ipcMain.on("close", () => {
+      this.close();
+    });
+    ipcMain.on("focus", () => {
+      this.setFocusable(true);
+    });
+    ipcMain.on("defocus", () => {
+      this.setFocusable(false);
+    });
+    this.on("restore", () => {
+      this.setFocusable(false);
+    });
   }
 }
 

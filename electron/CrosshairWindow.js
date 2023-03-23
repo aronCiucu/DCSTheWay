@@ -10,12 +10,12 @@ class CrosshairWindow extends BrowserWindow {
       transparent: true,
       resizable: false,
       frame: false,
+      focusable: false,
     });
 
-    this.setAlwaysOnTop(true);
     this.setMenu(null);
-    this.setFocusable(false);
     this.setIgnoreMouseEvents(true);
+    this.setAlwaysOnTop(true, "normal");
     this.loadURL(
       isDev
         ? "http://localhost:3000/crosshair.html"

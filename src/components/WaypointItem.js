@@ -21,6 +21,8 @@ import { CSS } from "@dnd-kit/utilities";
 
 import "./WaypointItem.css";
 
+const { ipcRenderer } = window.require("electron");
+
 const WaypointItem = (props) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const { attributes, listeners, setNodeRef, transform, transition } =
@@ -33,6 +35,13 @@ const WaypointItem = (props) => {
     setIsExpanded(!isExpanded);
   };
 
+  const handleInputFocus = (event) => {
+    ipcRenderer.send("focus");
+  };
+  const handleInputDefocus = () => {
+    ipcRenderer.send("defocus");
+  };
+
   return (
     <ListItem ref={setNodeRef} style={style} {...attributes}>
       <Grid container>
@@ -43,6 +52,9 @@ const WaypointItem = (props) => {
                 size="small"
                 defaultValue={props.name}
                 onChange={(e) => props.onRename(e, props.id)}
+                autoFocus
+                onMouseEnter={handleInputFocus}
+                onMouseLeave={handleInputDefocus}
               ></TextField>
 
               <Input disabled value={props.latHem + " " + props.lat}></Input>
@@ -50,6 +62,8 @@ const WaypointItem = (props) => {
               <Input
                 value={props.elev}
                 onChange={(e) => props.onElevation(e, props.id)}
+                onMouseEnter={handleInputFocus}
+                onMouseLeave={handleInputDefocus}
               ></Input>
             </Stack>
           ) : (

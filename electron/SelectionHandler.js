@@ -2,6 +2,7 @@ const { ipcMain } = require("electron");
 const CrosshairWindow = require("./CrosshairWindow");
 class SelectionHandler {
   crosshairWindow;
+
   constructor() {
     ipcMain.on("f10Start", () => {
       this.f10SelectionStart();

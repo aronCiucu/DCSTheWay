@@ -7,6 +7,7 @@ import WaypointList from "./components/WaypointList";
 import { dcsPointActions } from "./store/dcsPoint";
 import theWayTheme from "./theme/TheWayTheme";
 import TransferControls from "./components/TransferControls";
+import TitleBar from "./components/TitleBar";
 
 const { ipcRenderer } = window.require("electron");
 
@@ -24,7 +25,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline enableColorScheme />
-
+      <TitleBar />
       <Box sx={{ height: "100vh" }}>
         <Box sx={{ height: "25%" }}>
           <SourceSelector />
