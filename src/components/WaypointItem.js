@@ -38,8 +38,15 @@ const WaypointItem = (props) => {
   const handleInputFocus = (event) => {
     ipcRenderer.send("focus");
   };
-  const handleInputDefocus = () => {
+  const handleInputDefocus = (event) => {
     ipcRenderer.send("defocus");
+    event.target.blur();
+  };
+  const handleInputFinished = (event) => {
+    if (event.key === "Enter") {
+      handleExpand();
+      handleInputDefocus();
+    }
   };
 
   return (
@@ -52,9 +59,9 @@ const WaypointItem = (props) => {
                 size="small"
                 defaultValue={props.name}
                 onChange={(e) => props.onRename(e, props.id)}
-                autoFocus
                 onMouseEnter={handleInputFocus}
                 onMouseLeave={handleInputDefocus}
+                onKeyDown={handleInputFinished}
               ></TextField>
 
               <Input disabled value={props.latHem + " " + props.lat}></Input>
@@ -64,6 +71,7 @@ const WaypointItem = (props) => {
                 onChange={(e) => props.onElevation(e, props.id)}
                 onMouseEnter={handleInputFocus}
                 onMouseLeave={handleInputDefocus}
+                onKeyDown={handleInputFinished}
               ></Input>
             </Stack>
           ) : (
