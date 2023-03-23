@@ -17,7 +17,9 @@ const convert = (dcsWaypoints, module) => {
           dmmLong.deg.toString().padStart(3, "0") +
           "." +
           dmmLong.min.toFixed(3).toString().padStart(6, "0");
-        const f16Elev = Math.trunc(Convertors.mToF(dcsWaypoint.elev));
+        const f16Elev = Math.trunc(
+          Convertors.mToF(dcsWaypoint.elev)
+        ).toString();
         const f16LatHem = dcsWaypoint.lat > 0 ? "N" : "S";
         const f16LongHem = dcsWaypoint.long > 0 ? "E" : "W";
         f16waypoints.push({
