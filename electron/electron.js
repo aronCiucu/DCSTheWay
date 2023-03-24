@@ -7,11 +7,9 @@ const SelectionHandler = require("./SelectionHandler.js");
 const MainWindow = require("./MainWindow.js");
 
 let mainWindow;
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable no-unused-vars*/
 let udpListener;
-// eslint-disable-next-line no-unused-vars
 let selectionHandler;
-// eslint-disable-next-line no-unused-vars
 let udpSender;
 
 function createWindow() {

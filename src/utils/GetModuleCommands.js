@@ -5,14 +5,14 @@ export default function getModuleCommands(module, waypoints) {
         {
           device: 17,
           code: 3032,
-          delay: 20,
+          delay: 100,
           activate: -1,
           addDepress: "true",
         },
         {
           device: 17,
           code: 3006,
-          delay: 0,
+          delay: 100,
           activate: 1,
           addDepress: "true",
         },
@@ -22,21 +22,21 @@ export default function getModuleCommands(module, waypoints) {
           {
             device: 17,
             code: 3030,
-            delay: 0,
+            delay: 100,
             activate: 1,
             addDepress: "true",
           },
           {
             device: 17,
             code: 3035,
-            delay: 20,
+            delay: 100,
             activate: -1,
             addDepress: "true",
           },
           {
             device: 17,
             code: 3035,
-            delay: 20,
+            delay: 100,
             activate: -1,
             addDepress: "true",
           }
@@ -46,7 +46,7 @@ export default function getModuleCommands(module, waypoints) {
           payload.push({
             device: 17,
             code: 3004,
-            delay: 0,
+            delay: 100,
             activate: 1,
             addDepress: "true",
           });
@@ -54,7 +54,7 @@ export default function getModuleCommands(module, waypoints) {
           payload.push({
             device: 17,
             code: 3010,
-            delay: 0,
+            delay: 100,
             activate: 1,
             addDepress: "true",
           });
@@ -67,7 +67,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: 17,
                 code: 3003,
-                delay: 0,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -76,7 +76,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: 17,
                 code: 3004,
-                delay: 0,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -85,7 +85,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: 17,
                 code: 3005,
-                delay: 0,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -94,7 +94,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: 17,
                 code: 3006,
-                delay: 0,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -103,7 +103,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: 17,
                 code: 3007,
-                delay: 0,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -112,7 +112,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: 17,
                 code: 3008,
-                delay: 0,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -121,7 +121,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: 17,
                 code: 3009,
-                delay: 0,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -130,7 +130,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: 17,
                 code: 3010,
-                delay: 0,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -139,7 +139,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: 17,
                 code: 3011,
-                delay: 0,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -148,7 +148,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: 17,
                 code: 3002,
-                delay: 0,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -159,7 +159,7 @@ export default function getModuleCommands(module, waypoints) {
         payload.push({
           device: 17,
           code: 3016,
-          delay: 0,
+          delay: 100,
           activate: 1,
           addDepress: "true",
         });
@@ -167,7 +167,7 @@ export default function getModuleCommands(module, waypoints) {
         payload.push({
           device: 17,
           code: 3035,
-          delay: 20,
+          delay: 100,
           activate: -1,
           addDepress: "true",
         });
@@ -176,7 +176,7 @@ export default function getModuleCommands(module, waypoints) {
           payload.push({
             device: 17,
             code: 3008,
-            delay: 0,
+            delay: 100,
             activate: 1,
             addDepress: "true",
           });
@@ -184,7 +184,7 @@ export default function getModuleCommands(module, waypoints) {
           payload.push({
             device: 17,
             code: 3006,
-            delay: 0,
+            delay: 100,
             activate: 1,
             addDepress: "true",
           });
@@ -197,7 +197,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: 17,
                 code: 3003,
-                delay: 0,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -206,7 +206,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: 17,
                 code: 3004,
-                delay: 0,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -215,7 +215,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: 17,
                 code: 3005,
-                delay: 0,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -224,7 +224,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: 17,
                 code: 3006,
-                delay: 0,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -233,7 +233,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: 17,
                 code: 3007,
-                delay: 0,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -242,7 +242,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: 17,
                 code: 3008,
-                delay: 0,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -251,7 +251,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: 17,
                 code: 3009,
-                delay: 0,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -260,7 +260,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: 17,
                 code: 3010,
-                delay: 0,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -269,7 +269,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: 17,
                 code: 3011,
-                delay: 0,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -278,7 +278,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: 17,
                 code: 3002,
-                delay: 0,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -289,7 +289,7 @@ export default function getModuleCommands(module, waypoints) {
         payload.push({
           device: 17,
           code: 3016,
-          delay: 0,
+          delay: 100,
           activate: 1,
           addDepress: "true",
         });
@@ -297,7 +297,7 @@ export default function getModuleCommands(module, waypoints) {
         payload.push({
           device: 17,
           code: 3035,
-          delay: 20,
+          delay: 100,
           activate: -1,
           addDepress: "true",
         });
@@ -309,7 +309,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: 17,
                 code: 3003,
-                delay: 0,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -318,7 +318,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: 17,
                 code: 3004,
-                delay: 0,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -327,7 +327,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: 17,
                 code: 3005,
-                delay: 0,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -336,7 +336,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: 17,
                 code: 3006,
-                delay: 0,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -345,7 +345,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: 17,
                 code: 3007,
-                delay: 0,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -354,7 +354,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: 17,
                 code: 3008,
-                delay: 0,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -363,7 +363,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: 17,
                 code: 3009,
-                delay: 0,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -372,7 +372,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: 17,
                 code: 3010,
-                delay: 0,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -381,7 +381,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: 17,
                 code: 3011,
-                delay: 0,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -390,7 +390,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: 17,
                 code: 3002,
-                delay: 0,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -401,7 +401,7 @@ export default function getModuleCommands(module, waypoints) {
         payload.push({
           device: 17,
           code: 3016,
-          delay: 0,
+          delay: 100,
           activate: 1,
           addDepress: "true",
         });
@@ -410,38 +410,39 @@ export default function getModuleCommands(module, waypoints) {
           {
             device: 17,
             code: 3034,
-            delay: 20,
+            delay: 100,
             activate: 1,
             addDepress: "true",
           },
           {
             device: 17,
             code: 3034,
-            delay: 20,
+            delay: 100,
             activate: 1,
             addDepress: "true",
           },
           {
             device: 17,
             code: 3034,
-            delay: 20,
+            delay: 100,
             activate: 1,
             addDepress: "true",
           },
           {
             device: 17,
             code: 3034,
-            delay: 20,
+            delay: 100,
             activate: 1,
             addDepress: "true",
           }
         );
       }
+
       //main page
       payload.push({
         device: 17,
         code: 3032,
-        delay: 20,
+        delay: 100,
         activate: -1,
         addDepress: "true",
       });
