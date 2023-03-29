@@ -602,7 +602,7 @@ export default function getModuleCommands(module, waypoints) {
           addDepress: "true",
         });
         //Type hem
-        if (waypoint.latHem === "E") {
+        if (waypoint.longHem === "E") {
           payload.push({
             device: 9,
             code: 3031,
@@ -1118,7 +1118,7 @@ export default function getModuleCommands(module, waypoints) {
 
       return payload;
     }
-    case "M-2000C":
+    case "M-2000C": {
       let payload = [];
       for (const waypoint of waypoints) {
         payload.push(
@@ -1287,7 +1287,7 @@ export default function getModuleCommands(module, waypoints) {
           addDepress: "true",
         });
         //Type hem
-        if (waypoint.latHem === "E") {
+        if (waypoint.longHem === "E") {
           payload.push({
             device: 9,
             code: 3589,
@@ -1535,6 +1535,462 @@ export default function getModuleCommands(module, waypoints) {
         });
       }
       return payload;
+    }
+    case "AV8BNA": {
+      let payload = [
+        //nav mode
+        {
+          device: 12,
+          code: 3282,
+          delay: 100,
+          activate: 1,
+          addDepress: "true",
+        },
+        //left MFD menu
+        {
+          device: 26,
+          code: 3217,
+          delay: 100,
+          activate: 1,
+          addDepress: "true",
+        },
+        //EHSD
+        {
+          device: 26,
+          code: 3201,
+          delay: 100,
+          activate: 1,
+          addDepress: "true",
+        },
+        //DATA
+        {
+          device: 26,
+          code: 3201,
+          delay: 100,
+          activate: 1,
+          addDepress: "true",
+        },
+      ];
+      for (const waypoint of waypoints) {
+        //increment
+        payload.push(
+          {
+            device: 23,
+            code: 3312,
+            delay: 100,
+            activate: 1,
+            addDepress: "true",
+          },
+          {
+            device: 23,
+            code: 3312,
+            delay: 100,
+            activate: 1,
+            addDepress: "true",
+          },
+          //ENT
+          {
+            device: 23,
+            code: 3314,
+            delay: 100,
+            activate: 1,
+            addDepress: "true",
+          },
+          //ODU 2
+          {
+            device: 24,
+            code: 3251,
+            delay: 100,
+            activate: 1,
+            addDepress: "true",
+          }
+        );
+        //Type hem
+        if (waypoint.latHem === "N") {
+          payload.push({
+            device: 23,
+            code: 3303,
+            delay: 100,
+            activate: 1,
+            addDepress: "true",
+          });
+        } else {
+          payload.push({
+            device: 23,
+            code: 3311,
+            delay: 100,
+            activate: 1,
+            addDepress: "true",
+          });
+        }
+        //type lat
+        for (let i = 0; i < waypoint.lat.length; i++) {
+          // eslint-disable-next-line default-case
+          switch (waypoint.lat.charAt(i)) {
+            case "1":
+              payload.push({
+                device: 23,
+                code: 3302,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "2":
+              payload.push({
+                device: 23,
+                code: 3303,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "3":
+              payload.push({
+                device: 23,
+                code: 3304,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "4":
+              payload.push({
+                device: 23,
+                code: 3306,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "5":
+              payload.push({
+                device: 23,
+                code: 3307,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "6":
+              payload.push({
+                device: 23,
+                code: 3308,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "7":
+              payload.push({
+                device: 23,
+                code: 3310,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "8":
+              payload.push({
+                device: 23,
+                code: 3311,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "9":
+              payload.push({
+                device: 23,
+                code: 3312,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "0":
+              payload.push({
+                device: 23,
+                code: 3315,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+          }
+        }
+        payload.push(
+          //ENT
+          {
+            device: 23,
+            code: 3314,
+            delay: 100,
+            activate: 1,
+            addDepress: "true",
+          }
+        );
+        //Type hem
+        if (waypoint.longHem === "E") {
+          payload.push({
+            device: 23,
+            code: 3308,
+            delay: 100,
+            activate: 1,
+            addDepress: "true",
+          });
+        } else {
+          payload.push({
+            device: 23,
+            code: 3306,
+            delay: 100,
+            activate: 1,
+            addDepress: "true",
+          });
+        }
+        //type long
+        for (let i = 0; i < waypoint.long.length; i++) {
+          // eslint-disable-next-line default-case
+          switch (waypoint.long.charAt(i)) {
+            case "1":
+              payload.push({
+                device: 23,
+                code: 3302,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "2":
+              payload.push({
+                device: 23,
+                code: 3303,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "3":
+              payload.push({
+                device: 23,
+                code: 3304,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "4":
+              payload.push({
+                device: 23,
+                code: 3306,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "5":
+              payload.push({
+                device: 23,
+                code: 3307,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "6":
+              payload.push({
+                device: 23,
+                code: 3308,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "7":
+              payload.push({
+                device: 23,
+                code: 3310,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "8":
+              payload.push({
+                device: 23,
+                code: 3311,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "9":
+              payload.push({
+                device: 23,
+                code: 3312,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "0":
+              payload.push({
+                device: 23,
+                code: 3315,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+          }
+        }
+        payload.push(
+          //ENT
+          {
+            device: 23,
+            code: 3314,
+            delay: 100,
+            activate: 1,
+            addDepress: "true",
+          }
+        );
+        // Select elevation
+        payload.push({
+          device: 24,
+          code: 3252,
+          delay: 100,
+          activate: 1,
+          addDepress: "true",
+        });
+        console.log(waypoint.elev);
+        //type elevation
+        for (let i = 0; i < waypoint.elev.length; i++) {
+          // eslint-disable-next-line default-case
+          switch (waypoint.elev.charAt(i)) {
+            case "1":
+              payload.push({
+                device: 23,
+                code: 3302,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "2":
+              payload.push({
+                device: 23,
+                code: 3303,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "3":
+              payload.push({
+                device: 23,
+                code: 3304,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "4":
+              payload.push({
+                device: 23,
+                code: 3306,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "5":
+              payload.push({
+                device: 23,
+                code: 3307,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "6":
+              payload.push({
+                device: 23,
+                code: 3308,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "7":
+              payload.push({
+                device: 23,
+                code: 3310,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "8":
+              payload.push({
+                device: 23,
+                code: 3311,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "9":
+              payload.push({
+                device: 23,
+                code: 3312,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "0":
+              payload.push({
+                device: 23,
+                code: 3315,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+          }
+        }
+        payload.push(
+          //ENT
+          {
+            device: 23,
+            code: 3314,
+            delay: 100,
+            activate: 1,
+            addDepress: "true",
+          }
+        );
+        payload.push(
+          //revert to selection mode
+          {
+            device: 24,
+            code: 3250,
+            delay: 100,
+            activate: 1,
+            addDepress: "true",
+          }
+        );
+      }
+      payload.push(
+        //deselect DATA
+        {
+          device: 26,
+          code: 3201,
+          delay: 100,
+          activate: 1,
+          addDepress: "true",
+        }
+      );
+      return payload;
+    }
     default:
       return [];
   }
