@@ -3,6 +3,7 @@ import Convertors from "./Convertors";
 const convert = (dcsWaypoints, module) => {
   switch (module) {
     case "F-16C_50":
+    case "F-16I":
     case "A-10C_2":
     case "A-10C":
     case "M-2000C": {

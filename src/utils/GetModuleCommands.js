@@ -1,6 +1,7 @@
 export default function getModuleCommands(module, waypoints) {
   switch (module) {
-    case "F-16C_50": {
+    case "F-16C_50":
+    case "F-16I": {
       let payload = [
         {
           device: 17,
