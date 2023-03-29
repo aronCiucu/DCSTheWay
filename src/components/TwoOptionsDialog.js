@@ -1,35 +1,14 @@
 import { Button, Dialog, DialogTitle } from "@mui/material";
-import { useState } from "react";
+import { createModal } from "react-modal-promise";
 
-const TwoOptionsDialog = (props) => {
-  const [open, setOpen] = useState(false);
-  let promises = {};
-  const show = () => {
-    return new Promise((resolve, reject) => {
-      promises = { resolve, reject };
-      setOpen(true);
-    });
-  };
-
-  const closeHandler = () => {
-    promises.reject();
-  };
-
-  const selectHander = (value) => {
-    promises.resolve(value);
-  };
-
+const muiDialog = ({ isOpen, onResolve, onReject, title, op1, op2 }) => {
   return (
-    <Dialog open={props.isOpen} onClose={closeHandler}>
-      <DialogTitle>{props.title}</DialogTitle>
-      <Button onClick={() => selectHander(props.option1)}>
-        {props.option1}
-      </Button>
-      <Button onClick={() => selectHander(props.option2)}>
-        {props.option2}
-      </Button>
+    <Dialog open={isOpen} onClose={onReject}>
+      <DialogTitle>{title}</DialogTitle>
+      <Button onClick={() => onResolve(op1)}>{op1}</Button>
+      <Button onClick={() => onResolve(op2)}>{op2}</Button>
     </Dialog>
   );
 };
 
-export default TwoOptionsDialog;
+export const TwoOptionsDialog = createModal(muiDialog);
