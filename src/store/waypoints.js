@@ -46,6 +46,18 @@ const waypointsSlice = createSlice({
       );
       state.dcsWaypoints = arrayMove(state.dcsWaypoints, newIndex, oldIndex);
     },
+    appendWaypoints(state, action) {
+      for (const waypoint of action.payload) {
+        state.dcsWaypoints.push({
+          id: state.idCounter,
+          name: waypoint.name,
+          lat: waypoint.lat,
+          long: waypoint.long,
+          elev: waypoint.elev,
+        });
+        state.idCounter++;
+      }
+    },
   },
 });
 export const waypointsActions = waypointsSlice.actions;

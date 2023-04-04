@@ -36,7 +36,7 @@ function createWindow() {
 app.whenReady().then(() => {
   createWindow();
   udpListener = new UDPListener(mainWindow);
-  selectionHandler = new SelectionHandler();
+  selectionHandler = new SelectionHandler(mainWindow);
   udpSender = new UDPSender();
 });
 

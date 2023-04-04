@@ -5,6 +5,7 @@ const theWayTheme = {
     mode: "dark",
     primary: green,
     secondary: red,
+    neutral: { main: grey[800] },
     background: {
       default: grey[900],
       paper: grey[850],

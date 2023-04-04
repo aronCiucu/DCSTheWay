@@ -1,5 +1,6 @@
 import { Fab, Grid, Typography } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { useSelector } from "react-redux";
 
 const TransferControls = (props) => {
@@ -11,10 +12,15 @@ const TransferControls = (props) => {
       {showButton && (
         <Grid
           container
-          justifyContent="center"
+          justifyContent="space-around"
           alignItems="center"
           style={{ height: "100%" }}
         >
+          <Grid item>
+            <Fab size="medium" color="neutral" onClick={props.onSaveFile}>
+              <FileDownloadIcon style={{ color: "white" }} />
+            </Fab>
+          </Grid>
           <Grid item>
             <Fab variant="extended" color="primary" onClick={props.onTransfer}>
               <Typography variant="button" pr={2}>

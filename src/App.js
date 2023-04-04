@@ -1,11 +1,12 @@
 import { Box, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ModalContainer from "react-modal-promise";
 
 import SourceSelector from "./components/SourceSelector";
 import WaypointList from "./components/WaypointList";
 import { dcsPointActions } from "./store/dcsPoint";
+import { waypointsActions } from "./store/waypoints";
 import theWayTheme from "./theme/TheWayTheme";
 import TransferControls from "./components/TransferControls";
 import TitleBar from "./components/TitleBar";
@@ -27,7 +28,10 @@ function App() {
     ipcRenderer.on("dataReceived", (event, msg) => {
       dispatch(dcsPointActions.changeCoords(JSON.parse(msg)));
     });
-  }, [dispatch]);
+    ipcRenderer.on("fileOpened", (event, msg) => {
+      dispatch(waypointsActions.appendWaypoints(msg));
+    });
+  }, []);
 
   const handleTransfer = async () => {
     const moduleWaypoints = ConvertModuleWaypoints(dcsWaypoints, module);
@@ -50,7 +54,7 @@ function App() {
           }
           ipcRenderer.send("transfer", commands);
         })
-        .catch((err) => {});
+        .catch(() => {});
     } else if (module === "FA-18C_hornet") {
       //show warning dialog
       AlertDialog({
@@ -69,6 +73,10 @@ function App() {
     }
   };
 
+  const handleFileSave = () => {
+    ipcRenderer.send("saveFile", JSON.stringify(dcsWaypoints));
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline enableColorScheme />
@@ -82,7 +90,10 @@ function App() {
           <WaypointList />
         </Box>
         <Box sx={{ height: "15%" }}>
-          <TransferControls onTransfer={handleTransfer} />
+          <TransferControls
+            onTransfer={handleTransfer}
+            onSaveFile={handleFileSave}
+          />
         </Box>
       </Box>
     </ThemeProvider>
