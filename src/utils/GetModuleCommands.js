@@ -450,6 +450,650 @@ export default function getModuleCommands(module, waypoints) {
 
       return payload;
     }
+    case "FA-18C_hornet": {
+      let payload = [];
+      //enter the SUPT menu
+      payload.push({
+        device: 37,
+        code: 3028,
+        delay: 100,
+        activate: 1,
+        addDepress: "true",
+      });
+      payload.push({
+        device: 37,
+        code: 3028,
+        delay: 100,
+        activate: 1,
+        addDepress: "true",
+      });
+      //select HSD
+      payload.push({
+        device: 37,
+        code: 3012,
+        delay: 100,
+        activate: 1,
+        addDepress: "true",
+      });
+      //select DATA
+      payload.push({
+        device: 37,
+        code: 3020,
+        delay: 100,
+        activate: 1,
+        addDepress: "true",
+      });
+
+      for (const waypoint of waypoints) {
+        //increment waypoint
+        payload.push({
+          device: 37,
+          code: 3022,
+          delay: 100,
+          activate: 1,
+          addDepress: "true",
+        });
+        //press UFC
+        payload.push({
+          device: 37,
+          code: 3015,
+          delay: 100,
+          activate: 1,
+          addDepress: "true",
+        });
+        //press position 1
+        payload.push({
+          device: 25,
+          code: 3010,
+          delay: 100,
+          activate: 1,
+          addDepress: "true",
+        });
+        //Type hem
+        if (waypoint.latHem === "N") {
+          payload.push({
+            device: 25,
+            code: 3020,
+            delay: 100,
+            activate: 1,
+            addDepress: "true",
+          });
+        } else {
+          payload.push({
+            device: 25,
+            code: 3026,
+            delay: 100,
+            activate: 1,
+            addDepress: "true",
+          });
+        }
+        //enter first lat digits
+        const firstLat = waypoint.lat.substring(0, waypoint.lat.length - 4 - 2);
+        const last4Lat = waypoint.lat.substring(waypoint.lat.length - 4 - 2);
+        //Type lat
+        for (let i = 0; i < firstLat.length; i++) {
+          // eslint-disable-next-line default-case
+          switch (firstLat.charAt(i)) {
+            case "1":
+              payload.push({
+                device: 25,
+                code: 3019,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "2":
+              payload.push({
+                device: 25,
+                code: 3020,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "3":
+              payload.push({
+                device: 25,
+                code: 3021,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "4":
+              payload.push({
+                device: 25,
+                code: 3022,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "5":
+              payload.push({
+                device: 25,
+                code: 3023,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "6":
+              payload.push({
+                device: 25,
+                code: 3024,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "7":
+              payload.push({
+                device: 25,
+                code: 3025,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "8":
+              payload.push({
+                device: 25,
+                code: 3026,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "9":
+              payload.push({
+                device: 25,
+                code: 3027,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "0":
+              payload.push({
+                device: 25,
+                code: 3018,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+          }
+        }
+        //press enter
+        payload.push({
+          device: 25,
+          code: 3029,
+          delay: 100,
+          activate: 1,
+          addDepress: "true",
+        });
+        //enter last 4 digits
+        for (let i = 0; i < last4Lat.length; i++) {
+          // eslint-disable-next-line default-case
+          switch (last4Lat.charAt(i)) {
+            case "1":
+              payload.push({
+                device: 25,
+                code: 3019,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "2":
+              payload.push({
+                device: 25,
+                code: 3020,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "3":
+              payload.push({
+                device: 25,
+                code: 3021,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "4":
+              payload.push({
+                device: 25,
+                code: 3022,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "5":
+              payload.push({
+                device: 25,
+                code: 3023,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "6":
+              payload.push({
+                device: 25,
+                code: 3024,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "7":
+              payload.push({
+                device: 25,
+                code: 3025,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "8":
+              payload.push({
+                device: 25,
+                code: 3026,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "9":
+              payload.push({
+                device: 25,
+                code: 3027,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "0":
+              payload.push({
+                device: 25,
+                code: 3018,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+          }
+        }
+        //press enter
+        payload.push({
+          device: 25,
+          code: 3029,
+          delay: 100,
+          activate: 1,
+          addDepress: "true",
+        });
+        //Type hem
+        if (waypoint.latHem === "E") {
+          payload.push({
+            device: 25,
+            code: 3024,
+            delay: 100,
+            activate: 1,
+            addDepress: "true",
+          });
+        } else {
+          payload.push({
+            device: 25,
+            code: 3022,
+            delay: 100,
+            activate: 1,
+            addDepress: "true",
+          });
+        }
+        //enter first long digits
+        const firstLong = waypoint.long.substring(
+          0,
+          waypoint.long.length - 4 - 2
+        );
+        const last4Long = waypoint.long.substring(waypoint.long.length - 4 - 2);
+        //Type long
+        for (let i = 0; i < firstLong.length; i++) {
+          // eslint-disable-next-line default-case
+          switch (firstLong.charAt(i)) {
+            case "1":
+              payload.push({
+                device: 25,
+                code: 3019,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "2":
+              payload.push({
+                device: 25,
+                code: 3020,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "3":
+              payload.push({
+                device: 25,
+                code: 3021,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "4":
+              payload.push({
+                device: 25,
+                code: 3022,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "5":
+              payload.push({
+                device: 25,
+                code: 3023,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "6":
+              payload.push({
+                device: 25,
+                code: 3024,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "7":
+              payload.push({
+                device: 25,
+                code: 3025,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "8":
+              payload.push({
+                device: 25,
+                code: 3026,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "9":
+              payload.push({
+                device: 25,
+                code: 3027,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "0":
+              payload.push({
+                device: 25,
+                code: 3018,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+          }
+        }
+        //press enter
+        payload.push({
+          device: 25,
+          code: 3029,
+          delay: 100,
+          activate: 1,
+          addDepress: "true",
+        });
+        //enter last 4 digits
+        for (let i = 0; i < last4Long.length; i++) {
+          // eslint-disable-next-line default-case
+          switch (last4Long.charAt(i)) {
+            case "1":
+              payload.push({
+                device: 25,
+                code: 3019,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "2":
+              payload.push({
+                device: 25,
+                code: 3020,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "3":
+              payload.push({
+                device: 25,
+                code: 3021,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "4":
+              payload.push({
+                device: 25,
+                code: 3022,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "5":
+              payload.push({
+                device: 25,
+                code: 3023,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "6":
+              payload.push({
+                device: 25,
+                code: 3024,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "7":
+              payload.push({
+                device: 25,
+                code: 3025,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "8":
+              payload.push({
+                device: 25,
+                code: 3026,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "9":
+              payload.push({
+                device: 25,
+                code: 3027,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "0":
+              payload.push({
+                device: 25,
+                code: 3018,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+          }
+        }
+        //press enter
+        payload.push({
+          device: 25,
+          code: 3029,
+          delay: 100,
+          activate: 1,
+          addDepress: "true",
+        });
+        //press position 3 to select elevation
+        payload.push({
+          device: 25,
+          code: 3012,
+          delay: 100,
+          activate: 1,
+          addDepress: "true",
+        });
+        //press position 1 to select feet
+        payload.push({
+          device: 25,
+          code: 3010,
+          delay: 100,
+          activate: 1,
+          addDepress: "true",
+        });
+        //Type elev
+        for (let i = 0; i < waypoint.elev.length; i++) {
+          // eslint-disable-next-line default-case
+          switch (waypoint.elev.charAt(i)) {
+            case "1":
+              payload.push({
+                device: 25,
+                code: 3019,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "2":
+              payload.push({
+                device: 25,
+                code: 3020,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "3":
+              payload.push({
+                device: 25,
+                code: 3021,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "4":
+              payload.push({
+                device: 25,
+                code: 3022,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "5":
+              payload.push({
+                device: 25,
+                code: 3023,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "6":
+              payload.push({
+                device: 25,
+                code: 3024,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "7":
+              payload.push({
+                device: 25,
+                code: 3025,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "8":
+              payload.push({
+                device: 25,
+                code: 3026,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "9":
+              payload.push({
+                device: 25,
+                code: 3027,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+            case "0":
+              payload.push({
+                device: 25,
+                code: 3018,
+                delay: 100,
+                activate: 1,
+                addDepress: "true",
+              });
+              break;
+          }
+        }
+        //press enter
+        payload.push({
+          device: 25,
+          code: 3029,
+          delay: 100,
+          activate: 1,
+          addDepress: "true",
+        });
+      }
+
+      return payload;
+    }
     case "AH-64D_BLK_IIpilot": {
       let payload = [];
       //Enter TSD Page

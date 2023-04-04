@@ -12,6 +12,7 @@ import TitleBar from "./components/TitleBar";
 import ConvertModuleWaypoints from "./utils/ConvertModuleWaypoints";
 import GetModuleCommands from "./utils/GetModuleCommands";
 import { TwoOptionsDialog } from "./components/TwoOptionsDialog";
+import { AlertDialog } from "./components/AlertDialog";
 
 const { ipcRenderer } = window.require("electron");
 
@@ -52,6 +53,16 @@ function App() {
         .catch((err) => {});
     } else if (module === "FA-18C_hornet") {
       //show warning dialog
+      AlertDialog({
+        title: "Please make sure that",
+        content:
+          "1. PRECISE option is boxed in HSI > DATA\n" +
+          "2. You are not in the TAC menu\n" +
+          "3. You are in the 00°00.0000' coordinate format",
+      }).then(() => {
+        const commands = GetModuleCommands("FA-18C_hornet", moduleWaypoints);
+        ipcRenderer.send("transfer", commands);
+      });
     } else {
       const commands = GetModuleCommands(module, moduleWaypoints);
       ipcRenderer.send("transfer", commands);

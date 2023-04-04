@@ -139,6 +139,38 @@ const convert = (dcsWaypoints, module) => {
       }
       return waypoints;
     }
+    case "FA-18C_hornet": {
+      // lat  00.00.0000 DMM
+      //long 000.00.0000
+      let waypoints = [];
+      for (const dcsWaypoint of dcsWaypoints) {
+        const name = dcsWaypoint.name;
+        const id = dcsWaypoint.id;
+        const dmmLat = Convertors.decimalToDMM(dcsWaypoint.lat);
+        const dmmLong = Convertors.decimalToDMM(dcsWaypoint.long);
+        const lat =
+          dmmLat.deg.toString().padStart(2, "0") +
+          "." +
+          dmmLat.min.toFixed(4).toString().padStart(7, "0");
+        const long =
+          dmmLong.deg.toString().padStart(3, "0") +
+          "." +
+          dmmLong.min.toFixed(4).toString().padStart(7, "0");
+        const elev = Math.trunc(Convertors.mToF(dcsWaypoint.elev)).toString();
+        const latHem = dcsWaypoint.lat > 0 ? "N" : "S";
+        const longHem = dcsWaypoint.long > 0 ? "E" : "W";
+        waypoints.push({
+          name,
+          id,
+          lat,
+          long,
+          elev,
+          latHem,
+          longHem,
+        });
+      }
+      return waypoints;
+    }
     default:
       return [];
   }
