@@ -38,10 +38,30 @@ class SelectionHandler {
   }
 
   saveFile(commands) {
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    const d = new Date();
+    const filename = `waypoints${
+      d.getDate() + "" + monthNames[d.getMonth()] + "" + d.getFullYear()
+    }`;
+
     dialog
       .showSaveDialog({
         title: "Save waypoints in a file",
-        defaultPath: "waypoints.tw",
+        defaultPath: `${filename}.tw`,
         filters: [{ name: "TheWay file", extensions: ["tw"] }],
       })
       .then(({ filePath }) => {
