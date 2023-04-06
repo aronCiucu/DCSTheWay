@@ -1,4 +1,4 @@
-import { MenuItem, Select, Fab, Grid } from "@mui/material";
+import { MenuItem, Select, Fab, Grid, Typography, Box } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
@@ -6,10 +6,23 @@ import { useDispatch, useSelector } from "react-redux";
 
 import "./SourceSelector.css";
 import { uiActions } from "../store/ui";
+import Banner from "./Banner";
 
 const { ipcRenderer } = window.require("electron");
 
 const inputMethods = ["F10 Map", "From a file"];
+const supportedModules = [
+  "F-16C_50",
+  "F-16I",
+  "FA-18C_hornet",
+  "AH-64D_BLK_II",
+  "A-10C_2",
+  "A-10C",
+  "M-2000C",
+  "AV8BNA",
+  "Ka-50",
+  "Ka-50_3",
+];
 const SourceSelector = () => {
   const [inputMethod, setInputMethod] = useState("F10 Map");
   const [isSelecting, setIsSelecting] = useState(false);
@@ -36,14 +49,28 @@ const SourceSelector = () => {
     }
   };
 
+  const isSupportedModule = supportedModules.includes(module);
+
   return (
     <>
       <div className="parent-container">
-        <img
-          alt="module-image"
-          className="image-container"
-          src={`/assets/moduleImages/${module}.png`}
-        />
+        {module === null ? (
+          <Banner
+            text="No Connection To DCS"
+            imagePath={"/assets/defaultImage.jpg"}
+          ></Banner>
+        ) : isSupportedModule ? (
+          <Banner
+            text={module}
+            imagePath={`/assets/moduleImages/${module}.jpg`}
+          ></Banner>
+        ) : (
+          <Banner
+            text="Module Not Supported"
+            imagePath={"/assets/defaultImage.jpg"}
+          ></Banner>
+        )}
+
         <div className="selection-method">
           <Grid
             container

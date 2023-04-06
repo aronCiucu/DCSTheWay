@@ -2,15 +2,10 @@
     position: relative;
     height: 100%;
 }
-.image-container{
-    width: 100%;
-    height:100%;
-    object-fit: cover;
-    mask-image: linear-gradient(white 0%, transparent 80%);
-}
+
+
 .selection-method{
     position: absolute;
     bottom: 0px;
     width: 100%;
-
 }
