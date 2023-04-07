@@ -7,6 +7,7 @@ import { closestCenter, DndContext } from "@dnd-kit/core";
 import {
   restrictToVerticalAxis,
   restrictToParentElement,
+  restrictToFirstScrollableAncestor,
 } from "@dnd-kit/modifiers";
 import {
   SortableContext,
@@ -60,7 +61,11 @@ const WaypointList = () => {
         <DndContext
           collisionDetection={closestCenter}
           onDragEnd={handleDragEnd}
-          modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+          modifiers={[
+            restrictToVerticalAxis,
+            restrictToParentElement,
+            restrictToFirstScrollableAncestor,
+          ]}
         >
           <SortableContext
             items={moduleCoordinates}

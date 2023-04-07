@@ -1,12 +1,4 @@
-import {
-  MenuItem,
-  Select,
-  Fab,
-  Grid,
-  Typography,
-  Box,
-  Tooltip,
-} from "@mui/material";
+import { MenuItem, Select, Fab, Grid, Tooltip } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
@@ -88,29 +80,27 @@ const SourceSelector = () => {
             px={2}
           >
             <Grid item xs>
-              <Tooltip title="Input method">
-                <Select
-                  value={inputMethod}
-                  onChange={handleInputMethodChange}
-                  sx={{ width: "100%" }}
-                  size="small"
-                  inputProps={{
-                    MenuProps: {
-                      MenuListProps: {
-                        sx: {
-                          backgroundColor: "background.default",
-                        },
+              <Select
+                value={inputMethod}
+                onChange={handleInputMethodChange}
+                sx={{ width: "100%" }}
+                size="small"
+                inputProps={{
+                  MenuProps: {
+                    MenuListProps: {
+                      sx: {
+                        backgroundColor: "background.default",
                       },
                     },
-                  }}
-                >
-                  {inputMethods.map((im) => (
-                    <MenuItem key={im} value={im}>
-                      {im}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </Tooltip>
+                  },
+                }}
+              >
+                {inputMethods.map((im) => (
+                  <MenuItem key={im} value={im}>
+                    {im}
+                  </MenuItem>
+                ))}
+              </Select>
             </Grid>
             <Grid item>
               <Tooltip
@@ -121,6 +111,7 @@ const SourceSelector = () => {
                   aria-label={
                     isSelecting ? "Stop selection" : "Begin selection"
                   }
+                  disabled={module === null}
                   onClick={handleFab}
                 >
                   {isSelecting ? <CloseIcon /> : <AddIcon />}
