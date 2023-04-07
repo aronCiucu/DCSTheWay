@@ -1,4 +1,4 @@
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton, Tooltip } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import MinimizeIcon from "@mui/icons-material/Minimize";
 
@@ -15,12 +15,16 @@ const TitleBar = () => {
   return (
     <Box className="parent">
       <Box className="buttons">
-        <IconButton onClick={minimizeHandler}>
-          <MinimizeIcon />
-        </IconButton>
-        <IconButton onClick={closeHandler}>
-          <CloseIcon />
-        </IconButton>
+        <Tooltip title="Minimize">
+          <IconButton onClick={minimizeHandler}>
+            <MinimizeIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Close">
+          <IconButton onClick={closeHandler}>
+            <CloseIcon />
+          </IconButton>
+        </Tooltip>
       </Box>
     </Box>
   );

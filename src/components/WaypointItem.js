@@ -8,6 +8,7 @@ import {
   TextField,
   Input,
   Box,
+  Tooltip,
 } from "@mui/material";
 import {
   DragHandle,
@@ -80,9 +81,11 @@ const WaypointItem = (props) => {
         </Grid>
         <Grid item xs={5}>
           {props.pending ? (
-            <Button variant="contained" onClick={props.onSave}>
-              Save
-            </Button>
+            <Tooltip title="Save waypoint">
+              <Button variant="contained" onClick={props.onSave}>
+                Save
+              </Button>
+            </Tooltip>
           ) : (
             <Stack
               direction="row"

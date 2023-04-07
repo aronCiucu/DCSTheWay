@@ -16,6 +16,7 @@ const Banner = (props) => {
         alt="module-image"
         className="image-container"
         src={props.imagePath}
+        draggable="false"
       />
     </>
   );

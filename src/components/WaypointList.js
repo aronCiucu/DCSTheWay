@@ -5,6 +5,10 @@ import { waypointsActions } from "../store/waypoints";
 import Convertors from "../utils/Convertors";
 import { closestCenter, DndContext } from "@dnd-kit/core";
 import {
+  restrictToVerticalAxis,
+  restrictToParentElement,
+} from "@dnd-kit/modifiers";
+import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
@@ -56,6 +60,7 @@ const WaypointList = () => {
         <DndContext
           collisionDetection={closestCenter}
           onDragEnd={handleDragEnd}
+          modifiers={[restrictToVerticalAxis, restrictToParentElement]}
         >
           <SortableContext
             items={moduleCoordinates}
