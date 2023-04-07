@@ -1,8 +1,11 @@
 const { BrowserWindow, screen, ipcMain } = require("electron");
+const path = require("path");
 
 class MainWindow extends BrowserWindow {
   constructor() {
     super({
+      icon: path.join(__dirname, "../public/TheWayIcon40.ico"),
+      show: false,
       width: 300,
       height: 500,
       x: 0,
@@ -36,6 +39,9 @@ class MainWindow extends BrowserWindow {
     });
     this.on("restore", () => {
       this.setFocusable(false);
+    });
+    this.on("ready-to-show", () => {
+      this.show();
     });
   }
 }

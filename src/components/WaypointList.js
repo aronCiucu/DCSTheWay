@@ -1,4 +1,4 @@
-import { Card, List } from "@mui/material";
+import { Box, Card, List, Typography } from "@mui/material";
 import WaypointItem from "./WaypointItem";
 import { useDispatch, useSelector } from "react-redux";
 import { waypointsActions } from "../store/waypoints";
@@ -22,7 +22,7 @@ const WaypointList = () => {
   const dispatch = useDispatch();
 
   const moduleCoordinates = ConvertModuleWaypoints(dcsWaypoints, module);
-
+  const hasWaypoints = dcsWaypoints.length > 0;
   const saveWaypointHandler = () => {
     dispatch(
       waypointsActions.addDcsWaypoint({
@@ -57,7 +57,14 @@ const WaypointList = () => {
 
   return (
     <Card sx={{ borderRadius: "10px", height: "100%" }}>
-      <List style={{ maxHeight: "100%", overflow: "auto", padding: 0 }}>
+      <List
+        style={{
+          maxHeight: "100%",
+          height: "100%",
+          overflow: "auto",
+          padding: 0,
+        }}
+      >
         <DndContext
           collisionDetection={closestCenter}
           onDragEnd={handleDragEnd}
@@ -71,34 +78,56 @@ const WaypointList = () => {
             items={moduleCoordinates}
             strategy={verticalListSortingStrategy}
           >
-            {moduleCoordinates.map((wp) => (
-              <WaypointItem
-                key={wp.id}
-                id={wp.id}
-                pending={false}
-                name={wp.name}
-                lat={wp.lat}
-                long={wp.long}
-                elev={wp.elev}
-                latHem={wp.latHem}
-                longHem={wp.longHem}
-                onRename={renameHandler}
-                onElevation={elevationHandler}
-                onDelete={deleteHandler}
-              />
-            ))}
+            {hasWaypoints || isPending ? (
+              <>
+                {moduleCoordinates.map((wp) => (
+                  <WaypointItem
+                    key={wp.id}
+                    id={wp.id}
+                    pending={false}
+                    name={wp.name}
+                    lat={wp.lat}
+                    long={wp.long}
+                    elev={wp.elev}
+                    latHem={wp.latHem}
+                    longHem={wp.longHem}
+                    onRename={renameHandler}
+                    onElevation={elevationHandler}
+                    onDelete={deleteHandler}
+                  />
+                ))}
 
-            {isPending && (
-              <WaypointItem
-                pending={true}
-                name={"New Waypoint"}
-                lat={null}
-                long={null}
-                elev={null}
-                latHem={null}
-                longHem={null}
-                onSave={saveWaypointHandler}
-              />
+                {isPending && (
+                  <WaypointItem
+                    pending={true}
+                    name={"New Waypoint"}
+                    lat={null}
+                    long={null}
+                    elev={null}
+                    latHem={null}
+                    longHem={null}
+                    onSave={saveWaypointHandler}
+                  />
+                )}
+              </>
+            ) : (
+              <Box
+                sx={{
+                  width: "100%",
+                  height: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Typography
+                  variant="overline"
+                  color="grey"
+                  style={{ "user-select": "none" }}
+                >
+                  No waypoints selected...
+                </Typography>
+              </Box>
             )}
           </SortableContext>
         </DndContext>

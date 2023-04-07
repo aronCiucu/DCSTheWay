@@ -36,7 +36,7 @@ const WaypointItem = (props) => {
     setIsExpanded(!isExpanded);
   };
 
-  const handleInputFocus = (event) => {
+  const handleInputFocus = () => {
     ipcRenderer.send("focus");
   };
   const handleInputDefocus = (event) => {
@@ -81,11 +81,17 @@ const WaypointItem = (props) => {
         </Grid>
         <Grid item xs={5}>
           {props.pending ? (
-            <Tooltip title="Save waypoint">
-              <Button variant="contained" onClick={props.onSave}>
-                Save
-              </Button>
-            </Tooltip>
+            <Stack
+              direction="row"
+              justifyContent="flex-end"
+              alignItems="center"
+            >
+              <Tooltip title="Save waypoint">
+                <Button variant="contained" onClick={props.onSave}>
+                  Save
+                </Button>
+              </Tooltip>
+            </Stack>
           ) : (
             <Stack
               direction="row"

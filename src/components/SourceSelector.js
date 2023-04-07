@@ -1,4 +1,4 @@
-import { MenuItem, Select, Fab, Grid, Tooltip } from "@mui/material";
+import { MenuItem, Select, Fab, Grid } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
@@ -103,20 +103,14 @@ const SourceSelector = () => {
               </Select>
             </Grid>
             <Grid item>
-              <Tooltip
-                title={isSelecting ? "End selection" : "Start selection"}
+              <Fab
+                color={isSelecting ? "secondary" : "primary"}
+                aria-label={isSelecting ? "Stop selection" : "Begin selection"}
+                disabled={module === null}
+                onClick={handleFab}
               >
-                <Fab
-                  color={isSelecting ? "secondary" : "primary"}
-                  aria-label={
-                    isSelecting ? "Stop selection" : "Begin selection"
-                  }
-                  disabled={module === null}
-                  onClick={handleFab}
-                >
-                  {isSelecting ? <CloseIcon /> : <AddIcon />}
-                </Fab>
-              </Tooltip>
+                {isSelecting ? <CloseIcon /> : <AddIcon />}
+              </Fab>
             </Grid>
           </Grid>
         </div>
