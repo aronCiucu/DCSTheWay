@@ -1,10 +1,10 @@
 import { Box, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
-import { useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ModalContainer from "react-modal-promise";
 
 import SourceSelector from "./components/SourceSelector";
-import WaypointList from "./components/WaypointList";
+import WaypointList, { saveWaypointHandler } from "./components/WaypointList";
 import { dcsPointActions } from "./store/dcsPoint";
 import { waypointsActions } from "./store/waypoints";
 import theWayTheme from "./theme/TheWayTheme";
@@ -21,8 +21,32 @@ const theme = createTheme(theWayTheme);
 
 function App() {
   const dispatch = useDispatch();
-  const module = useSelector((state) => state.dcsPoint.module);
+  const { module, lat, long, elev } = useSelector((state) => state.dcsPoint);
   const dcsWaypoints = useSelector((state) => state.waypoints.dcsWaypoints);
+
+  const latRef = useRef();
+  const longRef = useRef();
+  const elevRef = useRef();
+  const moduleRef = useRef();
+  const dcsWaypointsRef = useRef();
+  useEffect(() => {
+    latRef.current = lat;
+    longRef.current = long;
+    elevRef.current = elev;
+    moduleRef.current = module;
+    dcsWaypointsRef.current = dcsWaypoints;
+  }, [lat, long, elev, module, dcsWaypoints]);
+
+  // const transferCallback = useCallback(() => {
+  //   handleTransfer();
+  // }, [module, dcsWaypoints]);
+  //
+  // useEffect(() => {
+  //   console.log("use effect");
+  //   ipcRenderer.on("transferWaypoints", () => {
+  //     transferCallback();
+  //   });
+  // }, []);
 
   useEffect(() => {
     ipcRenderer.on("dataReceived", (event, msg) => {
@@ -31,12 +55,30 @@ function App() {
     ipcRenderer.on("fileOpened", (event, msg) => {
       dispatch(waypointsActions.appendWaypoints(msg));
     });
+    ipcRenderer.on("saveWaypoint", () => {
+      dispatch(
+        waypointsActions.addDcsWaypoint({
+          lat: latRef.current,
+          long: longRef.current,
+          elev: elevRef.current,
+        })
+      );
+    });
+    ipcRenderer.on("transferWaypoints", () => {
+      handleTransfer();
+    });
+    ipcRenderer.on("deleteWaypoints", () => {
+      dispatch(waypointsActions.deleteAll());
+    });
   }, []);
 
   const handleTransfer = async () => {
-    const moduleWaypoints = ConvertModuleWaypoints(dcsWaypoints, module);
+    const moduleWaypoints = ConvertModuleWaypoints(
+      dcsWaypointsRef.current,
+      moduleRef.current
+    );
     // Check for special cases which require additional pilot feedback
-    if (module === "AH-64D_BLK_II") {
+    if (moduleRef.current === "AH-64D_BLK_II") {
       TwoOptionsDialog({
         title: "What seat are you in?",
         op1: "Pilot",
@@ -55,7 +97,7 @@ function App() {
           ipcRenderer.send("transfer", commands);
         })
         .catch(() => {});
-    } else if (module === "FA-18C_hornet") {
+    } else if (moduleRef.current === "FA-18C_hornet") {
       //show warning dialog
       AlertDialog({
         title: "Please make sure that",
@@ -68,7 +110,7 @@ function App() {
         ipcRenderer.send("transfer", commands);
       });
     } else {
-      const commands = GetModuleCommands(module, moduleWaypoints);
+      const commands = GetModuleCommands(moduleRef.current, moduleWaypoints);
       ipcRenderer.send("transfer", commands);
     }
   };

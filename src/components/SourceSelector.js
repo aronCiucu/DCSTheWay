@@ -66,7 +66,7 @@ const SourceSelector = () => {
           ></Banner>
         ) : (
           <Banner
-            text="Module Not Supported"
+            text={`Module Not Supported: ${module}`}
             imagePath={"/assets/defaultImage.jpg"}
           ></Banner>
         )}

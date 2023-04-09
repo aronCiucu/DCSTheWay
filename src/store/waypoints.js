@@ -37,6 +37,10 @@ const waypointsSlice = createSlice({
       );
       state.dcsWaypoints.splice(index, 1);
     },
+    deleteAll(state) {
+      state.dcsWaypoints = [];
+      state.idCounter = 1;
+    },
     changeOrder(state, action) {
       const oldIndex = state.dcsWaypoints.findIndex(
         (i) => i.id === action.payload.over
