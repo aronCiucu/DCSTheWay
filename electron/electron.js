@@ -22,9 +22,9 @@ function createWindow() {
   );
 
   mainWindow.on("closed", () => app.quit());
-  //Open the DevTools.
-  mainWindow.webContents.openDevTools({ mode: "detach" });
   if (isDev) {
+    //Open the DevTools.
+    mainWindow.webContents.openDevTools({ mode: "detach" });
     session.defaultSession.loadExtension(
       "C:\\Users\\ardro\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\4.27.2_0"
     );

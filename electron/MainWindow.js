@@ -4,7 +4,7 @@ const path = require("path");
 class MainWindow extends BrowserWindow {
   constructor() {
     super({
-      icon: path.join(__dirname, "../public/TheWayIcon40.ico"),
+      icon: path.join(__dirname, "../public/TheWayIcon.ico"),
       show: false,
       width: 300,
       height: 500,
