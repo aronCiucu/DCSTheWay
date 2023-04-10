@@ -57,17 +57,17 @@ const SourceSelector = () => {
         {module === null ? (
           <Banner
             text="No Connection To DCS"
-            imagePath={"/assets/defaultImage.jpg"}
+            imagePath={"./assets/defaultImage.jpg"}
           ></Banner>
         ) : isSupportedModule ? (
           <Banner
             text={module}
-            imagePath={`/assets/moduleImages/${module}.jpg`}
+            imagePath={`./assets/moduleImages/${module}.jpg`}
           ></Banner>
         ) : (
           <Banner
             text={`Module Not Supported: ${module}`}
-            imagePath={"/assets/defaultImage.jpg"}
+            imagePath={"./assets/defaultImage.jpg"}
           ></Banner>
         )}
 

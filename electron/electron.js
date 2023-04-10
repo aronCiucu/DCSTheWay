@@ -18,13 +18,13 @@ function createWindow() {
   mainWindow.loadURL(
     isDev
       ? "http://localhost:3000"
-      : `file://${path.join(__dirname, "index.html")}`
+      : `file://${path.join(__dirname, "../build/index.html")}`
   );
 
   mainWindow.on("closed", () => app.quit());
   //Open the DevTools.
+  mainWindow.webContents.openDevTools({ mode: "detach" });
   if (isDev) {
-    mainWindow.webContents.openDevTools({ mode: "detach" });
     session.defaultSession.loadExtension(
       "C:\\Users\\ardro\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\4.27.2_0"
     );
