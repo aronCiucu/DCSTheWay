@@ -52,6 +52,7 @@
     "react-scripts": "5.0.1"
   },
   "build": {
+    "productName": "TheWay",
     "extends": null,
     "files": ["node_modules","build/**/*","electron"],
     "win": {
