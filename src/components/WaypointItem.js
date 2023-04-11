@@ -9,6 +9,7 @@ import {
   Input,
   Box,
   Tooltip,
+  Typography,
 } from "@mui/material";
 import {
   DragHandle,
@@ -65,15 +66,53 @@ const WaypointItem = (props) => {
                 onKeyDown={handleInputFinished}
               ></TextField>
 
-              <Input disabled value={props.latHem + " " + props.lat}></Input>
-              <Input disabled value={props.longHem + " " + props.long}></Input>
-              <Input
-                value={props.elev}
-                onChange={(e) => props.onElevation(e, props.id)}
-                onMouseEnter={handleInputFocus}
-                onMouseLeave={handleInputDefocus}
-                onKeyDown={handleInputFinished}
-              ></Input>
+              <Box sx={{ mx: 0.5 }}>
+                <Grid container spacing={3}>
+                  <Grid item xs={3}>
+                    <Typography variant="overline" color="grey">
+                      LAT
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={9}>
+                    <Input
+                      disabled
+                      value={props.latHem + " " + props.lat}
+                      fullWidth={false}
+                    ></Input>
+                  </Grid>
+                </Grid>
+
+                <Grid container spacing={3}>
+                  <Grid item xs={3}>
+                    <Typography variant="overline" color="grey">
+                      LONG
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={9}>
+                    <Input
+                      disabled
+                      value={props.longHem + " " + props.long}
+                    ></Input>
+                  </Grid>
+                </Grid>
+
+                <Grid container spacing={3}>
+                  <Grid item xs={3}>
+                    <Typography variant="overline" color="grey">
+                      ELEV
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={9}>
+                    <Input
+                      value={props.elev}
+                      onChange={(e) => props.onElevation(e, props.id)}
+                      onMouseEnter={handleInputFocus}
+                      onMouseLeave={handleInputDefocus}
+                      onKeyDown={handleInputFinished}
+                    ></Input>
+                  </Grid>
+                </Grid>
+              </Box>
             </Stack>
           ) : (
             <ListItemText>{props.name}</ListItemText>
