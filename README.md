@@ -1,5 +1,6 @@
 # DCSTheWay
 Imports waypoints right into the plane navigation system, like a Data Transfer Cartridge.
+[DCS Forums thread here](https://forum.dcs.world/topic/272110-transfer-steerpoints-from-the-f10-map-into-the-aircraft-dcs-the-way/)
 
 ## What does it do?
 You choose points on the DCS F10 map, press a button, and those points will be entered as steerpoints into your plane automatically. 
@@ -36,6 +37,10 @@ If you are updating from an older version, simply download the newest release, r
 Video tutorial here:
 
 [![DCSTheWayVideoThumbnail](http://img.youtube.com/vi/0PHWXWClENQ/0.jpg)](http://www.youtube.com/watch?v=0PHWXWClENQ)
+
+## FAQ
+### I have a problem with my installation
+Worry not, feel free to message me on Discord (Doge#4634) or the ED Forums thread and we'll have it sorted!
 
 ## Credits
 Special thanks to discord users: kukiric, Bepis, the88tench, okopanja, and the ED Forums users for their suggestions and help.

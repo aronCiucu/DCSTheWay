@@ -77,7 +77,6 @@ const WaypointItem = (props) => {
                     <Input
                       disabled
                       value={props.latHem + " " + props.lat}
-                      fullWidth={false}
                     ></Input>
                   </Grid>
                 </Grid>
