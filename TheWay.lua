@@ -1,3 +1,4 @@
+log.write("THEWAY", log.INFO, "Initializing...")
 --Version 3
 local tcpServer                        = nil
 local udpSpeaker                       = nil
@@ -10,6 +11,7 @@ local JSON                             = loadfile("Scripts\\JSON.lua")()
 local upstreamLuaExportStart           = LuaExportStart
 local upstreamLuaExportAfterNextFrame  = LuaExportAfterNextFrame
 local upstreamLuaExportBeforeNextFrame = LuaExportBeforeNextFrame
+
 
 
 function LuaExportStart()
@@ -133,3 +135,5 @@ function LuaExportAfterNextFrame()
         end
     end
 end
+
+log.write("THEWAY", log.INFO, "Done")
