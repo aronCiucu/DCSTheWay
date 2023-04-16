@@ -36,7 +36,7 @@ If you are updating from an older version, simply download the newest release, r
 ## How to use? 
 Video tutorial here:
 
-[![DCSTheWayVideoThumbnail](http://img.youtube.com/vi/0PHWXWClENQ/0.jpg)](http://www.youtube.com/watch?v=0PHWXWClENQ)
+[![DCSTheWayVideoThumbnail](https://img.youtube.com/vi/B2Q1VurZ8ms/default.jpg)](https://youtu.be/B2Q1VurZ8ms)
 
 ## FAQ
 ### I have a problem with my installation
