@@ -37,17 +37,6 @@ function App() {
     dcsWaypointsRef.current = dcsWaypoints;
   }, [lat, long, elev, module, dcsWaypoints]);
 
-  // const transferCallback = useCallback(() => {
-  //   handleTransfer();
-  // }, [module, dcsWaypoints]);
-  //
-  // useEffect(() => {
-  //   console.log("use effect");
-  //   ipcRenderer.on("transferWaypoints", () => {
-  //     transferCallback();
-  //   });
-  // }, []);
-
   useEffect(() => {
     ipcRenderer.on("dataReceived", (event, msg) => {
       dispatch(dcsPointActions.changeCoords(JSON.parse(msg)));
