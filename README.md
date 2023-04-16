@@ -21,7 +21,7 @@ Multiplayer is supported as long as the server has Player Exports turned on (mos
 
 ## How to install?
 1. Download the latest zip file from the Releases section, and extract it. 
-2. Copy the `TheWay.lua` file from the folder you just extracted into `Users/YourUsernameHere/Saved Games/DCS/Scripts`. The `DCS` folder name may be `DCS.openbeta` if you are on the openbeta version of the game.
+2. Copy the `TheWay.lua` file from the folder you just extracted into `Users/YourUsernameHere/Saved Games/DCS/Scripts`. The `DCS` folder name may be `DCS.openbeta` if you are on the openbeta version of the game. If you are on Steam, the name will always be just `DCS`.
 3. Edit the `Export.lua` file there and append this line at the end of the file, and save it:
   ```lua
   local TheWayLfs=require('lfs'); dofile(TheWayLfs.writedir()..'Scripts/TheWay.lua')
@@ -41,6 +41,12 @@ Video tutorial here:
 ## FAQ
 ### I have a problem with my installation
 Worry not, feel free to message me on Discord (Doge#4634) or the ED Forums thread and we'll have it sorted!
+
+### How do I use this for VR?
+As I do not own a VR headset, it is hard for me to build a user interface for it. But, instead I have implemented a series of keybinds to help:
+CTRL+SHIFT+S: to save a point
+CTRL+SHIFT+T: to transfer the waypoints
+CTRL+SHIFT+D: to delete all waypoints
 
 ## Credits
 Special thanks to discord users: kukiric, Bepis, the88tench, okopanja, and the ED Forums users for their suggestions and help.
