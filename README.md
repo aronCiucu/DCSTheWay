@@ -15,7 +15,7 @@ Supported modules:
 * AV8BNA Harrier
 * Ka-50 Blackshark
 * AH-64D Apache
-* F-16I Sufa Mod
+* All IDF Mods Project F16s
  
 Multiplayer is supported as long as the server has Player Exports turned on (most servers do).
 
