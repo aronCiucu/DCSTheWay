@@ -8,7 +8,7 @@ export default function getModuleCommands(module, waypoints) {
     case "F-16D_52_NS":
     case "F-16D_Barak_30":
     case "F-16D_Barak_40":
-    case "F-16I":
+    case "F-16I": {
     //====================================  
       let payload = [
         {
