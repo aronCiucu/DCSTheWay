@@ -8,14 +8,16 @@ You can also share those waypoints with your friends, and you will all fly the s
 
 ## What is supported?
 Supported modules:
-* F-16 
+* F-16 (& All IDF Mods Project F16s)
 * F/A-18 
 * A-10C and A-10C2
 * Mirage 2000
 * AV8BNA Harrier
 * Ka-50 Blackshark
 * AH-64D Apache
-* All IDF Mods Project F16s
+
+## Under-development:
+* F15E Strike Eagle
  
 Multiplayer is supported as long as the server has Player Exports turned on (most servers do).
 
