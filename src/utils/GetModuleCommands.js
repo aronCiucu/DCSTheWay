@@ -1,5 +1,24 @@
 export default function getModuleCommands(module, waypoints) {
   switch (module) {
+    case "F-15E_S4+":
+      let payload = [
+        { // Menu button
+          device: 17,
+          code: 3032,
+          delay: 100,
+          activate: -1,
+          addDepress: "true",
+        },
+        {
+          device: 17,
+          code: 3006,
+          delay: 100,
+          activate: 1,
+          addDepress: "true",
+        }
+      ]; 
+      break;
+
     case "F-16C_50":
     //========= IDF Mods Project =========
     case "F-16D_50":
