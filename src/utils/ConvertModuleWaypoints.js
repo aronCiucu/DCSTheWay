@@ -3,7 +3,6 @@ import Convertors from "./Convertors";
 const convert = (dcsWaypoints, module) => {
   switch (module) {
     case "F-16C_50":
-    case "F-15E_S4+":
     //========= IDF Mods Project =========
     case "F-16D_50":
     case "F-16D_50_NS":
