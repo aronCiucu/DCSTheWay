@@ -113,19 +113,14 @@ function LuaExportAfterNextFrame()
     local selfData = LoGetSelfData()
     if (selfData ~= nil) then
         local model = selfData["Name"];
-        local toSend = "{ " ..
-            "\"model\": " ..
-            "\"" ..
-            model ..
-            "\"" ..
-            ", " ..
-            "\"coords\": " ..
-            "{ " ..
-            "\"lat\": " ..
-            "\"" ..
-            coords.latitude ..
-            "\"" .. ", " .. "\"long\": " ..
-            "\"" .. coords.longitude .. "\"" .. "} " .. ", " .. "\"elev\": " .. "\"" .. elevation .. "\"" .. "}"
+        local message = {}
+        message["model"] = model --"Code from GoldJohnKing"
+        message["coords"] = {}
+        message["coords"]["lat"] = tostring(coords.latitude)
+        message["coords"]["long"] = tostring(coords.longitude)
+        message["elev"] = tostring(elevation)
+
+        local toSend = JSON:encode(message)
 
         if pcall(function()
                 socket.try(udpSpeaker:sendto(toSend, "127.0.0.1", 42069))
