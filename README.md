@@ -52,7 +52,7 @@ CTRL+SHIFT+D: to delete all waypoints
 Special thanks to discord users: kukiric, Bepis, the88tench, okopanja, and the ED Forums users for their suggestions and help.
 
 Images provided by:
-* F15E: Coffee
+* F15E: Coffee :coffee:
 * IDF F16s: Hayds_93
 
 ## For nerds
