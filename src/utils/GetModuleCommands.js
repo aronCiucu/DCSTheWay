@@ -1,15 +1,165 @@
 export default function getModuleCommands(module, waypoints) {
   switch (module) {
+    case "F-15E_S4+":
+      let f15eUFCDevice = 17;
+      let f15eNumberCodes = {0: 3000, 1: 3001, 2: 3002, 3: 3003, 4: 3004, 5: 3005, 6: 3006, 7: 3007, 8: 3008, 9: 3009}; // hopefully will reduce length of code 
+      let payload = [
+        { // type 0 into scratchpad
+          device: f15eUFCDevice,
+          code: 3000,
+          delay: 100,
+          activate: 1,
+          addDepress: "true",
+        },
+        { // scratchpad to Waypoint Menu UFC button
+          device: f15eUFCDevice,
+          code: 3001,
+          delay: 100,
+          activate: 1,
+          addDepress: "true",
+        },
+        { // Enter waypoint menu
+          device: f15eUFCDevice,
+          code: 3001,
+          delay: 100,
+          activate: 1,
+          addDepress: "true",
+        }
+      ];
+      for (const waypoint of waypoints) {
+        let waypointNumber = waypoints.indexOf(waypoint);
+        for (let i = 0; i < waypointNumber.length; i++) { // split waypoint number into individual digits
+          payload.push({
+            device: f15eUFCDevice,
+            code: f15eNumberCodes[waypointNumber.charAt(i)],
+            delay: 100,
+            activate: 1,
+            addDepress: "true",
+          });
+        };
+
+        payload.push({ // Press Shift
+          device: f15eUFCDevice,
+          code: 3000,
+          delay: 100,
+          activate: 1,
+          addDepress: "true",
+        });
+        
+        if (waypoint.latHem === "N") { // North
+          payload.push({
+            device: f15eUFCDevice,
+            code: f15eNumberCodes[2],
+            delay: 10,
+            activate: 1,
+            addDepress: "true",
+          });
+        } else {
+          payload.push({ // South 
+            device: f15eUFCDevice,
+            code: f15eNumberCodes[8],
+            delay: 10,
+            activate: 1,
+            addDepress: "true",
+          });
+        }
+
+        for (let i = 0; i < waypoint.lat.length; i++) { // enter latitude into scratchpad
+          // eslint-disable-next-line default-case
+          payload.push({
+            device: f15eUFCDevice,
+            code: f15eNumberCodes[waypoint.lat.charAt(i)],
+            delay: 10,
+            activate: 1,
+            addDepress: "true",
+          });
+        }
+
+        payload.push({ // enter latitutde into UFC
+          device: f15eUFCDevice,
+          code: 3016,
+          delay: 10,
+          activate: 1,
+          addDepress: "true",
+        });
+
+        payload.push({ // Press Shift
+          device: f15eUFCDevice,
+          code: 3000,
+          delay: 100,
+          activate: 1,
+          addDepress: "true",
+        });
+
+        if (waypoint.longHem === "E") { // Type hemisphere into scratchpad
+          payload.push({
+            device: f15eUFCDevice,
+            code: 3008,
+            delay: 10,
+            activate: 1,
+            addDepress: "true",
+          });
+        } else {
+          payload.push({
+            device: f15eUFCDevice,
+            code: 3006,
+            delay: 10,
+            activate: 1,
+            addDepress: "true",
+          });
+        }
+
+        for (let i = 0; i < waypoint.long.length; i++) { // enter longitude into scratchpad
+          // eslint-disable-next-line default-case
+          payload.push({
+            device: f15eUFCDevice,
+            code: f15eNumberCodes[waypoint.long.charAt(i)],
+            delay: 10,
+            activate: 1,
+            addDepress: "true",
+          });
+        }
+
+        payload.push({ // enter longtitude into UFC
+          device: f15eUFCDevice,
+          code: 3016,
+          delay: 10,
+          activate: 1,
+          addDepress: "true",
+        });
+
+        
+        for (let i = 0; i < waypoint.elev.length; i++) { // Type Elevation into scratchpad
+          // eslint-disable-next-line default-case
+          payload.push({
+            device: f15eUFCDevice,
+            code: f15eNumberCodes[waypoint.elev.charAt(i)],
+            delay: 10,
+            activate: 1,
+            addDepress: "true",
+          });
+        }
+
+        payload.push({ // enter elevation into UFC
+          device: f15eUFCDevice,
+          code: 3016,
+          delay: 10,
+          activate: 1,
+          addDepress: "true",
+        });
+    }; 
+    break;
+
     case "F-16C_50":
-    //========= IDF Mods Project =========
     case "F-16D_50":
     case "F-16D_50_NS":
     case "F-16D_52":
     case "F-16D_52_NS":
     case "F-16D_Barak_30":
     case "F-16D_Barak_40":
-    case "F-16I": {
-    //====================================  
+    case "F-16I": 
+    
+    {  
       let payload = [
         {
           device: 17,
