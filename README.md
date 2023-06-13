@@ -51,6 +51,10 @@ CTRL+SHIFT+D: to delete all waypoints
 ## Credits
 Special thanks to discord users: kukiric, Bepis, the88tench, okopanja, and the ED Forums users for their suggestions and help.
 
+Images provided by:
+* F15E: Coffee
+* IDF F16s: Hayds_93
+
 ## For nerds
 The application is built using React.js and Electron. If you'd like to contribute, simply clone the repository and run `npm install`, then `npm run react-start` to start the React page, and `npm run electron-dev` to fire up the Electron side of things.
 If you'd like to build/package the code for production, run `npm run package` and check the `dist` folder for the created installer. 
