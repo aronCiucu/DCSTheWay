@@ -114,12 +114,11 @@ function LuaExportAfterNextFrame()
     if (selfData ~= nil) then
         local model = selfData["Name"];
         local message = {}
-        message["model"] = model --"Code from GoldJohnKing"
+        message["model"] = model
         message["coords"] = {}
         message["coords"]["lat"] = tostring(coords.latitude)
         message["coords"]["long"] = tostring(coords.longitude)
         message["elev"] = tostring(elevation)
-
         local toSend = JSON:encode(message)
 
         if pcall(function()
