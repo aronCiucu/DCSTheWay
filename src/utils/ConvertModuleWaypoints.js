@@ -3,7 +3,15 @@ import Convertors from "./Convertors";
 const convert = (dcsWaypoints, module) => {
   switch (module) {
     case "F-16C_50":
+    //========= IDF Mods Project =========
+    case "F-16D_50":
+    case "F-16D_50_NS":
+    case "F-16D_52":
+    case "F-16D_52_NS":
+    case "F-16D_Barak_30":
+    case "F-16D_Barak_40":
     case "F-16I":
+    //====================================   
     case "A-10C_2":
     case "A-10C":
     case "M-2000C": {
@@ -139,7 +147,10 @@ const convert = (dcsWaypoints, module) => {
       }
       return waypoints;
     }
-    case "FA-18C_hornet": {
+    case "FA-18C_hornet":
+    case "FA-18E":
+    case "FA-18F":
+    case "EA-18G": {
       // lat  00.00.0000 DMM
       //long 000.00.0000
       let waypoints = [];

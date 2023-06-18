@@ -119,7 +119,6 @@ function LuaExportAfterNextFrame()
         message["coords"]["lat"] = tostring(coords.latitude)
         message["coords"]["long"] = tostring(coords.longitude)
         message["elev"] = tostring(elevation)
-    
         local toSend = JSON:encode(message)
 
         if pcall(function()

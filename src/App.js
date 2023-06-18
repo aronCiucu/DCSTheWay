@@ -86,7 +86,7 @@ function App() {
           ipcRenderer.send("transfer", commands);
         })
         .catch(() => {});
-    } else if (moduleRef.current === "FA-18C_hornet") {
+    } else if (moduleRef.current === "FA-18C_hornet" || moduleRef.current === "FA-18E" || moduleRef.current === "FA-18F" || moduleRef.current === "EA-18G") {
       //show warning dialog
       AlertDialog({
         title: "Please make sure that",
