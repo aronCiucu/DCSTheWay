@@ -385,7 +385,11 @@ export default function getModuleCommands(module, waypoints) {
 
       return payload;
     }
-    case "FA-18C_hornet": {
+    case "FA-18C_hornet":
+    case "FA-18E":
+    case "FA-18F":
+    case "EA-18G":
+    {
       let payload = [];
       //enter the SUPT menu
       payload.push({

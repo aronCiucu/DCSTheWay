@@ -148,7 +148,10 @@ const convert = (dcsWaypoints, module) => {
       }
       return waypoints;
     }
-    case "FA-18C_hornet": {
+    case "FA-18C_hornet":
+    case "FA-18E":
+    case "FA-18F":
+    case "EA-18G": {
       // lat  00.00.0000 DMM
       //long 000.00.0000
       let waypoints = [];

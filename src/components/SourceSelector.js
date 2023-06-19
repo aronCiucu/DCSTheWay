@@ -16,7 +16,7 @@ const supportedModules = [
   "F-16C_50",
   //IDF project mods
   "F-16I", "F-16D_50", "F-16D_50_NS", "F-16D_52", "F-16D_52_NS", "F-16D_Barak_30", "F-16D_Barak_40", 
-  "FA-18C_hornet",
+  "FA-18C_hornet", "FA-18E", "FA-18F", "EA-18G",
   "AH-64D_BLK_II",
   "A-10C_2",
   "A-10C",
