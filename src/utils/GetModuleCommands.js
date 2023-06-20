@@ -163,8 +163,7 @@ export default function getModuleCommands(module, waypoints) {
           addDepress: "true",
         });
     }; 
-    break;
-
+    
     case "F-16C_50":
     case "F-16D_50":
     case "F-16D_50_NS":
@@ -173,7 +172,6 @@ export default function getModuleCommands(module, waypoints) {
     case "F-16D_Barak_30":
     case "F-16D_Barak_40":
     case "F-16I": 
-    
     {  
       let payload = [
         {
