@@ -8,7 +8,7 @@ const theWayTheme = {
     neutral: { main: grey[800] },
     background: {
       default: grey[900],
-      paper: grey[850],
+      paper: grey[900],
     },
   },
   typography: {
