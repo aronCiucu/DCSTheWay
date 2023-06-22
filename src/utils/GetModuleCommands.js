@@ -4,7 +4,7 @@ let f15eNumberCodes = {"0": 3000, "1": 3001, "2": 3002, "3": 3003, "4": 3004, "5
 
 export default function getModuleCommands(module, waypoints) {
   switch (module) {
-    case "F-15E_S4+":
+    case "F-15E":
       let f15eUFCDevice = 17;
       let payload = [
         { // type 0 into scratchpad

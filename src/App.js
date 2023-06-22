@@ -98,7 +98,7 @@ function App() {
         const commands = GetModuleCommands("FA-18C_hornet", moduleWaypoints);
         ipcRenderer.send("transfer", commands);
       });
-    } else if (moduleRef.current === "F15E_S4+") {
+    } else if (moduleRef.current === "F-15E") {
       // User must be in Menu 1, with a clear scratchpad
       AlertDialog({
         title: "Please make sure that",
@@ -106,7 +106,7 @@ function App() {
           "1. You are in the top level menu (M1)\n" +
           "2. The scratchpad is clear\n"
       }).then(() => {
-        const commands = GetModuleCommands("F15E_S4+", moduleWaypoints);
+        const commands = GetModuleCommands("F-15E", moduleWaypoints);
         ipcRenderer.send("transfer", commands);
       });
     } else {

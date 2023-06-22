@@ -8,7 +8,7 @@ You can also share those waypoints with your friends, and you will all fly the s
 
 ## What is supported?
 Supported modules:
-* F-15E S4+ (WIP)
+* F-15E (WIP)
 * F-16 (& All IDF Mods Project F16s)
 * F/A-18C (& Superbug FA-18E/F/G) 
 * A-10C and A-10C2
