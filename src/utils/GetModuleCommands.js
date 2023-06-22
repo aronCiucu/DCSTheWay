@@ -4641,6 +4641,82 @@ export default function getModuleCommands(module, waypoints) {
       });
       return payload;
     }
+    case "Mirage-F1EE": {
+      const keys = {
+        1: 3698,
+        2: 3699, // N
+        3: 3700,
+        4: 3701, // W
+        5: 3702,
+        6: 3703, // E
+        7: 3704,
+        8: 3705, // S
+        9: 3706,
+        0: 3697,
+        'INSER': 3711,
+        'MODE': 3692,
+        'PARAM': 3690,
+        'WAYPOINT': 3694
+      };
+
+      let keypadPress = function(key, value = 1, depress = true) {
+        return {
+          device: 1,
+          code: keys[key],
+          delay: 100,
+          activate: value,
+          addDepress: depress ? "true" : "false",
+        };
+      };
+
+      let payload = [
+        //Mode NAV
+        keypadPress('MODE', 0.1, false),
+        //Parameter POS
+        keypadPress('PARAM', 0, false)
+      ];
+
+      for (const waypoint of waypoints) {
+        //Increment waypoint
+        payload.push(keypadPress('WAYPOINT', 0.111, false));
+
+        //Hemisphere
+        if (waypoint.latHem === "N") {
+          payload.push(keypadPress(2));
+        } else {
+          payload.push(keypadPress(8));
+        }
+
+        //Latitude
+        for (const c of waypoint.lat) {
+          if (isNaN(c)) continue;
+          payload.push(keypadPress(parseInt(c)));
+        }
+
+        //Insert
+        payload.push(keypadPress('INSER'));
+
+        //Hemisphere
+        if (waypoint.longHem === "E") {
+          payload.push(keypadPress(6));
+        } else {
+          payload.push(keypadPress(4));
+        }
+
+        //Longitude
+        for (const c of waypoint.long) {
+          if (isNaN(c)) continue;
+          payload.push(keypadPress(parseInt(c)));
+        }
+
+        //Insert
+        payload.push(keypadPress('INSER'));
+      }
+
+      //Parameter PP
+      payload.push(keypadPress('PARAM', 0.2, false))
+      return payload;
+    }
     default:
       return [];
   }

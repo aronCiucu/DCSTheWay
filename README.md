@@ -15,6 +15,7 @@ Supported modules:
 * AV8BNA Harrier
 * Ka-50 Blackshark
 * AH-64D Apache (Pilot and CP/G)
+* Mirage F1EE
 
 ## Under Development
 * F-15E S4+ (WIP)
