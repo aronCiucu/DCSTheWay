@@ -1,27 +1,57 @@
 // global variables for number codes for various aircraft for easy access
 let f16cNumberCodes = {"0": 3002, "1": 3003, "2": 3004, "3": 3005, "4": 3006, "5": 3007, "6": 3008, "7": 3009, "8": 3010, "9": 3011};
-let f15eNumberCodes = {"0": 3000, "1": 3001, "2": 3002, "3": 3003, "4": 3004, "5": 3005, "6": 3006, "7": 3007, "8": 3008, "9": 3009};
+let f15eNumberCodes = {"0": 3036, "1": 3020, "2": 3021, "3": 3022, "4": 3025, "5": 3026, "6": 3027, "7": 3030, "8": 3031, "9": 3032};
 
 export default function getModuleCommands(module, waypoints) {
   switch (module) {
-    case "F-15E":
-      let f15eUFCDevice = 17;
+    case "F-15ESE":
+      let f15eUFCDevice = 56;
+      let delay = 1000;
+      {
       let payload = [
-        { // type 0 into scratchpad
+        { // Clear UFC button
           device: f15eUFCDevice,
-          code: 3000,
+          code: 3035,
           delay: 100,
           activate: 1,
           addDepress: "true",
         },
-        { // scratchpad to Waypoint Menu UFC button
+        { // Clear UFC button
           device: f15eUFCDevice,
-          code: 3001,
+          code: 3035,
           delay: 100,
           activate: 1,
           addDepress: "true",
         },
-        { // Enter waypoint menu
+        { // Clear UFC button
+          device: f15eUFCDevice,
+          code: 3035,
+          delay: 100,
+          activate: 1,
+          addDepress: "true",
+        },
+        { // Menu UFC button
+          device: f15eUFCDevice,
+          code: 3038,
+          delay: 100,
+          activate: 1,
+          addDepress: "true",
+        },
+        { // Waypoint UFC button
+          device: f15eUFCDevice,
+          code: 3010,
+          delay: 100,
+          activate: 1,
+          addDepress: "true",
+        },
+        { // Enter UFC button
+          device: f15eUFCDevice,
+          code: f15eNumberCodes[0],
+          delay: 100,
+          activate: 1,
+          addDepress: "true",
+        },
+        { // Enter 0 into UFC button 1
           device: f15eUFCDevice,
           code: 3001,
           delay: 100,
@@ -30,20 +60,55 @@ export default function getModuleCommands(module, waypoints) {
         }
       ];
       for (const waypoint of waypoints) {
-        let waypointNumber = waypoints.indexOf(waypoint);
-        for (let i = 0; i < waypointNumber.length; i++) { // split waypoint number into individual digits
-          payload.push({
-            device: f15eUFCDevice,
-            code: f15eNumberCodes[waypointNumber.charAt(i)],
-            delay: 100,
-            activate: 1,
-            addDepress: "true",
-          });
-        };
+        let waypointNumber = waypoints.indexOf(waypoint) + 1;
+        // // console.log(waypointNumber);
+        // for (let i = 0; i < waypointNumber.length; i++) {
+        //   // eslint-disable-next-line default-case
+        //   console.log(waypointNumber.charAt(i));
+        //   payload.push({
+        //     device: f15eUFCDevice,
+        //     code: f15eNumberCodes[waypointNumber.charAt(i)],
+        //     delay: 100,
+        //     activate: 1,
+        //     addDepress: "true",
+        //   });
+        // }
+
+        payload.push({ //todo multi digit waypoint numbers
+          device: f15eUFCDevice,
+          code: f15eNumberCodes[waypointNumber],
+          delay: 100,
+          activate: 1,
+          addDepress: "true",
+        });
 
         payload.push({ // Press Shift
           device: f15eUFCDevice,
-          code: 3000,
+          code: 3033,
+          delay: 100,
+          activate: 1,
+          addDepress: "true",
+        });
+
+        payload.push({ // Press B / 3
+          device: f15eUFCDevice,
+          code: f15eNumberCodes[3],
+          delay: 100,
+          activate: 1,
+          addDepress: "true",
+        });
+
+        payload.push({ // Press PB 1
+          device: f15eUFCDevice,
+          code: 3001,
+          delay: 100,
+          activate: 1,
+          addDepress: "true",
+        });
+
+        payload.push({ // Press Shift
+          device: f15eUFCDevice,
+          code: 3033,
           delay: 100,
           activate: 1,
           addDepress: "true",
@@ -53,7 +118,7 @@ export default function getModuleCommands(module, waypoints) {
           payload.push({
             device: f15eUFCDevice,
             code: f15eNumberCodes[2],
-            delay: 10,
+            delay: 100,
             activate: 1,
             addDepress: "true",
           });
@@ -61,7 +126,7 @@ export default function getModuleCommands(module, waypoints) {
           payload.push({ // South 
             device: f15eUFCDevice,
             code: f15eNumberCodes[8],
-            delay: 10,
+            delay: 100,
             activate: 1,
             addDepress: "true",
           });
@@ -75,7 +140,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: f15eUFCDevice,
                 code: f15eNumberCodes[char],
-                delay: 10,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
@@ -85,15 +150,15 @@ export default function getModuleCommands(module, waypoints) {
 
         payload.push({ // enter latitutde into UFC
           device: f15eUFCDevice,
-          code: 3016,
-          delay: 10,
+          code: 3002,
+          delay: 100,
           activate: 1,
           addDepress: "true",
         });
 
         payload.push({ // Press Shift
           device: f15eUFCDevice,
-          code: 3000,
+          code: 3033,
           delay: 100,
           activate: 1,
           addDepress: "true",
@@ -102,16 +167,16 @@ export default function getModuleCommands(module, waypoints) {
         if (waypoint.longHem === "E") { // Type hemisphere into scratchpad
           payload.push({
             device: f15eUFCDevice,
-            code: 3008,
-            delay: 10,
+            code: f15eNumberCodes[6],
+            delay: 100,
             activate: 1,
             addDepress: "true",
           });
         } else {
           payload.push({
             device: f15eUFCDevice,
-            code: 3006,
-            delay: 10,
+            code: f15eNumberCodes[4],
+            delay: 100,
             activate: 1,
             addDepress: "true",
           });
@@ -124,7 +189,7 @@ export default function getModuleCommands(module, waypoints) {
               payload.push({
                 device: f15eUFCDevice,
                 code: f15eNumberCodes[char],
-                delay: 10, 
+                delay: 100, 
                 activate: 1,
                 addDepress: "true",
               });
@@ -134,36 +199,35 @@ export default function getModuleCommands(module, waypoints) {
 
         payload.push({ // enter longtitude into UFC
           device: f15eUFCDevice,
-          code: 3016,
-          delay: 10,
+          code: 3003,
+          delay: 100,
           activate: 1,
           addDepress: "true",
         });
 
-        for (let i = 0; i < waypoint.elevation.length; i++) { // enter each digit of elevation into scratchpad
+        for (let i = 0; i < waypoint.elev.length; i++) { // enter each digit of elevation into scratchpad
           // eslint-disable-next-line default-case
-          for (const char of waypoint.elevation.charAt(i)) {
-            if (char !== ".") {
+          for (const char of waypoint.elev.charAt(i)) {
               payload.push({
                 device: f15eUFCDevice,
                 code: f15eNumberCodes[char],
-                delay: 10,
+                delay: 100,
                 activate: 1,
                 addDepress: "true",
               });
-            }
           }
         }
 
         payload.push({ // enter elevation into UFC
           device: f15eUFCDevice,
-          code: 3016,
-          delay: 10,
+          code: 3007,
+          delay: 100,
           activate: 1,
           addDepress: "true",
         });
-    }; 
-    
+    };
+    return payload; 
+  }
     case "F-16C_50":
     case "F-16D_50":
     case "F-16D_50_NS":
