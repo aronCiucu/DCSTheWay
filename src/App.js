@@ -98,17 +98,26 @@ function App() {
         const commands = GetModuleCommands("FA-18C_hornet", moduleWaypoints);
         ipcRenderer.send("transfer", commands);
       });
-    } else if (moduleRef.current === "F-15ESE") {
-      // User must be in Menu 1, with a clear scratchpad
-      AlertDialog({
-        title: "Please make sure that",
-        content:
-          "1. You are in the top level menu (M1)\n" +
-          "2. The scratchpad is clear\n"
-      }).then(() => {
-        const commands = GetModuleCommands("F-15ESE", moduleWaypoints);
-        ipcRenderer.send("transfer", commands);
-      });
+    } 
+    if (moduleRef.current === "F-15ESE") {
+      TwoOptionsDialog({
+        title: "What seat are you in?",
+        op1: "Pilot",
+        op2: "WSO",
+      })
+        .then((option) => {
+          let commands;
+          if (option === "Pilot") {
+            commands = GetModuleCommands("F-15ESE", moduleWaypoints);
+          } else {
+            commands = GetModuleCommands(
+              "F-15ESE",
+              moduleWaypoints
+            );
+          }
+          ipcRenderer.send("transfer", commands);
+        })
+        .catch(() => {});
     } else {
       const commands = GetModuleCommands(moduleRef.current, moduleWaypoints);
       ipcRenderer.send("transfer", commands);
