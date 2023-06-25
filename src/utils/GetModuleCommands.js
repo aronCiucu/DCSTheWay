@@ -4,8 +4,14 @@ let f15eNumberCodes = {"0": 3036, "1": 3020, "2": 3021, "3": 3022, "4": 3025, "5
 
 export default function getModuleCommands(module, waypoints) {
   switch (module) {
-    case "F-15ESE":
-      let f15eUFCDevice = 56;
+    case "F-15ESE_pilot":
+    case "F-15ESE_wso":
+      let f15eUFCDevice = 0;
+      if (module === "F-15ESE_pilot") {
+        f15eUFCDevice = 56;
+      } else {
+        f15eUFCDevice = 57;
+      }
       let delay = 100;
       {
       let payload = [
@@ -105,11 +111,9 @@ export default function getModuleCommands(module, waypoints) {
       ];
       for (const waypoint of waypoints) {
         let waypointNumber = waypoints.indexOf(waypoint) + 1;
-        console.log((waypointNumber+'').length);
         for (let i = 0; i < (waypointNumber+'').length; i++) {
           // eslint-disable-next-line default-case
           let digit = (waypointNumber + '').charAt(i);
-          console.log(digit);
           payload.push({
             device: f15eUFCDevice,
             code: f15eNumberCodes[digit],

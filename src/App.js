@@ -108,12 +108,9 @@ function App() {
         .then((option) => {
           let commands;
           if (option === "Pilot") {
-            commands = GetModuleCommands("F-15ESE", moduleWaypoints);
+            commands = GetModuleCommands("F-15ESE_pilot", moduleWaypoints);
           } else {
-            commands = GetModuleCommands(
-              "F-15ESE",
-              moduleWaypoints
-            );
+            commands = GetModuleCommands("F-15ESE_wso", moduleWaypoints);
           }
           ipcRenderer.send("transfer", commands);
         })
