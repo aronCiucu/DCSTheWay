@@ -98,8 +98,7 @@ function App() {
         const commands = GetModuleCommands("FA-18C_hornet", moduleWaypoints);
         ipcRenderer.send("transfer", commands);
       });
-    } 
-    if (moduleRef.current === "F-15ESE") {
+    } else if (moduleRef.current === "F-15ESE") {
       TwoOptionsDialog({
         title: "What seat are you in?",
         op1: "Pilot",
