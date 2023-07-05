@@ -8,16 +8,14 @@ You can also share those waypoints with your friends, and you will all fly the s
 
 ## What is supported?
 Supported modules:
+* F-15E (WIP)
 * F-16 (& All IDF Mods Project F16s)
-* F/A-18 
+* F/A-18C (& Superbug FA-18E/F/G) 
 * A-10C and A-10C2
 * Mirage 2000
 * AV8BNA Harrier
 * Ka-50 Blackshark
 * AH-64D Apache (Pilot and CP/G)
-
-## Under Development
-* F-15E S4+ (WIP)
  
 Multiplayer is supported as long as the server has Player Exports turned on (most servers do).
 
@@ -56,6 +54,10 @@ CTRL+SHIFT+D: to delete all waypoints
 
 ## Credits
 Special thanks to discord users: kukiric, Bepis, the88tench, okopanja, and the ED Forums users for their suggestions and help.
+
+Images provided by:
+* F15E, F/A-18C: Coffee :coffee:
+* IDF F16s, Superbug F18s: Hayds_93
 
 ## For nerds
 The application is built using React.js and Electron. If you'd like to contribute, simply clone the repository and run `npm install`, then `npm run react-start` to start the React page, and `npm run electron-dev` to fire up the Electron side of things.

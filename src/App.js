@@ -98,6 +98,22 @@ function App() {
         const commands = GetModuleCommands("FA-18C_hornet", moduleWaypoints);
         ipcRenderer.send("transfer", commands);
       });
+    } else if (moduleRef.current === "F-15ESE") {
+      TwoOptionsDialog({
+        title: "What seat are you in?",
+        op1: "Pilot",
+        op2: "WSO",
+      })
+        .then((option) => {
+          let commands;
+          if (option === "Pilot") {
+            commands = GetModuleCommands("F-15ESE_pilot", moduleWaypoints);
+          } else {
+            commands = GetModuleCommands("F-15ESE_wso", moduleWaypoints);
+          }
+          ipcRenderer.send("transfer", commands);
+        })
+        .catch(() => {});
     } else {
       const commands = GetModuleCommands(moduleRef.current, moduleWaypoints);
       ipcRenderer.send("transfer", commands);
