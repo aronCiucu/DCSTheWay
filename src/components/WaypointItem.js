@@ -37,7 +37,7 @@ const WaypointItem = (props) => {
     setIsExpanded(!isExpanded);
   };
 
-  const handleInputFocus = () => {
+  const handleInputFocus = (event) => {
     ipcRenderer.send("focus");
   };
   const handleInputDefocus = (event) => {
@@ -64,7 +64,8 @@ const WaypointItem = (props) => {
                 onMouseEnter={handleInputFocus}
                 onMouseLeave={handleInputDefocus}
                 onKeyDown={handleInputFinished}
-              ></TextField>
+                onFocus={(e) => e.target.select()}
+              />
 
               <Box sx={{ mx: 0.5 }}>
                 <Grid container spacing={3}>
@@ -77,7 +78,7 @@ const WaypointItem = (props) => {
                     <Input
                       disabled
                       value={props.latHem + " " + props.lat}
-                    ></Input>
+                    />
                   </Grid>
                 </Grid>
 
