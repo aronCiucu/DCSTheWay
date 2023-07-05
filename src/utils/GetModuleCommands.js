@@ -3021,7 +3021,8 @@ export default function getModuleCommands(module, waypoints) {
           addDepress: "true",
         });
         //Type name
-        for (let i = 0; i < waypoint.name.length; i++) {
+        const waypointNameLength = waypoint.name.length < 12 ? waypoint.name.length : 12;
+        for (let i = 0; i < waypointNameLength; i++) {
           // eslint-disable-next-line default-case
           switch (waypoint.name.charAt(i)) {
             case "1":
