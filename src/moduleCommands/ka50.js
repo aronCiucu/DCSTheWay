@@ -69,7 +69,7 @@ class ka50 {
             // eslint-disable-next-line default-case
             switch (i) {
                 case 1: {
-                    payload.push({
+                    this.#codesPayload.push({
                         device: 20,
                         code: 3002,
                         delay: 100,
@@ -79,7 +79,7 @@ class ka50 {
                     break;
                 }
                 case 2: {
-                    payload.push({
+                    this.#codesPayload.push({
                         device: 20,
                         code: 3003,
                         delay: 100,
@@ -89,7 +89,7 @@ class ka50 {
                     break;
                 }
                 case 3: {
-                    payload.push({
+                    this.#codesPayload.push({
                         device: 20,
                         code: 3004,
                         delay: 100,
@@ -99,7 +99,7 @@ class ka50 {
                     break;
                 }
                 case 4: {
-                    payload.push({
+                    this.#codesPayload.push({
                         device: 20,
                         code: 3005,
                         delay: 100,
@@ -109,7 +109,7 @@ class ka50 {
                     break;
                 }
                 case 5: {
-                    payload.push({
+                    this.#codesPayload.push({
                         device: 20,
                         code: 3006,
                         delay: 100,
@@ -119,7 +119,7 @@ class ka50 {
                     break;
                 }
                 case 6: {
-                    payload.push({
+                    this.#codesPayload.push({
                         device: 20,
                         code: 3007,
                         delay: 100,
@@ -131,7 +131,7 @@ class ka50 {
             }
             //Type hem
             if (waypoints[i - 1].latHem === "N") {
-                payload.push({
+                this.#codesPayload.push({
                     device: 20,
                     code: 3001,
                     delay: 100,
@@ -139,7 +139,7 @@ class ka50 {
                     addDepress: "true",
                 });
             } else {
-                payload.push({
+                this.#codesPayload.push({
                     device: 20,
                     code: 3002,
                     delay: 100,
@@ -153,7 +153,7 @@ class ka50 {
             }
             //Type hem
             if (waypoints[i - 1].longHem === "E") {
-                payload.push({
+                this.#codesPayload.push({
                     device: 20,
                     code: 3001,
                     delay: 100,
@@ -161,7 +161,7 @@ class ka50 {
                     addDepress: "true",
                 });
             } else {
-                payload.push({
+                this.#codesPayload.push({
                     device: 20,
                     code: 3002,
                     delay: 100,
@@ -174,7 +174,7 @@ class ka50 {
                 this.#addKeyboardCode(waypoints[i - 1].long.charAt(j));
             }
             //Press Enter
-            payload.push({
+            this.#codesPayload.push({
                 device: 20,
                 code: 3018,
                 delay: 100,
@@ -183,7 +183,7 @@ class ka50 {
             });
         }
         //PVI to OPER
-        payload.push({
+        this.#codesPayload.push({
             device: 20,
             code: 3026,
             delay: 100,
