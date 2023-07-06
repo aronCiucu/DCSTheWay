@@ -16,6 +16,7 @@ class MainWindow extends BrowserWindow {
       },
       maximizable: false,
       resizable: false,
+      transparent:true,
       frame: false,
       focusable: false,
     });
