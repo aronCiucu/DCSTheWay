@@ -1,11 +1,11 @@
-import f16 from "../moduleCommands/f16";
-import f15e from "../moduleCommands/f15e";
-import fa18 from "../moduleCommands/fa18";
-import ah64 from "../moduleCommands/ah64";
-import a10 from "../moduleCommands/a10";
-import m2000 from "../moduleCommands/m2000";
-import av8b from "../moduleCommands/av8b";
-import ka50 from "../moduleCommands/ka50";
+import f16 from "./f16";
+import f15e from "./f15e";
+import fa18 from "./fa18";
+import ah64 from "./ah64";
+import a10 from "./a10";
+import m2000 from "./m2000";
+import av8b from "./av8b";
+import ka50 from "./ka50";
 
 export default function getModuleCommands(module, waypoints) {
     switch (module) {
