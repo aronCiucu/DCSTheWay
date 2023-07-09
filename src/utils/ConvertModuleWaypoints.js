@@ -122,16 +122,19 @@ const convert = (dcsWaypoints, module) => {
       for (const dcsWaypoint of dcsWaypoints) {
         const name = dcsWaypoint.name;
         const id = dcsWaypoint.id;
-        const dmmLat = Convertors.decimalToDMM(dcsWaypoint.lat);
-        const dmmLong = Convertors.decimalToDMM(dcsWaypoint.long);
-        const lat =
-          dmmLat.deg.toString().padStart(2, "0") +
+        let getCoord = function(degreeLength, dmm) {
+          let degrees = dmm.deg;
+          let minutes = dmm.min.toFixed(1);
+          if (minutes % 60 == 0) {
+            degrees++;
+            minutes = 0;
+          }
+          return degrees.toString().padStart(degreeLength, "0") +
           "." +
-          dmmLat.min.toFixed(1).toString().padStart(4, "0");
-        const long =
-          dmmLong.deg.toString().padStart(3, "0") +
-          "." +
-          dmmLong.min.toFixed(1).toString().padStart(4, "0");
+          minutes.toString().padStart(4, "0");
+        };
+        const lat = getCoord(2, Convertors.decimalToDMM(dcsWaypoint.lat));
+        const long = getCoord(3, Convertors.decimalToDMM(dcsWaypoint.long));
         const elev = Math.trunc(Convertors.mToF(dcsWaypoint.elev)).toString();
         const latHem = dcsWaypoint.lat > 0 ? "N" : "S";
         const longHem = dcsWaypoint.long > 0 ? "E" : "W";
