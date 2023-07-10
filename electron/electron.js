@@ -4,14 +4,15 @@ const isDev = require("electron-is-dev");
 const UDPListener = require("./UDPListener.js");
 const UDPSender = require("./TCPSender");
 const SelectionHandler = require("./SelectionHandler.js");
+const UserPreferenceHandler = require("./userPreferenceHandler");
 const MainWindow = require("./MainWindow.js");
 const { uIOhook, UiohookKey } = require("uiohook-napi");
 
 let mainWindow;
-/* eslint-disable no-unused-vars*/
 let udpListener;
 let selectionHandler;
 let udpSender;
+let userPreferenceHandler;
 
 function createWindow() {
   mainWindow = new MainWindow();
@@ -39,6 +40,7 @@ app.whenReady().then(() => {
   udpListener = new UDPListener(mainWindow);
   selectionHandler = new SelectionHandler(mainWindow);
   udpSender = new UDPSender();
+  userPreferenceHandler = new UserPreferenceHandler(mainWindow);
 
   //keybinds
   let shiftPressed = false;

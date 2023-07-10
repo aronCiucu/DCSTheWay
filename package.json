@@ -5,6 +5,7 @@
   "main": "electron/electron.js",
   "dependencies": {
     "electron-is-dev": "^2.0.0",
+    "electron-store": "^8.1.0",
     "uiohook-napi": "^1.5.0"
   },
   "scripts": {
@@ -13,7 +14,11 @@
     "electron-dev": "electron .",
     "dev": "concurrently -k \"npm run start\" \"electron .\"",
     "electron-build": "electron-builder",
-    "package": "npm run react-build && npm run electron-build"
+    "package": "npm run react-build && npm run electron-build",
+    "test": "jest"
+  },
+  "jest": {
+    "testEnvironment": "jsdom"
   },
   "eslintConfig": {
     "extends": [
@@ -33,6 +38,9 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/preset-env": "^7.22.7",
+    "@babel/preset-react": "^7.22.5",
     "@dnd-kit/core": "^6.0.8",
     "@dnd-kit/modifiers": "^6.0.1",
     "@dnd-kit/sortable": "^7.0.2",
@@ -42,19 +50,28 @@
     "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.11.11",
     "@reduxjs/toolkit": "^1.9.3",
+    "@testing-library/react": "^14.0.0",
+    "babel-jest": "^29.6.1",
     "concurrently": "^7.6.0",
     "electron": "^24.0.0",
     "electron-builder": "^23.6.0",
+    "jest": "^27.5.1",
+    "jest-environment-jsdom": "^27.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-modal-promise": "^1.0.2",
     "react-redux": "^8.0.5",
-    "react-scripts": "5.0.1"
+    "react-scripts": "5.0.1",
+    "react-test-renderer": "^18.2.0"
   },
   "build": {
     "productName": "TheWay",
     "extends": null,
-    "files": ["node_modules","build/**/*","electron"],
+    "files": [
+      "node_modules",
+      "build/**/*",
+      "electron"
+    ],
     "win": {
       "icon": "build/TheWayIcon.ico"
     }

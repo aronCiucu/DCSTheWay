@@ -3,7 +3,7 @@ import {AlertDialog} from "../components/AlertDialog";
 
 const askUserAboutSeat = (module) => {
     if (module === "AH-64D_BLK_II") {
-        TwoOptionsDialog({
+        return TwoOptionsDialog({
             title: "What seat are you in?",
             op1: "Pilot",
             op2: "CPG/Gunner",
@@ -17,17 +17,15 @@ const askUserAboutSeat = (module) => {
             });
     } else if (module === "FA-18C_hornet" || module === "FA-18E" || module === "FA-18F" || module === "EA-18G") {
         //show warning dialog
-        AlertDialog({
+        return AlertDialog({
             title: "Please make sure that",
             content:
                 "1. PRECISE option is boxed in HSI > DATA\n" +
                 "2. You are not in the TAC menu\n" +
                 "3. You are in the 00°00.0000' coordinate format",
-        }).then(() => {
-            return "FA-18C_hornet";
-        });
+        }).then(() => "FA-18C_hornet");
     } else if (module === "F-15ESE") {
-        TwoOptionsDialog({
+        return TwoOptionsDialog({
             title: "What seat are you in?",
             op1: "Pilot",
             op2: "WSO",
@@ -40,7 +38,16 @@ const askUserAboutSeat = (module) => {
             .catch(() => {
             });
     } else {
-        return module;
+        // TEST
+        return AlertDialog({
+            title: "Please make sure that",
+            content:
+                "1. PRECISE option is boxed in HSI > DATA\n" +
+                "2. You are not in the TAC menu\n" +
+                "3. You are in the 00°00.0000' coordinate format",
+        }).then(() => (module));
+        // TEST
+        // return module;
     }
 };
 

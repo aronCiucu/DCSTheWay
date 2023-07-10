@@ -60,14 +60,15 @@ function App() {
         });
     }, []);
 
-    const handleTransfer = () => {
+    const handleTransfer = async () => {
         const moduleWaypoints = ConvertModuleWaypoints(
             dcsWaypointsRef.current,
             moduleRef.current
         );
         // Check for special cases which require additional pilot feedback
-        const seatInModule = askUserAboutSeat(moduleRef.current);
-        const commands = GetModuleCommands(seatInModule, moduleWaypoints);
+        const chosenSeat = await askUserAboutSeat(moduleRef.current);
+        console.log(chosenSeat);
+        const commands = GetModuleCommands(chosenSeat, moduleWaypoints);
         ipcRenderer.send("transfer", commands);
     };
 
