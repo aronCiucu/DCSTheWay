@@ -3,18 +3,25 @@ const Store = require('electron-store');
 
 class userPreferenceHandler {
     mainWindow;
+    store;
 
     constructor(mainWindow) {
+        this.store = new Store();
         this.mainWindow = mainWindow;
         ipcMain.on("savePreferences", (e, data) => {
-            console.log('allah');
             this.#writePreferencesFile(data);
+        });
+        ipcMain.on("getPreferences", () => {
+            this.#readPreferencesFile();
         });
     }
 
     #writePreferencesFile(data) {
-        const store = new Store();
-        store.set(data);
+        this.store.set(data);
+    }
+    #readPreferencesFile() {
+        const preferences = this.store.get();
+        this.mainWindow.webContents.send("preferencesReceived", preferences);
     }
 }
 

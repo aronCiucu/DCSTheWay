@@ -123,7 +123,7 @@ const WaypointList = () => {
                 <Typography
                   variant="overline"
                   color="grey"
-                  style={{ "user-select": "none" }}
+                  style={{ userSelect: "none" }}
                 >
                   No waypoints selected...
                 </Typography>

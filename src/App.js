@@ -13,6 +13,7 @@ import TitleBar from "./components/TitleBar";
 import ConvertModuleWaypoints from "./utils/ConvertModuleWaypoints";
 import GetModuleCommands from "./moduleCommands/GetModuleCommands";
 import askUserAboutSeat from "./moduleCommands/askUserAboutSeat";
+import {uiActions} from "./store/ui";
 
 const {ipcRenderer} = window.require("electron");
 
@@ -22,6 +23,7 @@ function App() {
     const dispatch = useDispatch();
     const {module, lat, long, elev} = useSelector((state) => state.dcsPoint);
     const dcsWaypoints = useSelector((state) => state.waypoints.dcsWaypoints);
+    const userPreferences = useSelector(state => state.ui.userPreferences);
 
     const latRef = useRef();
     const longRef = useRef();
@@ -58,6 +60,10 @@ function App() {
         ipcRenderer.on("deleteWaypoints", () => {
             dispatch(waypointsActions.deleteAll());
         });
+        ipcRenderer.on("preferencesReceived", (e, preferences) => {
+            dispatch(uiActions.setUserPreferences(preferences));
+        });
+        ipcRenderer.send("getPreferences");
     }, []);
 
     const handleTransfer = async () => {
@@ -65,15 +71,22 @@ function App() {
             dcsWaypointsRef.current,
             moduleRef.current
         );
-        // Check for special cases which require additional pilot feedback
-        const chosenSeat = await askUserAboutSeat(moduleRef.current);
-        console.log(chosenSeat);
+        let chosenSeat;
+        if (areDialogsHidden()) {
+            chosenSeat = moduleRef.current;
+        } else {
+            chosenSeat = await askUserAboutSeat(moduleRef.current);
+        }
         const commands = GetModuleCommands(chosenSeat, moduleWaypoints);
         ipcRenderer.send("transfer", commands);
     };
 
     const handleFileSave = () => {
         ipcRenderer.send("saveFile", JSON.stringify(dcsWaypoints));
+    };
+
+    const areDialogsHidden = () => {
+        return userPreferences["hideDialogs"] || false;
     };
 
     return (

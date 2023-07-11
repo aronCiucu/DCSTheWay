@@ -9,6 +9,7 @@ import ka50 from "./ka50";
 
 export default function getModuleCommands(module, waypoints) {
     switch (module) {
+        case "F-15ESE":
         case "F-15ESE_pilot":
         case "F-15ESE_wso":
             f15e.slotVariant = module;
@@ -29,6 +30,7 @@ export default function getModuleCommands(module, waypoints) {
         case "EA-18G": {
             return fa18.createButtonCommands(waypoints);
         }
+        case "AH-64D_BLK_II":
         case "AH-64D_BLK_IIpilot": {
             ah64.slotVariant = "AH-64D_BLK_IIpilot";
             return ah64.createButtonCommands(waypoints);
