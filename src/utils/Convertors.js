@@ -1,6 +1,6 @@
 class Convertors {
   static decimalToDMM(decimalCoordinate) {
-    const deg = Math.trunc(decimalCoordinate);
+    const deg = Math.abs(Math.trunc(decimalCoordinate));
     const min = Number("0." + decimalCoordinate.toString().split(".")[1]) * 60;
     return { deg, min };
   }

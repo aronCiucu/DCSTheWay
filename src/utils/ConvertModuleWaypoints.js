@@ -123,14 +123,14 @@ const convert = (dcsWaypoints, module) => {
         const id = dcsWaypoint.id;
         let getCoord = function(degreeLength, dmm) {
           let degrees = dmm.deg;
-          let minutes = dmm.min.toFixed(1);
-          if (minutes % 60 == 0) {
+          let minutes = dmm.min.toFixed(1).toString();
+          if (Number(minutes) !== 0 && Number(minutes) % 60 === 0) {
             degrees++;
-            minutes = 0;
+            minutes = "00.0";
           }
           return degrees.toString().padStart(degreeLength, "0") +
           "." +
-          minutes.toString().padStart(4, "0");
+          minutes.padStart(4, "0");
         };
         const lat = getCoord(2, Convertors.decimalToDMM(dcsWaypoint.lat));
         const long = getCoord(3, Convertors.decimalToDMM(dcsWaypoint.long));
