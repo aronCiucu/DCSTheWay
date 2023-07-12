@@ -38,16 +38,7 @@ const askUserAboutSeat = (module) => {
             .catch(() => {
             });
     } else {
-        // TEST
-        return AlertDialog({
-            title: "Please make sure that",
-            content:
-                "1. PRECISE option is boxed in HSI > DATA\n" +
-                "2. You are not in the TAC menu\n" +
-                "3. You are in the 00°00.0000' coordinate format",
-        }).then(() => (module));
-        // TEST
-        // return module;
+        return module;
     }
 };
 

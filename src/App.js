@@ -5,7 +5,6 @@ import ModalContainer from "react-modal-promise";
 
 import SourceSelector from "./components/SourceSelector";
 import WaypointList from "./components/WaypointList";
-import {dcsPointActions} from "./store/dcsPoint";
 import {waypointsActions} from "./store/waypoints";
 import theWayTheme from "./theme/TheWayTheme";
 import TransferControls from "./components/TransferControls";
@@ -13,7 +12,7 @@ import TitleBar from "./components/TitleBar";
 import ConvertModuleWaypoints from "./utils/ConvertModuleWaypoints";
 import GetModuleCommands from "./moduleCommands/GetModuleCommands";
 import askUserAboutSeat from "./moduleCommands/askUserAboutSeat";
-import {uiActions} from "./store/ui";
+import useElectronIpcListeners from "./hooks/useElectronIpcListeners";
 
 const {ipcRenderer} = window.require("electron");
 
@@ -38,13 +37,8 @@ function App() {
         dcsWaypointsRef.current = dcsWaypoints;
     }, [lat, long, elev, module, dcsWaypoints]);
 
+    useElectronIpcListeners();
     useEffect(() => {
-        ipcRenderer.on("dataReceived", (event, msg) => {
-            dispatch(dcsPointActions.changeCoords(JSON.parse(msg)));
-        });
-        ipcRenderer.on("fileOpened", (event, msg) => {
-            dispatch(waypointsActions.appendWaypoints(msg));
-        });
         ipcRenderer.on("saveWaypoint", () => {
             dispatch(
                 waypointsActions.addDcsWaypoint({
@@ -57,13 +51,6 @@ function App() {
         ipcRenderer.on("transferWaypoints", () => {
             handleTransfer();
         });
-        ipcRenderer.on("deleteWaypoints", () => {
-            dispatch(waypointsActions.deleteAll());
-        });
-        ipcRenderer.on("preferencesReceived", (e, preferences) => {
-            dispatch(uiActions.setUserPreferences(preferences));
-        });
-        ipcRenderer.send("getPreferences");
     }, []);
 
     const handleTransfer = async () => {
