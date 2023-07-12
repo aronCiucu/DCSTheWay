@@ -37,7 +37,7 @@ describe("converting DMM coordinates", () => {
         ];
         expect(converted).toEqual(expected);
     });
-    test.skip("00.00.0", function () {
+    test("00.00.0", function () {
         const converted = ConvertModuleWaypoints(dcsWaypoints, "Ka-50");
         const expected = [
             {

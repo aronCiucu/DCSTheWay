@@ -17,9 +17,6 @@
     "package": "npm run react-build && npm run electron-build",
     "test": "jest"
   },
-  "jest": {
-    "testEnvironment": "jsdom"
-  },
   "eslintConfig": {
     "extends": [
       "react-app"
