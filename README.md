@@ -41,16 +41,18 @@ Video tutorial here:
 ## FAQ
 ### I cannot find the installer
 Make sure you have downloaded the program from the Releases section, and not the source code.  
-### I get a "No connection to DCS" error!
-Make sure you have followed the install instructions to the letter, and that every file is where it should be.
-Check if the server you are flying on has Player Exports turned on. If it doesn't, this won't work! 
-### None of my isses are shown here
-Worry not, feel free to message me on Discord (Doge#4634) or the ED Forums thread and we'll have it sorted!
 ### How do I use this for VR?
 As I do not own a VR headset, it is hard for me to build a user interface for it. But, instead I have implemented a series of keybinds to help:
 CTRL+SHIFT+S: to save a point
 CTRL+SHIFT+T: to transfer the waypoints
 CTRL+SHIFT+D: to delete all waypoints
+### I get a "No connection to DCS" error!
+Make sure you have followed the install instructions to the letter, and that every file is where it should be.
+Check if the server you are flying on has Player Exports turned on. If it doesn't, this won't work! 
+### Where is the app installed by default?
+TheWay files are installed in Windows at `C:\Users\USER\AppData\Local\Programs\theway`
+### None of my isses are shown here
+Worry not, feel free to message me on Discord (Doge#4634) or the ED Forums thread and we'll have it sorted!
 
 ## Credits
 Special thanks to discord users: kukiric, Bepis, the88tench, okopanja, and the ED Forums users for their suggestions and help.
