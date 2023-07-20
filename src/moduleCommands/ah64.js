@@ -145,7 +145,7 @@ class ah64 {
             }
             //Type lat
             for (let i = 0; i < waypoint.lat.length; i++) {
-                this.#addKeyboardCode(waypoint.lat.charAt(i));
+                waypoint.lat.charAt(i) !== "." && this.#addKeyboardCode(waypoint.lat.charAt(i));
             }
             //check if longitude is E or W
             if (waypoint.longHem === "E") {
@@ -167,7 +167,7 @@ class ah64 {
             }
             //Type long
             for (let i = 0; i < waypoint.long.length; i++) {
-                this.#addKeyboardCode(waypoint.long.charAt(i));
+                waypoint.long.charAt(i) !== "." && this.#addKeyboardCode(waypoint.long.charAt(i));
             }
             //press ENTER
             this.#codesPayload.push({

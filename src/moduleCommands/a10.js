@@ -101,7 +101,7 @@ class a10 {
             }
             //Type lat
             for (let i = 0; i < waypoint.lat.length; i++) {
-                this.#addKeyboardCode(waypoint.lat.charAt(i));
+                waypoint.lat.charAt(i) !== "." && this.#addKeyboardCode(waypoint.lat.charAt(i));
             }
             this.#codesPayload.push({
                 device: 9,
@@ -130,7 +130,7 @@ class a10 {
             }
             //Type long
             for (let i = 0; i < waypoint.long.length; i++) {
-                this.#addKeyboardCode(waypoint.long.charAt(i));
+                waypoint.long.charAt(i) !== "." && this.#addKeyboardCode(waypoint.long.charAt(i));
             }
             this.#codesPayload.push({
                 device: 9,
