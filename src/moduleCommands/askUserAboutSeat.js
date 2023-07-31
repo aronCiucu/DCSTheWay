@@ -26,19 +26,32 @@ const askUserAboutSeat = (module) => {
         }).then(() => "FA-18C_hornet");
     } else if (module === "F-15ESE") {
         return TwoOptionsDialog({
-            title: "What seat are you in?",
-            op1: "Pilot",
-            op2: "WSO",
+          title: "What seat are you in?",
+          op1: "Pilot",
+          op2: "WSO",
         })
             .then((option) => {
+            TwoOptionsDialog({
+                title: "What route are you using?",
+                op1: "A{1/A}",
+                op2: "B{1/B}",
+            }).then((option2) => {
+            if (option2 === "A{1/A}")
                 if (option === "WSO")
-                    return "F-15ESE_wso";
-                return "F-15ESE_pilot";
+                    return  "F-15ESE_wsoA";
+                else
+                    return "F-15ESE_pilotA";
+            if (option === "WSO")
+                return "F-15ESE_wsoB";
+            return "F-15ESE_pilotB";
             })
+                //if (option === "WSO")
+                //   return "F-15ESE_wso";
+                //return "F-15ESE_pilot";
+            //})
             .catch(() => {
             });
-    } else {
-        return module;
+        })
     }
 };
 
