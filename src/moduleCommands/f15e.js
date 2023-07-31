@@ -21,7 +21,7 @@ class f15e {
             f15eUFCDevice = 57;
         }
         let delay = 100;
-        if (((["F-15ESE_pilotA", "F-15ESE_wsoA"].includes(this.slotVariant)))) // A Route Payload
+        if (((["F-15ESE_pilotA", "F-15ESE_wsoA"].includes(this.slotVariant)))) // B Route Payload
         {
             let payload = [
                 { // Clear UFC button
@@ -81,6 +81,42 @@ class f15e {
                     activate: 1,
                     addDepress: "true",
                 },
+                { // Press UFC button 10
+                    device: f15eUFCDevice,
+                    code: 3010,
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                { // Enter 1 button
+                    device: f15eUFCDevice,
+                    code: this.#f15eNumberCodes[1],
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                { // Press Shift
+                    device: f15eUFCDevice,
+                    code: 3033,
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+
+                { // Press 3 / B
+                    device: f15eUFCDevice,
+                    code: this.#f15eNumberCodes[3],
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                { // Enter 1B into UFC button 1
+                    device: f15eUFCDevice,
+                    code: 3001,
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
             ];
             for (const waypoint of waypoints) {
                 let waypointNumber = waypoints.indexOf(waypoint) + 1;
@@ -104,9 +140,9 @@ class f15e {
                     addDepress: "true",
                 });
 
-                payload.push({ // Press A / 1
+                payload.push({ // Press B / 3
                     device: f15eUFCDevice,
-                    code: this.#f15eNumberCodes[1],
+                    code: this.#f15eNumberCodes[3],
                     delay: delay,
                     activate: 1,
                     addDepress: "true",
@@ -261,9 +297,9 @@ class f15e {
                     activate: 1,
                     addDepress: "true",
                 },
-                { // press 1 / A
+                { // press 3 / B
                     device: f15eUFCDevice,
-                    code: this.#f15eNumberCodes[1],
+                    code: this.#f15eNumberCodes[3],
                     delay: delay,
                     activate: 1,
                     addDepress: "true",

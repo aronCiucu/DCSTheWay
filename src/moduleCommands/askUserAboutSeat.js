@@ -49,10 +49,15 @@ const askUserAboutSeat = (module) => {
               return `F-15ESE_${seat.toLowerCase()}${routeCode}`;
         
             });
+<<<<<<< Updated upstream
         
           })
           .catch(() => {});
     } return module;
+=======
+        })
+    } else return module;
+>>>>>>> Stashed changes
 };
 
 export default askUserAboutSeat;
