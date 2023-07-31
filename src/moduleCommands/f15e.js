@@ -52,7 +52,7 @@ class f15e {
                     activate: 1,
                     addDepress: "true",
                 },
-                { // Enter 1 button
+                { // Enter 1 button 
                     device: f15eUFCDevice,
                     code: this.#f15eNumberCodes[1],
                     delay: delay,
@@ -88,7 +88,14 @@ class f15e {
                     activate: 1,
                     addDepress: "true",
                 },
-                { // Enter 1 button
+                { // Enter 9 button
+                    device: f15eUFCDevice,
+                    code: this.#f15eNumberCodes[9],
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                { // Enter 1 button // reason for this is because we currently cannot remove waypoints on ANY route. so we go to an integer high enough that it is extremely improbable to be an issue.
                     device: f15eUFCDevice,
                     code: this.#f15eNumberCodes[1],
                     delay: delay,
@@ -110,7 +117,7 @@ class f15e {
                     activate: 1,
                     addDepress: "true",
                 },
-                { // Enter 1B into UFC button 1
+                { // Enter 90A into UFC button 1
                     device: f15eUFCDevice,
                     code: 3001,
                     delay: delay,
@@ -123,20 +130,13 @@ class f15e {
                 for (let i = 0; i < (waypointNumber + '').length; i++) {
                     // eslint-disable-next-line default-case
                     let digit = (waypointNumber + '').charAt(i);
-                    payload.push({ // Waypoint Digit
+                    payload.push({ // Enter 9 button
                         device: f15eUFCDevice,
-                        code: this.#f15eNumberCodes[digit],
+                        code: this.#f15eNumberCodes[9],
                         delay: delay,
                         activate: 1,
                         addDepress: "true",
                     });
-                    payload.push({ // Clear UFC button
-                        device: f15eUFCDevice,
-                        code: 3035,
-                        delay: delay,
-                        activate: 1,
-                        addDepress: "true",
-                    })
                     payload.push({ // Waypoint Digit
                         device: f15eUFCDevice,
                         code: this.#f15eNumberCodes[digit],
@@ -281,7 +281,14 @@ class f15e {
                     activate: 1,
                     addDepress: "true",
                 },
-                { // Type 1 into UFC
+                { // Enter 9 button
+                    device: f15eUFCDevice,
+                    code: this.#f15eNumberCodes[9],
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                { // Enter 1 button // reason for this is because we currently cannot remove waypoints on ANY route. so we go to an integer high enough that it is extremely improbable to be non-nil.
                     device: f15eUFCDevice,
                     code: this.#f15eNumberCodes[1],
                     delay: delay,
@@ -295,9 +302,9 @@ class f15e {
                     activate: 1,
                     addDepress: "true",
                 },
-                { // press 3 / B
+                { // press 1 / A
                     device: f15eUFCDevice,
-                    code: this.#f15eNumberCodes[3],
+                    code: this.#f15eNumberCodes[1],
                     delay: delay,
                     activate: 1,
                     addDepress: "true",
