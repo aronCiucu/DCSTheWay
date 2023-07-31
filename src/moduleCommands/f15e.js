@@ -13,26 +13,6 @@ class f15e {
         "9": 3032
     };
 
-    static HandleTwoDigitNumber(digit) { // thinking about making a more than 9-10 waypoint implementation.
-        let numString = digit.toString();
-
-        let firstDigit = numString.charAt(0);
-        let secondDigit = numString.charAt(1);
-
-        firstDigit = parseInt(firstDigit);
-        secondDigit = parseInt(secondDigit);
-
-        let digits = [];
-
-        if (firstDigit !== 0) {
-            digits.push(firstDigit);
-        }
-
-        digits.push(secondDigit);
-
-        return digits;
-    }
-
     static createButtonCommands(waypoints) {
         let f15eUFCDevice;
         if (["F-15ESE_pilotA", "F-15ESE_pilotB"].includes(this.slotVariant)) {
@@ -352,41 +332,15 @@ class f15e {
                 let waypointNumber = waypoints.indexOf(waypoint) + 1;
                 for (let i = 0; i < (waypointNumber + '').length; i++) {
                     // eslint-disable-next-line default-case
-                    if (waypointNumber >= 10){ // Im just going to leave a note here, but this worked perfectly on the first try.
-                        //  We're going to handle two digit numbers differently than single digit numbers.
-                        let handler = this.HandleTwoDigitNumber(waypointNumber)
-                        if (handler.length ===2) {
-                            let digit = (handler[0] + '').charAt(i); // First Waypoint Digit
-                            payload.push({ // Waypoint Digit
-                                device: f15eUFCDevice,
-                                code: this.#f15eNumberCodes[digit],
-                                delay: delay,
-                                activate: 1,
-                                addDepress: "true",
-                            });
-                            let digit_ = (handler[1] + '').charAt(i); // Second Waypoint Digit
-                            payload.push({ // Waypoint Digit
-                                device: f15eUFCDevice,
-                                code: this.#f15eNumberCodes[digit_],
-                                delay: delay,
-                                activate: 1,
-                                addDepress: "true",
-                            });
-                        }
-                        else { // something is wrong if it got here but just incase :shrug:                            
-                        }
-                    }
-                    else {
-                        let digit = (waypointNumber + '').charAt(i);
-                        payload.push({ // Waypoint Digit
-                            device: f15eUFCDevice,
-                            code: this.#f15eNumberCodes[digit],
-                            delay: delay,
-                            activate: 1,
-                            addDepress: "true",
-                        });
-                    }
-                    
+                    let digit = (waypointNumber + '').charAt(i);
+                    payload.push({ // Waypoint Digit
+                        device: f15eUFCDevice,
+                        code: this.#f15eNumberCodes[digit],
+                        delay: delay,
+                        activate: 1,
+                        addDepress: "true",
+                    });
+        
                 }
 
                 payload.push({ // Press PB 1
@@ -656,40 +610,14 @@ class f15e {
                 let waypointNumber = waypoints.indexOf(waypoint) + 1;
                 for (let i = 0; i < (waypointNumber + '').length; i++) {
                     // eslint-disable-next-line default-case
-                    if (waypointNumber >= 10){ // Copy pasted from route A
-                        //  We're going to handle two digit numbers differently than single digit numbers.
-                        let handler = this.HandleTwoDigitNumber(waypointNumber)
-                        if (handler.length ===2) {
-                            let digit = (handler[0] + '').charAt(i); // First Waypoint Digit
-                            payload.push({ // Waypoint Digit
-                                device: f15eUFCDevice,
-                                code: this.#f15eNumberCodes[digit],
-                                delay: delay,
-                                activate: 1,
-                                addDepress: "true",
-                            });
-                            let digit_ = (handler[1] + '').charAt(i); // Second Waypoint Digit
-                            payload.push({ // Waypoint Digit
-                                device: f15eUFCDevice,
-                                code: this.#f15eNumberCodes[digit_],
-                                delay: delay,
-                                activate: 1,
-                                addDepress: "true",
-                            });
-                        }
-                        else { // something is wrong if it got here but just incase :shrug:                            
-                        }
-                    }
-                    else {
-                        let digit = (waypointNumber + '').charAt(i);
-                        payload.push({ // Waypoint Digit
-                            device: f15eUFCDevice,
-                            code: this.#f15eNumberCodes[digit],
-                            delay: delay,
-                            activate: 1,
-                            addDepress: "true",
-                        });
-                    }
+                    let digit = (waypointNumber + '').charAt(i);
+                    payload.push({ // Waypoint Digit
+                        device: f15eUFCDevice,
+                        code: this.#f15eNumberCodes[digit],
+                        delay: delay,
+                        activate: 1,
+                        addDepress: "true",
+                    });
                 }
 
                 payload.push({ // Press Shift
