@@ -103,9 +103,9 @@ class f15e {
                     addDepress: "true",
                 },
 
-                { // Press 3 / B
+                { // Press 1 / A
                     device: f15eUFCDevice,
-                    code: this.#f15eNumberCodes[3],
+                    code: this.#f15eNumberCodes[1],
                     delay: delay,
                     activate: 1,
                     addDepress: "true",
@@ -123,7 +123,21 @@ class f15e {
                 for (let i = 0; i < (waypointNumber + '').length; i++) {
                     // eslint-disable-next-line default-case
                     let digit = (waypointNumber + '').charAt(i);
-                    payload.push({
+                    payload.push({ // Waypoint Digit
+                        device: f15eUFCDevice,
+                        code: this.#f15eNumberCodes[digit],
+                        delay: delay,
+                        activate: 1,
+                        addDepress: "true",
+                    });
+                    payload.push({ // Clear UFC button
+                        device: f15eUFCDevice,
+                        code: 3035,
+                        delay: delay,
+                        activate: 1,
+                        addDepress: "true",
+                    })
+                    payload.push({ // Waypoint Digit
                         device: f15eUFCDevice,
                         code: this.#f15eNumberCodes[digit],
                         delay: delay,
@@ -131,22 +145,6 @@ class f15e {
                         addDepress: "true",
                     });
                 }
-
-                payload.push({ // Press Shift
-                    device: f15eUFCDevice,
-                    code: 3033,
-                    delay: delay,
-                    activate: 1,
-                    addDepress: "true",
-                });
-
-                payload.push({ // Press B / 3
-                    device: f15eUFCDevice,
-                    code: this.#f15eNumberCodes[3],
-                    delay: delay,
-                    activate: 1,
-                    addDepress: "true",
-                });
 
                 payload.push({ // Press PB 1
                     device: f15eUFCDevice,

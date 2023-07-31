@@ -46,18 +46,13 @@ const askUserAboutSeat = (module) => {
                 routeCode = 'B';  
               }
         
-              return `F-15ESE_${seat.toLowerCase()}${routeCode}`;
+              return `F-15ESE_${seat.toLowerCase()}${routeCode}`;  // improved readability over the big ball of if statements
         
             });
-<<<<<<< Updated upstream
         
           })
           .catch(() => {});
     } return module;
-=======
-        })
-    } else return module;
->>>>>>> Stashed changes
 };
 
 export default askUserAboutSeat;
