@@ -13,6 +13,26 @@ class f15e {
         "9": 3032
     };
 
+    static HandleTwoDigitNumber(digit) { // thinking about making a more than 9-10 waypoint implementation.
+        let numString = digit.toString();
+
+        let firstDigit = numString.charAt(0);
+        let secondDigit = numString.charAt(1);
+
+        firstDigit = parseInt(firstDigit);
+        secondDigit = parseInt(secondDigit);
+
+        let digits = [];
+
+        if (firstDigit !== 0) {
+            digits.push(firstDigit);
+        }
+
+        digits.push(secondDigit);
+
+        return digits;
+    }
+
     static createButtonCommands(waypoints) {
         let f15eUFCDevice;
         if (["F-15ESE_pilotA", "F-15ESE_pilotB"].includes(this.slotVariant)) {
@@ -21,7 +41,7 @@ class f15e {
             f15eUFCDevice = 57;
         }
         let delay = 100;
-        if (((["F-15ESE_pilotA", "F-15ESE_wsoA"].includes(this.slotVariant)))) // B Route Payload
+        if (((["F-15ESE_pilotA", "F-15ESE_wsoA"].includes(this.slotVariant)))) // A Route Payload
         {
             let payload = [
                 { // Clear UFC button
@@ -117,33 +137,256 @@ class f15e {
                     activate: 1,
                     addDepress: "true",
                 },
-                { // Enter 90A into UFC button 1
+                { // Enter 91A into UFC button 1
                     device: f15eUFCDevice,
                     code: 3001,
                     delay: delay,
                     activate: 1,
                     addDepress: "true",
+                },  // this part is a bit weird ROUTE A IMPLEMENTATION CURRENTLY
+                // Im going to create a false steerpoint and then select it from this point forward to allow the change of later/current steerpoints.
+                { // Press Shift
+                    device: f15eUFCDevice,
+                    code: 3033,
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                { // NORTH
+                    device: f15eUFCDevice,
+                    code: this.#f15eNumberCodes[2],
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                { // Inserting 5 1 times
+                    device: f15eUFCDevice,
+                    code: this.#f15eNumberCodes[5],
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                { // Inserting 5 2 times
+                    device: f15eUFCDevice,
+                    code: this.#f15eNumberCodes[5],
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                { // Inserting 5 3 times
+                    device: f15eUFCDevice,
+                    code: this.#f15eNumberCodes[5],
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                { // Inserting 5 4 times
+                    device: f15eUFCDevice,
+                    code: this.#f15eNumberCodes[5],
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                { // Inserting 5 5 times
+                    device: f15eUFCDevice,
+                    code: this.#f15eNumberCodes[5],
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                { // Inserting 5 6 times
+                    device: f15eUFCDevice,
+                    code: this.#f15eNumberCodes[5],
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                { // Inserting 5 7 times
+                    device: f15eUFCDevice,
+                    code: this.#f15eNumberCodes[5],
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                { // enter latitutde into UFC
+                    device: f15eUFCDevice,
+                    code: 3002,
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                // now we need to do the same for the other coordinate
+                { // Press Shift
+                    device: f15eUFCDevice,
+                    code: 3033,
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                { // EAST
+                    device: f15eUFCDevice,
+                    code: this.#f15eNumberCodes[6],
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                { // Inserting 0 
+                    device: f15eUFCDevice,
+                    code: this.#f15eNumberCodes[0],
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                { // Inserting 5 1 times
+                    device: f15eUFCDevice,
+                    code: this.#f15eNumberCodes[5],
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                { // Inserting 5 2 times
+                    device: f15eUFCDevice,
+                    code: this.#f15eNumberCodes[5],
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                { // Inserting 5 3 times
+                    device: f15eUFCDevice,
+                    code: this.#f15eNumberCodes[5],
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                { // Inserting 5 4 times
+                    device: f15eUFCDevice,
+                    code: this.#f15eNumberCodes[5],
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                { // Inserting 5 5 times
+                    device: f15eUFCDevice,
+                    code: this.#f15eNumberCodes[5],
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                { // Inserting 5 6 times
+                    device: f15eUFCDevice,
+                    code: this.#f15eNumberCodes[5],
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                { // Inserting 5 7 times
+                    device: f15eUFCDevice,
+                    code: this.#f15eNumberCodes[5],
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                { // enter longtitude into UFC
+                    device: f15eUFCDevice,
+                    code: 3003,
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                // Now we're finished with the false coordinate, and we can select it in the MENU
+                { // Menu UFC button
+                    device: f15eUFCDevice,
+                    code: 3038,
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                { // Enter 9 button
+                    device: f15eUFCDevice,
+                    code: this.#f15eNumberCodes[9],
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                { // Enter 1 button 
+                    device: f15eUFCDevice,
+                    code: this.#f15eNumberCodes[1],
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                { // Press Shift
+                    device: f15eUFCDevice,
+                    code: 3033,
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+
+                { // Press 1 / A
+                    device: f15eUFCDevice,
+                    code: this.#f15eNumberCodes[1],
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                { // Press UFC button 10
+                    device: f15eUFCDevice,
+                    code: 3010,
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                { // Press UFC button 10
+                    device: f15eUFCDevice,
+                    code: 3010,
+                    delay: delay,
+                    activate: 1,
+                    addDepress: "true",
                 },
             ];
+            
+
+
             for (const waypoint of waypoints) {
                 let waypointNumber = waypoints.indexOf(waypoint) + 1;
                 for (let i = 0; i < (waypointNumber + '').length; i++) {
                     // eslint-disable-next-line default-case
-                    let digit = (waypointNumber + '').charAt(i);
-                    payload.push({ // Enter 9 button
-                        device: f15eUFCDevice,
-                        code: this.#f15eNumberCodes[9],
-                        delay: delay,
-                        activate: 1,
-                        addDepress: "true",
-                    });
-                    payload.push({ // Waypoint Digit
-                        device: f15eUFCDevice,
-                        code: this.#f15eNumberCodes[digit],
-                        delay: delay,
-                        activate: 1,
-                        addDepress: "true",
-                    });
+                    if (waypointNumber >= 10){ // Im just going to leave a note here, but this worked perfectly on the first try.
+                        //  We're going to handle two digit numbers differently than single digit numbers.
+                        let handler = this.HandleTwoDigitNumber(waypointNumber)
+                        if (handler.length ===2) {
+                            let digit = (handler[0] + '').charAt(i); // First Waypoint Digit
+                            payload.push({ // Waypoint Digit
+                                device: f15eUFCDevice,
+                                code: this.#f15eNumberCodes[digit],
+                                delay: delay,
+                                activate: 1,
+                                addDepress: "true",
+                            });
+                            let digit_ = (handler[1] + '').charAt(i); // Second Waypoint Digit
+                            payload.push({ // Waypoint Digit
+                                device: f15eUFCDevice,
+                                code: this.#f15eNumberCodes[digit_],
+                                delay: delay,
+                                activate: 1,
+                                addDepress: "true",
+                            });
+                        }
+                        else { // something is wrong if it got here but just incase :shrug:                            
+                        }
+                    }
+                    else {
+                        let digit = (waypointNumber + '').charAt(i);
+                        payload.push({ // Waypoint Digit
+                            device: f15eUFCDevice,
+                            code: this.#f15eNumberCodes[digit],
+                            delay: delay,
+                            activate: 1,
+                            addDepress: "true",
+                        });
+                    }
+                    
                 }
 
                 payload.push({ // Press PB 1
@@ -281,13 +524,6 @@ class f15e {
                     activate: 1,
                     addDepress: "true",
                 },
-                { // Enter 9 button
-                    device: f15eUFCDevice,
-                    code: this.#f15eNumberCodes[9],
-                    delay: delay,
-                    activate: 1,
-                    addDepress: "true",
-                },
                 { // Enter 1 button // reason for this is because we currently cannot remove waypoints on ANY route. so we go to an integer high enough that it is extremely improbable to be non-nil.
                     device: f15eUFCDevice,
                     code: this.#f15eNumberCodes[1],
@@ -420,14 +656,40 @@ class f15e {
                 let waypointNumber = waypoints.indexOf(waypoint) + 1;
                 for (let i = 0; i < (waypointNumber + '').length; i++) {
                     // eslint-disable-next-line default-case
-                    let digit = (waypointNumber + '').charAt(i);
-                    payload.push({
-                        device: f15eUFCDevice,
-                        code: this.#f15eNumberCodes[digit],
-                        delay: delay,
-                        activate: 1,
-                        addDepress: "true",
-                    });
+                    if (waypointNumber >= 10){ // Copy pasted from route A
+                        //  We're going to handle two digit numbers differently than single digit numbers.
+                        let handler = this.HandleTwoDigitNumber(waypointNumber)
+                        if (handler.length ===2) {
+                            let digit = (handler[0] + '').charAt(i); // First Waypoint Digit
+                            payload.push({ // Waypoint Digit
+                                device: f15eUFCDevice,
+                                code: this.#f15eNumberCodes[digit],
+                                delay: delay,
+                                activate: 1,
+                                addDepress: "true",
+                            });
+                            let digit_ = (handler[1] + '').charAt(i); // Second Waypoint Digit
+                            payload.push({ // Waypoint Digit
+                                device: f15eUFCDevice,
+                                code: this.#f15eNumberCodes[digit_],
+                                delay: delay,
+                                activate: 1,
+                                addDepress: "true",
+                            });
+                        }
+                        else { // something is wrong if it got here but just incase :shrug:                            
+                        }
+                    }
+                    else {
+                        let digit = (waypointNumber + '').charAt(i);
+                        payload.push({ // Waypoint Digit
+                            device: f15eUFCDevice,
+                            code: this.#f15eNumberCodes[digit],
+                            delay: delay,
+                            activate: 1,
+                            addDepress: "true",
+                        });
+                    }
                 }
 
                 payload.push({ // Press Shift
