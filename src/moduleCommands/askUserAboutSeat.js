@@ -52,7 +52,7 @@ const askUserAboutSeat = (module) => {
         
           })
           .catch(() => {});
-    } return module;
+    }  else return module;
 };
 
 export default askUserAboutSeat;
