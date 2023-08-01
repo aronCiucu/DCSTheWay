@@ -34,18 +34,18 @@ const askUserAboutSeat = (module) => {
         
             return TwoOptionsDialog({
               title: "What route are you using?",
-              op1: "A{1/A}",  
-              op2: "B{1/B}",
+              op1: "A{1/A}",  // op1: "A"
+              op2: "B{1/B}",  // op2: "B" // removed because its a nice touch to keep the explicitness of this here, instead of making it more inline.
             })
             .then(route => {
         
               let routeCode;
-              if (route === 'A{1/A}') {
-                routeCode = 'A';
+              if (route === 'A{1/A}') { // sorting
+                routeCode = 'A'; // maybe an alert dialogue here to tell the user that route A will not work if it has target points or something of the sort
               } else {
                 routeCode = 'B';  
               }
-        
+              
               return `F-15ESE_${seat.toLowerCase()}${routeCode}`;  // improved readability over the big ball of if statements
         
             });
