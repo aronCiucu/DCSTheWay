@@ -26,6 +26,8 @@ class f16 {
     }
 
     static createButtonCommands(waypoints) {
+        // honestly about to be the dumbest fix for https://forum.dcs.world/topic/272110-transfer-steerpoints-from-the-f10-map-into-the-aircraft-dcs-the-way/?do=findComment&comment=5264640
+        this.#codesPayload.splice(0, this.#codesPayload.length); // this is the f16 fix. it wasnt clearing its payload. so it just persisted. honestly this pull request is quickly overextending its scope.
         this.#codesPayload.push(
             {
                 device: 17,

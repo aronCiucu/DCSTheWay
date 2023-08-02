@@ -32,8 +32,8 @@ const waypointsSlice = createSlice({
       state.dcsWaypoints[index]["elev"] = action.payload.elev;
     },
     delete(state, action) {
-      const index = state.dcsWaypoints.findIndex(
-        (i) => i.id === action.payload
+      const index = state.dcsWaypoints.findIndex( // https://forum.dcs.world/topic/272110-transfer-steerpoints-from-the-f10-map-into-the-aircraft-dcs-the-way/?do=findComment&comment=5264640
+        (i) => i.id === action.payload // this segment of code isnt the issue, it does its job properly, my guess is that the F16 script's payload isnt getting cleared.
       );
       state.dcsWaypoints.splice(index, 1);
     },
