@@ -24,7 +24,7 @@ const MuiDialog = ({isOpen, onResolve, onReject, title, op1, op2}) => {
                     <FormControlLabel control={
                         <Checkbox checked={checked}
                                   onChange={handleChange}/>
-                    } label="Assume pilot slot from now"/>
+                    } label="Remember my choice"/> <div>{/* Clearer and more applicable across the application IMO */}</div>
                 </FormGroup>
             </Stack>
         </Dialog>
