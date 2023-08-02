@@ -26,6 +26,7 @@ class fa18 {
     }
 
     static createButtonCommands(waypoints) {
+        this.#codesPayload.splice(0, this.#codesPayload.length); // Fixing Persistent Payload via splice
         //enter the SUPT menu
         this.#codesPayload.push({
             device: 37,

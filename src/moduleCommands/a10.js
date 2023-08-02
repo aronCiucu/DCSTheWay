@@ -56,6 +56,7 @@ class a10 {
     }
 
     static createButtonCommands(waypoints) {
+        this.#codesPayload.splice(0, this.#codesPayload.length); // Fixing Persistent Payload via splice
         this.#codesPayload.push(
             {
                 device: 9,

@@ -23,6 +23,7 @@ class f15e {
         let delay = 100;
         if (((["F-15ESE_pilotA", "F-15ESE_wsoA"].includes(this.slotVariant)))) // A Route Payload
         {
+            // Doesnt need to be Splice-Cleared because payload is created *each time* the function is called, and isnt static.
             let payload = [
                 { // Clear UFC button
                     device: f15eUFCDevice,
