@@ -26,6 +26,7 @@ class av8b {
     }
 
     static createButtonCommands(waypoints) {
+        this.#codesPayload = [];
         this.#codesPayload.push(
             //nav mode
             {

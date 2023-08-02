@@ -26,6 +26,7 @@ class f16 {
     }
 
     static createButtonCommands(waypoints) {
+        this.#codesPayload = [];
         this.#codesPayload.push(
             {
                 device: 17,

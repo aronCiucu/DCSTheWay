@@ -56,6 +56,7 @@ class a10 {
     }
 
     static createButtonCommands(waypoints) {
+        this.#codesPayload = [];
         this.#codesPayload.push(
             {
                 device: 9,

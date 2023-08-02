@@ -63,6 +63,7 @@ class ah64 {
     }
 
     static createButtonCommands(waypoints) {
+        this.#codesPayload = [];
         //Enter TSD Page
         this.#codesPayload.push({
             device: this.#isPilot() ? 43 : 45,

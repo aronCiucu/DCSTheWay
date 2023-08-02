@@ -45,6 +45,7 @@ class ka50 {
                    9       3010
 
                    */
+        this.#codesPayload = [];
         this.#codesPayload.push(
             //PVI to Entry mode
             {
