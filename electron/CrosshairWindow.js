@@ -5,8 +5,8 @@ const path = require("path");
 class CrosshairWindow extends BrowserWindow {
   constructor() {
     super({
-      width: 150,
-      height: 150,
+      width: 30,
+      height: 30,
       transparent: true,
       resizable: false,
       frame: false,
