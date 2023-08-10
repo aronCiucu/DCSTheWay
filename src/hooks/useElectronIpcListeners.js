@@ -13,7 +13,7 @@ const useElectronIpcListeners = () => {
     useEffect(() => {
         ipcRenderer.on("dataReceived", throttle((event, msg) => {
             dispatch(dcsPointActions.changeCoords(JSON.parse(msg)));
-          }, 100));
+        }, 100));
         ipcRenderer.on("fileOpened", (event, msg) => {
             dispatch(waypointsActions.appendWaypoints(msg));
         });

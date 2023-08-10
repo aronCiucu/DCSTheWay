@@ -45,7 +45,7 @@ class ka50 {
                    9       3010
 
                    */
-        this.#codesPayload.splice(0, this.#codesPayload.length); // Fixing Persistent Payload via splice
+        this.#codesPayload = [];
         this.#codesPayload.push(
             //PVI to Entry mode
             {

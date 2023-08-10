@@ -26,7 +26,7 @@ class m2000{
     }
 
     static createButtonCommands(waypoints) {
-        this.#codesPayload.splice(0, this.#codesPayload.length); // Fixing Persistent Payload via splice
+        this.#codesPayload = [];
         for (const waypoint of waypoints) {
             this.#codesPayload.push(
                 {
