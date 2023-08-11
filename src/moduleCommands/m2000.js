@@ -134,8 +134,8 @@ class m2000{
                 device: 9,
                 code: 3574,
                 delay: 100,
-                activate: 1,
-                addDepress: "true",
+                activate: 0.3,
+                addDepress: "false",
             });
             this.#codesPayload.push(
                 {
