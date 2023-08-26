@@ -20,7 +20,7 @@ Supported modules:
 Multiplayer is supported as long as the server has Player Exports turned on (most servers do).
 
 ## How to install?
-1. Download the latest zip file from the Releases section, and extract it. 
+1. Download the latest zip file from the Releases section [found here](https://github.com/aronCiucu/DCSTheWay/releases), and extract it. 
 2. Copy the `TheWay.lua` file from the folder you just extracted into `Users/YourUsernameHere/Saved Games/DCS/Scripts`. The `DCS` folder name may be `DCS.openbeta` if you are on the openbeta version of the game. If you are on Steam, the name will always be just `DCS`.
 3. Edit the `Export.lua` file there and append this line at the end of the file, and save it:
   ```lua
