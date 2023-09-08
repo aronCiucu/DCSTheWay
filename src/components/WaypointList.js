@@ -14,12 +14,14 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import ConvertModuleWaypoints from "../utils/ConvertModuleWaypoints";
+import {useState} from "react";
 
 const WaypointList = () => {
   const isPending = useSelector((state) => state.ui.pendingWaypoint);
   const { lat, long, elev, module } = useSelector((state) => state.dcsPoint);
   const dcsWaypoints = useSelector((state) => state.waypoints.dcsWaypoints);
   const dispatch = useDispatch();
+  const [expandedWaypointId, setExpandedWaypointId] = useState(-1);
 
   const moduleCoordinates = ConvertModuleWaypoints(dcsWaypoints, module);
   const hasWaypoints = dcsWaypoints.length > 0;
@@ -45,6 +47,14 @@ const WaypointList = () => {
     const elev = Convertors.fToM(event.target.value);
     dispatch(waypointsActions.changeElevation({ id, elev }));
   };
+
+  const expandHandler = (id, isExpanded) => {
+    isExpanded ?
+        setExpandedWaypointId(id) :
+        setExpandedWaypointId(-1);
+  }
+
+  const checkIfExpanded = (id) => (expandedWaypointId===id);
 
   const handleDragEnd = (event) => {
     const { active, over } = event;
@@ -91,9 +101,11 @@ const WaypointList = () => {
                     elev={wp.elev}
                     latHem={wp.latHem}
                     longHem={wp.longHem}
+                    expanded={checkIfExpanded(wp.id)}
                     onRename={renameHandler}
                     onElevation={elevationHandler}
                     onDelete={deleteHandler}
+                    onExpand={expandHandler}
                   />
                 ))}
 

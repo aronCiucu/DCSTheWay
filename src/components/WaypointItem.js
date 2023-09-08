@@ -9,7 +9,7 @@ import {
   Input,
   Box,
   Tooltip,
-  Typography,
+  Typography, Collapse,
 } from "@mui/material";
 import {
   DragHandle,
@@ -17,7 +17,6 @@ import {
   ArrowDropUp,
   Delete,
 } from "@mui/icons-material";
-import { useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
@@ -26,18 +25,14 @@ import "./WaypointItem.css";
 const { ipcRenderer } = window.require("electron");
 
 const WaypointItem = (props) => {
-  const [isExpanded, setIsExpanded] = useState(false);
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: props.id });
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
   };
-  const handleExpand = () => {
-    setIsExpanded(!isExpanded);
-  };
 
-  const handleInputFocus = (event) => {
+  const handleInputFocus = () => {
     ipcRenderer.send("focus");
   };
   const handleInputDefocus = (event) => {
@@ -46,7 +41,7 @@ const WaypointItem = (props) => {
   };
   const handleInputFinished = (event) => {
     if (event.key === "Enter") {
-      handleExpand();
+      props.onExpand(props.id, !props.expanded);
       handleInputDefocus();
     }
   };
@@ -55,17 +50,21 @@ const WaypointItem = (props) => {
     <ListItem ref={setNodeRef} style={style} {...attributes}>
       <Grid container>
         <Grid item xs={7}>
-          {isExpanded ? (
+          <Collapse in={props.expanded} collapsedSize={25}>
             <Stack>
-              <TextField
-                size="small"
-                defaultValue={props.name}
-                onChange={(e) => props.onRename(e, props.id)}
-                onMouseEnter={handleInputFocus}
-                onMouseLeave={handleInputDefocus}
-                onKeyDown={handleInputFinished}
-                onFocus={(e) => e.target.select()}
-              />
+              {props.expanded ? (
+                  <TextField
+                      size="small"
+                      defaultValue={props.name}
+                      onChange={(e) => props.onRename(e, props.id)}
+                      onMouseEnter={handleInputFocus}
+                      onMouseLeave={handleInputDefocus}
+                      onKeyDown={handleInputFinished}
+                      onFocus={(e) => e.target.select()}
+                  />
+              ) : (
+                  <ListItemText>{props.name}</ListItemText>
+              )}
 
               <Box sx={{ mx: 0.5 }}>
                 <Grid container spacing={3}>
@@ -114,9 +113,7 @@ const WaypointItem = (props) => {
                 </Grid>
               </Box>
             </Stack>
-          ) : (
-            <ListItemText>{props.name}</ListItemText>
-          )}
+          </Collapse>
         </Grid>
         <Grid item xs={5}>
           {props.pending ? (
@@ -140,8 +137,10 @@ const WaypointItem = (props) => {
               <IconButton onClick={(e) => props.onDelete(e, props.id)}>
                 <Delete />
               </IconButton>
-              <IconButton onClick={handleExpand}>
-                {isExpanded ? <ArrowDropUp /> : <ArrowDropDown />}
+              <IconButton
+                onClick={() => props.onExpand(props.id,!props.expanded)}
+              >
+                {props.expanded ? <ArrowDropUp /> : <ArrowDropDown />}
               </IconButton>
               <Box className="dragHandle" {...listeners}>
                 <DragHandle />
