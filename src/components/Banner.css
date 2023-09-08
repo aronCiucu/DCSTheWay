@@ -5,7 +5,8 @@
     mask-image: linear-gradient(white 0%,white 40%, transparent 100%);
 }
 .overlay-text-container{
+    width: 100%;
     position: absolute;
-    top: 0px;
+    top: 0;
     z-index:1 ;
 }
