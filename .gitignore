@@ -24,3 +24,7 @@ yarn-debug.log*
 yarn-error.log*
 
 .idea
+.vscode/launch.json
+devrun.bat
+language-server-log.txt
+*.bat

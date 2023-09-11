@@ -26,20 +26,33 @@ const askUserAboutSeat = (module) => {
         }).then(() => "FA-18C_hornet");
     } else if (module === "F-15ESE") {
         return TwoOptionsDialog({
-            title: "What seat are you in?",
+            title: "What seat are you in?", 
             op1: "Pilot",
             op2: "WSO",
-        })
-            .then((option) => {
-                if (option === "WSO")
-                    return "F-15ESE_wso";
-                return "F-15ESE_pilot";
+          })
+          .then(seat => {
+        
+            return TwoOptionsDialog({
+              title: "What route are you using?",
+              op1: "A{1/A}",  // op1: "A"
+              op2: "B{1/B}",  // op2: "B" // removed because its a nice touch to keep the explicitness of this here, instead of making it more inline.
             })
-            .catch(() => {
+            .then(route => {
+        
+              let routeCode;
+              if (route === 'A{1/A}') { // sorting
+                routeCode = 'A'; // maybe an alert dialogue here to tell the user that route A will not work if it has target points or something of the sort
+              } else {
+                routeCode = 'B';  
+              }
+              
+              return `F-15ESE_${seat.toLowerCase()}${routeCode}`;  // improved readability over the big ball of if statements
+        
             });
-    } else {
-        return module;
-    }
+        
+          })
+          .catch(() => {});
+    }  else return module;
 };
 
 export default askUserAboutSeat;
