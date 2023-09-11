@@ -1,0 +1,40 @@
+This file and the other jsons contain the debugging info for the Redux Dev tools. To simulate DCS being open and
+slotted in a module, goto the Redux dev tools, click Import from file, and select one of the json files.
+Or, dispatch the actions manually using the following actions:
+
+
+{
+  type: 'dcsPoint/changeCoords',
+  payload: {
+    model: 'AH-64D_BLK_II',
+    coords: {
+      lat: '41.905925545347',
+      'long': '43.783457188399'
+    },
+    elev: '1677.6647949219'
+  }
+}
+
+{
+  type: 'dcsPoint/changeCoords',
+  payload: {
+    model: 'F-15ESE',
+    coords: {
+      lat: '41.905925545347',
+      'long': '43.783457188399'
+    },
+    elev: '1677.6647949219'
+  }
+}
+
+{
+  type: 'dcsPoint/changeCoords',
+  payload: {
+    model: 'FA-18C_hornet',
+    coords: {
+      lat: '41.905925545347',
+      'long': '43.783457188399'
+    },
+    elev: '1677.6647949219'
+  }
+}

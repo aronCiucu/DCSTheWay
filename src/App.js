@@ -60,12 +60,7 @@ function App() {
             dcsWaypointsRef.current,
             moduleRef.current
         );
-        let chosenSeat;
-        if (userPreferences["hideDialogs"]) {
-            chosenSeat = moduleRef.current;
-        } else {
-            chosenSeat = await askUserAboutSeat(moduleRef.current);
-        }
+        const chosenSeat = await askUserAboutSeat(moduleRef.current, userPreferences);
         const commands = GetModuleCommands(chosenSeat, moduleWaypoints);
         ipcRenderer.send("transfer", commands);
     };

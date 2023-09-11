@@ -1,0 +1,3 @@
+{
+	"payload": "[{\"type\":\"dcsPoint/changeCoords\",\"payload\":{\"model\":\"AH-64D_BLK_II\",\"coords\":{\"lat\":\"41.905925545347\",\"long\":\"43.783457188399\"},\"elev\":\"1677.6647949219\"}},{\"type\":\"waypoints/addDcsWaypoint\",\"payload\":{\"lat\":41.905925545347,\"long\":43.783457188399,\"elev\":1677.6647949219}},{\"type\":\"waypoints/addDcsWaypoint\",\"payload\":{\"lat\":41.905925545347,\"long\":43.783457188399,\"elev\":1677.6647949219}},{\"type\":\"waypoints/addDcsWaypoint\",\"payload\":{\"lat\":41.905925545347,\"long\":43.783457188399,\"elev\":1677.6647949219}}]"
+}

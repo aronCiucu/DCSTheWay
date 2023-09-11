@@ -17,7 +17,10 @@ class userPreferenceHandler {
     }
 
     #writePreferencesFile(data) {
-        this.store.set(data);
+        const existingPreference = this.store.get(data.module);
+        existingPreference
+            ? this.store.set(data.module, [...existingPreference, data.option])
+            : this.store.set(data.module, [data.option]);
     }
     #readPreferencesFile() {
         const preferences = this.store.get();

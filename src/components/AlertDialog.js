@@ -13,16 +13,27 @@ import {createModal} from "react-modal-promise";
 import {useState} from "react";
 import saveUserPreferences from "../utils/saveUserPreferences";
 import {uiActions} from "../store/ui";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 const MuiDialog = ({isOpen, onResolve, onReject, title, content}) => {
-    const [checked, setChecked] = useState(false);
+    const {module} = useSelector((state) => state.dcsPoint);
+    const [dontShow, setDontShow] = useState(false);
     const dispatch = useDispatch();
-    const handleChange = (event) => {
-        setChecked(event.target.checked);
-        dispatch(uiActions.setUserPreferences({hideDialogs: event.target.checked}));
-        saveUserPreferences({hideDialogs: event.target.checked});
-    };
+    const handleDontShow = (event) => {
+        setDontShow(event.target.checked);
+    }
+
+    const handleConfirm = () => {
+        if (dontShow) {
+            const choice = {
+                module,
+                option: "Hide",
+            }
+            dispatch(uiActions.setUserPreference(choice));
+            saveUserPreferences(choice);
+        }
+        onResolve();
+    }
 
     return (
         <Dialog open={isOpen} onClose={onReject}>
@@ -30,11 +41,11 @@ const MuiDialog = ({isOpen, onResolve, onReject, title, content}) => {
             <DialogContent>
                 <Stack>
                     <DialogContentText>{content}</DialogContentText>
-                    <Button fullWidth onClick={() => onResolve()}>Confirm</Button>
-                    <FormGroup>
+                    <Button fullWidth onClick={handleConfirm}>Confirm</Button>
+                    <FormGroup sx={{alignItems: "center"}}>
                         <FormControlLabel control={
-                            <Checkbox checked={checked}
-                                      onChange={handleChange} />
+                            <Checkbox checked={dontShow}
+                                      onChange={(e) => handleDontShow(e)} />
                         } label="Don't show again"/>
                     </FormGroup>
                 </Stack>

@@ -9,6 +9,7 @@ const Banner = (props) => {
       >
         <Typography
           variant="overline"
+          sx={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.25), -2px -2px 4px rgba(0, 0, 0, 0.25)' }}
         >
           TheWay V{process.env.REACT_APP_VERSION}
         </Typography>

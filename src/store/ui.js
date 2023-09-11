@@ -9,6 +9,13 @@ const uiSlice = createSlice({
     changePendingWaypoint(state, action) {
       state.pendingWaypoint = action.payload;
     },
+    setUserPreference(state, action) {
+      const preference = action.payload;
+      const {module, option} = preference;
+      state.userPreferences[module]
+          ? state.userPreferences[module].push(option)
+          : state.userPreferences[module] = [option];
+    },
     setUserPreferences(state, action) {
       state.userPreferences = action.payload;
     }
