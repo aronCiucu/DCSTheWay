@@ -6,6 +6,7 @@ import a10 from "./a10";
 import m2000 from "./m2000";
 import av8b from "./av8b";
 import ka50 from "./ka50";
+import miragef1 from "./miragef1";
 
 export default function getModuleCommands(module, waypoints) {
     switch (module) {
@@ -52,6 +53,9 @@ export default function getModuleCommands(module, waypoints) {
         case "Ka-50":
         case "Ka-50_3": {
             return ka50.createButtonCommands(waypoints);
+        }
+        case "Mirage-F1EE": {
+            return miragef1.createButtonCommands(waypoints);
         }
         default:
             return [];
