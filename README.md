@@ -51,8 +51,10 @@ Make sure you have followed the install instructions to the letter, and that eve
 Check if the server you are flying on has Player Exports turned on. If it doesn't, this won't work! 
 ### Where is the app installed by default?
 TheWay files are installed in Windows at `C:\Users\USER\AppData\Local\Programs\theway`
-### None of my isses are shown here
-Worry not, feel free to message me on Discord (Doge#4634) or the ED Forums thread and we'll have it sorted!
+### How can I reset the module seat choice after I've ticked "Remember my choice"?
+Go to `C:\Users\USER\AppData\Roaming\theway` and delete the `config.json` file. Now the dialogs will appear again.
+### None of my issues are shown here
+Worry not, feel free to message me on Discord (Doge4634) or the ED Forums thread, and we'll have it sorted!
 
 ## Credits
 Special thanks to discord users: kukiric, Bepis, the88tench, okopanja, and the ED Forums users for their suggestions and help.
