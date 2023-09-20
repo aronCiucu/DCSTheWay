@@ -16,6 +16,7 @@ Supported modules:
 * AV8BNA Harrier
 * Ka-50 Blackshark
 * AH-64D Apache (Pilot and CP/G)
+* Mirage F1EE
  
 Multiplayer is supported as long as the server has Player Exports turned on (most servers do).
 

@@ -113,6 +113,7 @@ const convert = (dcsWaypoints, module) => {
       }
       return waypoints;
     }
+    case "Mirage-F1EE":
     case "Ka-50":
     case "Ka-50_3": {
       // lat  00.00.0 DMM
