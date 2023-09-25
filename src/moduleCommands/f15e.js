@@ -71,7 +71,7 @@ class f15e {
                 activate: 1,
                 addDepress: "true",
             },
-            { // Press B / 3 (This switchs to universal Base point / INS Align point)
+            { // Press B / 3 (This switches to the universal Base point / INS Align point)
                 device: f15eUFCDevice,
                 code: this.#f15eNumberCodes["B"],
                 delay: this.delay,
@@ -265,7 +265,7 @@ class f15e {
                 activate: 1,
                 addDepress: "true",
             },
-            { // Enter 1 button // reason for this is because we currently cannot remove waypoints on ANY route. so we go to an integer high enough that it is extremely improbable to be non-nil.
+            { // Enter 1 button (This re-selects the first waypoint)
                 device: f15eUFCDevice,
                 code: this.#f15eNumberCodes[1],
                 delay: this.delay,
