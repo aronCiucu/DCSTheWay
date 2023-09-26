@@ -16,7 +16,7 @@ const Banner = (props) => {
         <Typography
           color="lightgrey"
           variant="overline"
-          sx={{ lineHeight: 'normal' }}
+          sx={{ lineHeight: 'normal', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.25), -2px -2px 4px rgba(0, 0, 0, 0.25)' }}
         >
           {props.text}
         </Typography>
