@@ -110,23 +110,24 @@ class f15e {
                         addDepress: "true",
                     }
                 );
-                payload.push(
-                    { // press shift
-                        device: f15eUFCDevice, 
-                        code: this.#f15eNumberCodes["shift"],
-                        delay: this.delay,
-                        activate: 1,
-                        addDepress: "true",
-                    },
-                    { // route letter
-                        device: f15eUFCDevice, 
-                        code: route,
-                        delay: this.delay,
-                        activate: 1,
-                        addDepress: "true",
-                    }
-                )
             }
+            payload.push(
+                { // press shift
+                    device: f15eUFCDevice, 
+                    code: this.#f15eNumberCodes["shift"],
+                    delay: this.delay,
+                    activate: 1,
+                    addDepress: "true",
+                },
+                { // route letter
+                    device: f15eUFCDevice, 
+                    code: route,
+                    delay: this.delay,
+                    activate: 1,
+                    addDepress: "true",
+                }
+            )
+            
 
         // ============================================================
 
