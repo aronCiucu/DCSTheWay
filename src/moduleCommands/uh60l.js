@@ -101,21 +101,14 @@ class uh60l {
         // Switch to waypoint page (device this.#device_id, SelectDisplay, value 0.05
         this.#addKeyboardValue("display", this.#display_value);
 
-        // INC, KBD - name, KBD - grid, KBD - 4 + 4?
         for (const waypoint of waypoints) {
-            // kbd
-            // name
-            // kbd
-            // lat/long
-            // enter
-
             // increment waypoint
             this.#addKeyboardCode("inc");
 
-            // kbd
+            // kbd for input
             this.#addKeyboardCode("kbd");
 
-            //Type name (max 5 chars)
+            //Type name (max 13 chars on display)
             for (let i = 0; i < 13; i++) {
                 this.#addKeyboardCode(waypoint.name.charAt(i));
             }
@@ -175,7 +168,7 @@ class uh60l {
             // enter
             this.#addKeyboardCode("ent");
         }
-        // DEC back to 0?
+        // DEC back to MIZ0 after the INCs
         for (let i = 0; i < waypoints.length; i++) {
             this.#addKeyboardCode("dec");
         }
