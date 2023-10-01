@@ -35,23 +35,23 @@ class uh60l {
         "g": [3238, 3244],
         "h": [3239, 3244],
         "i": [3240, 3244],
-        "j": [3238, 3245],
-        "k": [3239, 3245],
-        "l": [3240, 3245],
-        "m": [3238, 3246],
-        "n": [3239, 3246],
-        "o": [3240, 3246],
-        "p": [3238, 3247],
-        "q": [3239, 3247],
-        "r": [3240, 3247],
-        "s": [3238, 3248],
-        "t": [3239, 3248],
-        "u": [3240, 3248],
-        "v": [3238, 3249],
-        "w": [3239, 3249],
-        "x": [3240, 3249],
-        "y": [3238, 3250],
-        "z": [3239, 3250],
+        "j": [3238, 3246],
+        "k": [3239, 3246],
+        "l": [3240, 3246],
+        "m": [3238, 3247],
+        "n": [3239, 3247],
+        "o": [3240, 3247],
+        "p": [3238, 3248],
+        "q": [3239, 3248],
+        "r": [3240, 3248],
+        "s": [3238, 3250],
+        "t": [3239, 3250],
+        "u": [3240, 3250],
+        "v": [3238, 3251],
+        "w": [3239, 3251],
+        "x": [3240, 3251],
+        "y": [3238, 3252],
+        "z": [3239, 3252],
     };
     static #codesPayload = [];
 
@@ -87,7 +87,7 @@ class uh60l {
                 code: characterCode,
                 delay: 100,
                 activate: value,
-                addDepress: "true",
+                addDepress: "false",
             });
         }
     }
@@ -116,7 +116,7 @@ class uh60l {
             this.#addKeyboardCode("kbd");
 
             //Type name (max 5 chars)
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < 13; i++) {
                 this.#addKeyboardCode(waypoint.name.charAt(i));
             }
 
@@ -145,6 +145,10 @@ class uh60l {
             for (let i = 0; i < waypoint.lat.length; i++) {
                 waypoint.lat.charAt(i) !== "." && this.#addKeyboardCode(waypoint.lat.charAt(i));
             }
+
+            // kbd
+            this.#addKeyboardCode("kbd");
+
             //check if longitude is E or W
             if (waypoint.longHem === "E") {
                 this.#codesPayload.push({
