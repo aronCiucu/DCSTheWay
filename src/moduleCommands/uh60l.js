@@ -52,6 +52,7 @@ class uh60l {
         "x": [3240, 3251],
         "y": [3238, 3252],
         "z": [3239, 3252],
+        // todo: space char? 0 or 9?
     };
     static #codesPayload = [];
 
