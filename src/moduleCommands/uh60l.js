@@ -2,6 +2,7 @@ class uh60l {
     static #device_id = 23;
     static #mode_value = 0.04;
     static #display_value = 0.05;
+    static #delay_value = 50;
     static #kuKeycodes = {
         "mode": 3235,
         "display": 3236,
@@ -64,7 +65,7 @@ class uh60l {
                 this.#codesPayload.push({
                     device: this.#device_id,
                     code: code,
-                    delay: 100,
+                    delay: this.#delay_value,
                     activate: 1,
                     addDepress: "true",
                 });
@@ -74,7 +75,7 @@ class uh60l {
                 this.#codesPayload.push({
                     device: this.#device_id,
                     code: characterCode,
-                    delay: 100,
+                    delay: this.#delay_value,
                     activate: 1,
                     addDepress: "true",
                 });
@@ -87,7 +88,7 @@ class uh60l {
             this.#codesPayload.push({
                 device: this.#device_id,
                 code: characterCode,
-                delay: 100,
+                delay: this.#delay_value,
                 activate: value,
                 addDepress: "false",
             });
@@ -123,7 +124,7 @@ class uh60l {
                 this.#codesPayload.push({
                     device: this.#device_id,
                     code: this.#kuKeycodes["n"][1],
-                    delay: 100,
+                    delay: this.#delay_value,
                     activate: 1,
                     addDepress: "true",
                 });
@@ -131,7 +132,7 @@ class uh60l {
                 this.#codesPayload.push({
                     device: this.#device_id,
                     code: this.#kuKeycodes["s"][1],
-                    delay: 100,
+                    delay: this.#delay_value,
                     activate: 1,
                     addDepress: "true",
                 });
@@ -149,7 +150,7 @@ class uh60l {
                 this.#codesPayload.push({
                     device: this.#device_id,
                     code: this.#kuKeycodes["e"][1],
-                    delay: 100,
+                    delay: this.#delay_value,
                     activate: 1,
                     addDepress: "true",
                 });
@@ -157,7 +158,7 @@ class uh60l {
                 this.#codesPayload.push({
                     device: this.#device_id,
                     code: this.#kuKeycodes["w"][1],
-                    delay: 100,
+                    delay: this.#delay_value,
                     activate: 1,
                     addDepress: "true",
                 });
