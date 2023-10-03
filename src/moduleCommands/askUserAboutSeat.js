@@ -55,8 +55,8 @@ const askUserAboutSeat = async (module, userPreferences) => {
       return AlertDialog({
         title: "Be advised:",
         content:
-            "1. This may overwrite waypoints\n" +
-            "2. If WP/TGT is on MIZ0 (00), 01 onwards will be overwritten"
+            "This may overwrite waypoints! " +
+            "If WP/TGT is on MIZ0 (00), 01 onwards will be overwritten."
       }).then(() => "UH-60L");
     }
   } else return module;
