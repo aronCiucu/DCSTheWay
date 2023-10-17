@@ -49,6 +49,16 @@ const askUserAboutSeat = async (module, userPreferences) => {
       }).then((chosenRoute) => route = chosenRoute);
     }
     return `F-15ESE_${seat.toLowerCase()}${(route === 'A{1/A}' ? "A" : "B")}`;
+  } else if (module === "UH-60L") {
+    if (moduleSpecificPreferences?.includes("Hide")) return "UH-60L";
+    else {
+      return AlertDialog({
+        title: "Be advised:",
+        content:
+            "This may overwrite waypoints! " +
+            "If WP/TGT is on MIZ0 (00), 01 onwards will be overwritten."
+      }).then(() => "UH-60L");
+    }
   } else return module;
 };
 
