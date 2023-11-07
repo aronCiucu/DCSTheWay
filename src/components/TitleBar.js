@@ -1,10 +1,11 @@
 import { Box, IconButton, Tooltip } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import MinimizeIcon from "@mui/icons-material/Minimize";
+import SettingsIcon from '@mui/icons-material/Settings';
 
 import "./TitleBar.css";
 const { ipcRenderer } = window.require("electron");
-const TitleBar = () => {
+const TitleBar = ({openSettingsHandler}) => {
   const minimizeHandler = () => {
     ipcRenderer.send("minimize");
   };
@@ -15,6 +16,11 @@ const TitleBar = () => {
   return (
     <Box className="parent">
       <Box className="buttons">
+        <Tooltip title="Settings">
+          <IconButton onClick={openSettingsHandler}>
+            <SettingsIcon />
+          </IconButton>
+        </Tooltip>
         <Tooltip title="Minimize">
           <IconButton onClick={minimizeHandler}>
             <MinimizeIcon />

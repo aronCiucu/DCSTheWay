@@ -1,3 +1,5 @@
+import createButtonPress from "../models/ButtonPress";
+
 class f16 {
     static #kuKeycodes = {
         "1": 3003,
@@ -16,74 +18,26 @@ class f16 {
     static #addKeyboardCode(character) {
         const characterCode = this.#kuKeycodes[character.toLowerCase()];
         if (characterCode !== undefined)
-            this.#codesPayload.push({
-                device: 17,
-                code: characterCode,
-                delay: 10,
-                activate: 1,
-                addDepress: "true",
-            });
+            this.#codesPayload.push(createButtonPress(17, characterCode,10));
     }
 
     static createButtonCommands(waypoints) {
         this.#codesPayload = [];
         this.#codesPayload.push(
-            {
-                device: 17,
-                code: 3032,
-                delay: 100,
-                activate: -1,
-                addDepress: "true",
-            },
-            {
-                device: 17,
-                code: 3006,
-                delay: 100,
-                activate: 1,
-                addDepress: "true",
-            },
+            createButtonPress(17, 3032, 100, -1),
+            createButtonPress(17, 3006, 100),
         );
         for (const waypoint of waypoints) {
             this.#codesPayload.push(
-                {
-                    device: 17,
-                    code: 3030,
-                    delay: 100,
-                    activate: 1,
-                    addDepress: "true",
-                },
-                {
-                    device: 17,
-                    code: 3035,
-                    delay: 100,
-                    activate: -1,
-                    addDepress: "true",
-                },
-                {
-                    device: 17,
-                    code: 3035,
-                    delay: 100,
-                    activate: -1,
-                    addDepress: "true",
-                }
+                createButtonPress(17, 3030, 100),
+                createButtonPress(17, 3035, 100, -1),
+                createButtonPress(17, 3035, 100, -1)
             );
             //Type hem
             if (waypoint.latHem === "N") {
-                this.#codesPayload.push({
-                    device: 17,
-                    code: 3004,
-                    delay: 10,
-                    activate: 1,
-                    addDepress: "true",
-                });
+                this.#codesPayload.push(createButtonPress(17, 3004, 10));
             } else {
-                this.#codesPayload.push({
-                    device: 17,
-                    code: 3010,
-                    delay: 10,
-                    activate: 1,
-                    addDepress: "true",
-                });
+                this.#codesPayload.push(createButtonPress(17, 3010, 10));
             }
 
             for (let i = 0; i < waypoint.lat.length; i++) { // Type Latitude into UFC
@@ -91,38 +45,14 @@ class f16 {
             }
 
             //enter
-            this.#codesPayload.push({
-                device: 17,
-                code: 3016,
-                delay: 10,
-                activate: 1,
-                addDepress: "true",
-            });
+            this.#codesPayload.push(createButtonPress(17, 3016, 10));
             //dobber to long
-            this.#codesPayload.push({
-                device: 17,
-                code: 3035,
-                delay: 100,
-                activate: -1,
-                addDepress: "true",
-            });
+            this.#codesPayload.push(createButtonPress(17, 3035, 100, -1));
             //Type hem
             if (waypoint.longHem === "E") {
-                this.#codesPayload.push({
-                    device: 17,
-                    code: 3008,
-                    delay: 10,
-                    activate: 1,
-                    addDepress: "true",
-                });
+                this.#codesPayload.push(createButtonPress(17, 3008, 10));
             } else {
-                this.#codesPayload.push({
-                    device: 17,
-                    code: 3006,
-                    delay: 10,
-                    activate: 1,
-                    addDepress: "true",
-                });
+                this.#codesPayload.push(createButtonPress(17, 3006, 10));
             }
 
             //type long
@@ -131,21 +61,9 @@ class f16 {
             }
 
             //enter
-            this.#codesPayload.push({
-                device: 17,
-                code: 3016,
-                delay: 10,
-                activate: 1,
-                addDepress: "true",
-            });
+            this.#codesPayload.push(createButtonPress(17, 3016, 10));
             //dobber to elev
-            this.#codesPayload.push({
-                device: 17,
-                code: 3035,
-                delay: 100,
-                activate: -1,
-                addDepress: "true",
-            });
+            this.#codesPayload.push(createButtonPress(17, 3035, 100, -1));
 
             //type elev
             for (let i = 0; i < waypoint.elev.length; i++) { // Type Elevation into UFC
@@ -153,54 +71,18 @@ class f16 {
             }
 
             //enter
-            this.#codesPayload.push({
-                device: 17,
-                code: 3016,
-                delay: 10,
-                activate: 1,
-                addDepress: "true",
-            });
+            this.#codesPayload.push(createButtonPress(17, 3016, 10));
             //back to steerpoint field
             this.#codesPayload.push(
-                {
-                    device: 17,
-                    code: 3034,
-                    delay: 100,
-                    activate: 1,
-                    addDepress: "true",
-                },
-                {
-                    device: 17,
-                    code: 3034,
-                    delay: 100,
-                    activate: 1,
-                    addDepress: "true",
-                },
-                {
-                    device: 17,
-                    code: 3034,
-                    delay: 100,
-                    activate: 1,
-                    addDepress: "true",
-                },
-                {
-                    device: 17,
-                    code: 3034,
-                    delay: 100,
-                    activate: 1,
-                    addDepress: "true",
-                }
+                createButtonPress(17, 3034, 100),
+                createButtonPress(17, 3034, 100),
+                createButtonPress(17, 3034, 100),
+                createButtonPress(17, 3034, 100),
             );
         }
 
         //main page
-        this.#codesPayload.push({
-            device: 17,
-            code: 3032,
-            delay: 100,
-            activate: -1,
-            addDepress: "true",
-        });
+        this.#codesPayload.push(createButtonPress(17, 3032, 100, -1));
 
         return this.#codesPayload;
     }

@@ -1,5 +1,5 @@
 import {Box, createTheme, CssBaseline, ThemeProvider} from "@mui/material";
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import ModalContainer from "react-modal-promise";
 
@@ -13,6 +13,7 @@ import ConvertModuleWaypoints from "./utils/ConvertModuleWaypoints";
 import GetModuleCommands from "./moduleCommands/GetModuleCommands";
 import askUserAboutSeat from "./moduleCommands/askUserAboutSeat";
 import useElectronIpcListeners from "./hooks/useElectronIpcListeners";
+import SettingsDialog from "./components/SettingsDialog";
 
 const {ipcRenderer} = window.require("electron");
 
@@ -23,6 +24,7 @@ function App() {
     const {module, lat, long, elev} = useSelector((state) => state.dcsPoint);
     const dcsWaypoints = useSelector((state) => state.waypoints.dcsWaypoints);
     const userPreferences = useSelector(state => state.ui.userPreferences);
+    const [settingsModalOpen, setSettingsModalOpen] = useState(false);
 
     const latRef = useRef();
     const longRef = useRef();
@@ -72,9 +74,10 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline enableColorScheme/>
-            <TitleBar/>
+            <TitleBar openSettingsHandler={() => setSettingsModalOpen(true)}/>
             <ModalContainer/>
             <Box sx={{height: "100vh"}}>
+                <SettingsDialog open={settingsModalOpen} closeHandler={() => setSettingsModalOpen(false)}/>
                 <Box sx={{height: "25%"}}>
                     <SourceSelector/>
                 </Box>
