@@ -1,12 +1,20 @@
-import {Button, Checkbox, Dialog, DialogTitle, FormControlLabel, FormGroup, Stack} from "@mui/material";
-import {createModal} from "react-modal-promise";
-import {useState} from "react";
-import saveUserPreferences from "../utils/saveUserPreferences";
-import {uiActions} from "../store/ui";
-import {useDispatch, useSelector} from "react-redux";
+import {
+    Button,
+    Checkbox,
+    Dialog,
+    DialogTitle,
+    FormControlLabel,
+    FormGroup,
+    Stack,
+} from "@mui/material";
+import { createModal } from "react-modal-promise";
+import { useState } from "react";
+import { uiActions } from "../store/ui";
+import { useDispatch, useSelector } from "react-redux";
+import { saveModulePreferences } from "../utils/savePreferences";
 
-const MuiDialog = ({isOpen, onResolve, onReject, title, op1, op2}) => {
-    const {module} = useSelector((state) => state.dcsPoint);
+const MuiDialog = ({ isOpen, onResolve, onReject, title, op1, op2 }) => {
+    const { module } = useSelector((state) => state.dcsPoint);
     const [rememberChoice, setRememberChoice] = useState(false);
     const dispatch = useDispatch();
     const handleRememberChoice = (event) => {
@@ -18,12 +26,12 @@ const MuiDialog = ({isOpen, onResolve, onReject, title, op1, op2}) => {
             const choice = {
                 module,
                 option,
-            }
-            dispatch(uiActions.setUserPreference(choice));
-            saveUserPreferences(choice);
+            };
+            dispatch(uiActions.setModulePreference(choice));
+            saveModulePreferences(choice);
         }
         onResolve(option);
-    }
+    };
 
     return (
         <Dialog open={isOpen} onClose={onReject}>
@@ -31,11 +39,16 @@ const MuiDialog = ({isOpen, onResolve, onReject, title, op1, op2}) => {
             <Stack>
                 <Button onClick={() => handleOptionSelected(op1)}>{op1}</Button>
                 <Button onClick={() => handleOptionSelected(op2)}>{op2}</Button>
-                <FormGroup sx={{alignItems: "center"}}>
-                    <FormControlLabel control={
-                        <Checkbox checked={rememberChoice}
-                                  onChange={(e) => handleRememberChoice(e)}/>
-                    } label="Remember this choice"/>
+                <FormGroup sx={{ alignItems: "center" }}>
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                checked={rememberChoice}
+                                onChange={(e) => handleRememberChoice(e)}
+                            />
+                        }
+                        label="Remember this choice"
+                    />
                 </FormGroup>
             </Stack>
         </Dialog>
