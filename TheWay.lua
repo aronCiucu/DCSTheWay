@@ -111,22 +111,20 @@ function LuaExportAfterNextFrame()
     local elevation = LoGetAltitude(loX, loZ)
     local coords = LoLoCoordinatesToGeoCoordinates(loX, loZ)
     local selfData = LoGetSelfData()
-    if (selfData ~= nil) then
-        local model = selfData["Name"];
-        local message = {}
-        message["model"] = model
-        message["coords"] = {}
-        message["coords"]["lat"] = tostring(coords.latitude)
-        message["coords"]["long"] = tostring(coords.longitude)
-        message["elev"] = tostring(elevation)
-        local toSend = JSON:encode(message)
+    local model = selfData and selfData['Name'] or ''
+    local message = {}
+    message["model"] = model
+    message["coords"] = {}
+    message["coords"]["lat"] = tostring(coords.latitude)
+    message["coords"]["long"] = tostring(coords.longitude)
+    message["elev"] = tostring(elevation)
+    local toSend = JSON:encode(message)
 
-        if pcall(function()
-                socket.try(udpSpeaker:sendto(toSend, "127.0.0.1", 42069))
-            end) then
-        else
-            log.write("THEWAY", log.ERROR, "Unable to send data")
-        end
+    if pcall(function()
+            socket.try(udpSpeaker:sendto(toSend, "127.0.0.1", 42069))
+        end) then
+    else
+        log.write("THEWAY", log.ERROR, "Unable to send data")
     end
 end
 
