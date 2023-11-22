@@ -11,10 +11,14 @@ import uh60l from "./uh60l";
 
 export default function getModuleCommands(module, waypoints) {
     switch (module) {
-        case "F-15ESE_pilotA":
-        case "F-15ESE_wsoA":
-        case "F-15ESE_pilotB":
-        case "F-15ESE_wsoB":
+        case "F-15ESE_pilotATGT":
+        case "F-15ESE_wsoATGT":
+        case "F-15ESE_pilotBTGT":
+        case "F-15ESE_wsoBTGT":
+        case "F-15ESE_pilotANOTTGT":
+        case "F-15ESE_wsoANOTTGT":
+        case "F-15ESE_pilotBNOTTGT":
+        case "F-15ESE_wsoBNOTTGT":
             f15e.slotVariant = module;
             return f15e.createButtonCommands(waypoints);
         case "F-16C_50":

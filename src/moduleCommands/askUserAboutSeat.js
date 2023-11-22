@@ -48,7 +48,14 @@ const askUserAboutSeat = async (module, userPreferences) => {
         op2: "B{1/B}",  // op2: "B" // removed because its a nice touch to keep the explicitness of this here, instead of making it more inline.
       }).then((chosenRoute) => route = chosenRoute);
     }
-    return `F-15ESE_${seat.toLowerCase()}${(route === 'A{1/A}' ? "A" : "B")}`;
+
+    let tgt;
+    await TwoOptionsDialog({
+      title: "Input as TGT?",
+      op1: "YES",
+      op2: "NO",
+    }).then((asTGT) => tgt = asTGT);
+    return `F-15ESE_${seat.toLowerCase()}${(route === 'A{1/A}' ? "A" : "B")}${(tgt === 'YES' ? "TGT" : "NOTTGT")}`;
   } else if (module === "UH-60L") {
     if (moduleSpecificPreferences?.includes("Hide")) return "UH-60L";
     else {

@@ -17,20 +17,29 @@ class f15e {
         "shift": 3033,
         "A" : 3020,
         "B" : 3022,
+        "." : 3029,
     };
 
     static createButtonCommands(waypoints) {
         let f15eUFCDevice;
-        if (["F-15ESE_pilotA", "F-15ESE_pilotB"].includes(this.slotVariant)) {
+        if (["F-15ESE_pilotATGT", "F-15ESE_pilotBTGT", "F-15ESE_pilotANOTTGT", "F-15ESE_pilotBNOTTGT"].includes(this.slotVariant)) {
             f15eUFCDevice = 56;
         } else {
             f15eUFCDevice = 57;
         }
         let route; // This should reduce length of code by a lot, and make it more readable.
-        if (this.slotVariant === "F-15ESE_pilotA" || this.slotVariant === "F-15ESE_wsoA") {
+        if (this.slotVariant === "F-15ESE_pilotATGT" || this.slotVariant === "F-15ESE_wsoATGT"
+            || this.slotVariant === "F-15ESE_pilotANOTTGT" || this.slotVariant === "F-15ESE_wsoANOTTGT") {
             route = this.#f15eNumberCodes["A"];
         } else {
             route = this.#f15eNumberCodes["B"];
+        }
+        let tgt;
+        if (this.slotVariant === "F-15ESE_pilotATGT" || this.slotVariant === "F-15ESE_wsoATGT"
+            || this.slotVariant === "F-15ESE_pilotBTGT" || this.slotVariant === "F-15ESE_wsoBTGT") {
+            tgt = true;
+        } else {
+            tgt = false;
         }
         
         {
@@ -111,22 +120,49 @@ class f15e {
                     }
                 );
             }
-            payload.push(
-                { // press shift
-                    device: f15eUFCDevice, 
-                    code: this.#f15eNumberCodes["shift"],
-                    delay: this.delay,
-                    activate: 1,
-                    addDepress: "true",
-                },
-                { // route letter
-                    device: f15eUFCDevice, 
-                    code: route,
-                    delay: this.delay,
-                    activate: 1,
-                    addDepress: "true",
-                }
-            )
+            if (tgt == true) {
+                payload.push(
+                    { // press .
+                        device: f15eUFCDevice, 
+                        code: this.#f15eNumberCodes["."],
+                        delay: this.delay,
+                        activate: 1,
+                        addDepress: "true",
+                    },
+                    { // press shift
+                        device: f15eUFCDevice, 
+                        code: this.#f15eNumberCodes["shift"],
+                        delay: this.delay,
+                        activate: 1,
+                        addDepress: "true",
+                    },
+                    { // route letter
+                        device: f15eUFCDevice, 
+                        code: route,
+                        delay: this.delay,
+                        activate: 1,
+                        addDepress: "true",
+                    }
+                )
+            } else {
+                payload.push(
+                    { // press shift
+                        device: f15eUFCDevice, 
+                        code: this.#f15eNumberCodes["shift"],
+                        delay: this.delay,
+                        activate: 1,
+                        addDepress: "true",
+                    },
+                    { // route letter
+                        device: f15eUFCDevice, 
+                        code: route,
+                        delay: this.delay,
+                        activate: 1,
+                        addDepress: "true",
+                    }
+                )
+            }
+            
             
 
         // ============================================================
@@ -259,7 +295,52 @@ class f15e {
                 addDepress: "true",
             });
         }
-        payload.push({ // Menu UFC button
+        
+        if (tgt == true) {
+            payload.push({ // Menu UFC button
+                device: f15eUFCDevice,
+                code: 3038,
+                delay: this.delay,
+                activate: 1,
+                addDepress: "true",
+            },
+            { // Enter 1 button (This re-selects the first waypoint)
+                device: f15eUFCDevice,
+                code: this.#f15eNumberCodes[1],
+                delay: this.delay,
+                activate: 1,
+                addDepress: "true",
+            },
+            { // press .
+                device: f15eUFCDevice, 
+                code: this.#f15eNumberCodes["."],
+                delay: this.delay,
+                activate: 1,
+                addDepress: "true",
+            },
+            { // press shift
+                device: f15eUFCDevice,
+                code: 3033,
+                delay: this.delay,
+                activate: 1,
+                addDepress: "true",
+            },
+            { // enter route letter
+                device: f15eUFCDevice,
+                code: route,
+                delay: this.delay,
+                activate: 1,
+                addDepress: "true",
+            },
+            { // Waypoint UFC button
+                device: f15eUFCDevice,
+                code: 3010,
+                delay: this.delay,
+                activate: 1,
+                addDepress: "true",
+            },);
+        } else {
+            payload.push({ // Menu UFC button
                 device: f15eUFCDevice,
                 code: 3038,
                 delay: this.delay,
@@ -294,6 +375,7 @@ class f15e {
                 activate: 1,
                 addDepress: "true",
             },);
+        }
 
         return payload;
         }
