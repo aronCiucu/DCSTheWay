@@ -169,7 +169,6 @@ class av8b {
         activate: 1,
         addDepress: "true",
       });
-      console.log(waypoint.elev);
       //type elevation
       for (let i = 0; i < waypoint.elev.length; i++) {
         this.#addKeyboardCode(waypoint.elev.charAt(i));
