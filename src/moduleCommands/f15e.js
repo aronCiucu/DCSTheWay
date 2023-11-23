@@ -24,14 +24,12 @@ class f15e {
     };
 
     static pushJDAMOps(payload, MPDcode) {
-        let push_delay = 2000;
         payload.push({
             device: MPDcode,
             code: this.#f15eNumberCodes["PB1"],
-            delay: push_delay,
+            delay: 2000,
             activate: 1,
             addDepress: "true",
-            fastDepress: "true",
         });
         payload.push({
             device: MPDcode,
