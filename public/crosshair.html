@@ -15,7 +15,7 @@
             justify-content: center;
             align-items: center;
         }
-        .crosshair{
+        #crosshair{
             width: 15px;
             height: 15px;
             border: 3px solid lawngreen;
@@ -27,6 +27,15 @@
 </head>
 <body>
 <div class="container">
-    <div class="crosshair"></div>
+    <div id="crosshair"></div>
 </div>
 </body>
+
+<script>
+    const { ipcRenderer } = require('electron');
+    ipcRenderer.send("getPreferences");
+    ipcRenderer.on("crosshairColor", (event, color) => {
+        let crosshairElement = document.getElementById("crosshair");
+        crosshairElement.style.border = `3px solid ${color}`;
+    });
+</script>

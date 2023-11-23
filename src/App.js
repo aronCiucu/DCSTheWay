@@ -12,7 +12,7 @@ import ConvertModuleWaypoints from "./utils/ConvertModuleWaypoints";
 import GetModuleCommands from "./moduleCommands/GetModuleCommands";
 import askUserAboutSeat from "./moduleCommands/askUserAboutSeat";
 import useElectronIpcListeners from "./hooks/useElectronIpcListeners";
-import SettingsDialog from "./components/SettingsDialog";
+import SettingsDialog from "./components/settings/SettingsDialog";
 
 const { ipcRenderer } = window.require("electron");
 
