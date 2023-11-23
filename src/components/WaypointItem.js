@@ -9,7 +9,9 @@ import {
   Input,
   Box,
   Tooltip,
-  Typography, Collapse, Grow,
+  Typography,
+  Collapse,
+  Grow,
 } from "@mui/material";
 import {
   DragHandle,
@@ -54,17 +56,17 @@ const WaypointItem = (props) => {
             <Collapse in={props.expanded} collapsedSize={25}>
               <Stack>
                 {props.expanded ? (
-                    <TextField
-                        size="small"
-                        defaultValue={props.name}
-                        onChange={(e) => props.onRename(e, props.id)}
-                        onMouseEnter={handleInputFocus}
-                        onMouseLeave={handleInputDefocus}
-                        onKeyDown={handleInputFinished}
-                        onFocus={(e) => e.target.select()}
-                    />
+                  <TextField
+                    size="small"
+                    defaultValue={props.name}
+                    onChange={(e) => props.onRename(e, props.id)}
+                    onMouseEnter={handleInputFocus}
+                    onMouseLeave={handleInputDefocus}
+                    onKeyDown={handleInputFinished}
+                    onFocus={(e) => e.target.select()}
+                  />
                 ) : (
-                    <ListItemText>{props.name}</ListItemText>
+                  <ListItemText>{props.name}</ListItemText>
                 )}
 
                 <Box sx={{ mx: 0.5 }}>
@@ -75,10 +77,7 @@ const WaypointItem = (props) => {
                       </Typography>
                     </Grid>
                     <Grid item xs={9}>
-                      <Input
-                          disabled
-                          value={props.latHem + " " + props.lat}
-                      />
+                      <Input disabled value={props.latHem + " " + props.lat} />
                     </Grid>
                   </Grid>
 
@@ -90,8 +89,8 @@ const WaypointItem = (props) => {
                     </Grid>
                     <Grid item xs={9}>
                       <Input
-                          disabled
-                          value={props.longHem + " " + props.long}
+                        disabled
+                        value={props.longHem + " " + props.long}
                       ></Input>
                     </Grid>
                   </Grid>
@@ -104,11 +103,11 @@ const WaypointItem = (props) => {
                     </Grid>
                     <Grid item xs={9}>
                       <Input
-                          value={props.elev}
-                          onChange={(e) => props.onElevation(e, props.id)}
-                          onMouseEnter={handleInputFocus}
-                          onMouseLeave={handleInputDefocus}
-                          onKeyDown={handleInputFinished}
+                        value={props.elev}
+                        onChange={(e) => props.onElevation(e, props.id)}
+                        onMouseEnter={handleInputFocus}
+                        onMouseLeave={handleInputDefocus}
+                        onKeyDown={handleInputFinished}
                       ></Input>
                     </Grid>
                   </Grid>
@@ -118,35 +117,35 @@ const WaypointItem = (props) => {
           </Grid>
           <Grid item xs={5}>
             {props.pending ? (
-                <Stack
-                    direction="row"
-                    justifyContent="flex-end"
-                    alignItems="center"
-                >
-                  <Tooltip title="Save waypoint">
-                    <Button variant="contained" onClick={props.onSave}>
-                      Save
-                    </Button>
-                  </Tooltip>
-                </Stack>
+              <Stack
+                direction="row"
+                justifyContent="flex-end"
+                alignItems="center"
+              >
+                <Tooltip title="Save waypoint">
+                  <Button variant="contained" onClick={props.onSave}>
+                    Save
+                  </Button>
+                </Tooltip>
+              </Stack>
             ) : (
-                <Stack
-                    direction="row"
-                    justifyContent="flex-end"
-                    alignItems="center"
+              <Stack
+                direction="row"
+                justifyContent="flex-end"
+                alignItems="center"
+              >
+                <IconButton onClick={(e) => props.onDelete(e, props.id)}>
+                  <Delete />
+                </IconButton>
+                <IconButton
+                  onClick={() => props.onExpand(props.id, !props.expanded)}
                 >
-                  <IconButton onClick={(e) => props.onDelete(e, props.id)}>
-                    <Delete />
-                  </IconButton>
-                  <IconButton
-                      onClick={() => props.onExpand(props.id,!props.expanded)}
-                  >
-                    {props.expanded ? <ArrowDropUp /> : <ArrowDropDown />}
-                  </IconButton>
-                  <Box className="dragHandle" {...listeners}>
-                    <DragHandle />
-                  </Box>
-                </Stack>
+                  {props.expanded ? <ArrowDropUp /> : <ArrowDropDown />}
+                </IconButton>
+                <Box className="dragHandle" {...listeners}>
+                  <DragHandle />
+                </Box>
+              </Stack>
             )}
           </Grid>
         </Grid>

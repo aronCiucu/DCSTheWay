@@ -1,41 +1,41 @@
-<!DOCTYPE html>
+<!doctype html>
 <head>
-    <title>TheWay Crosshair</title>
-    <style>
-        html{
-            height: 100%;
-        }
-        body{
-            height: 100%;
-            margin: 0;
-        }
-        .container{
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        #crosshair{
-            width: 15px;
-            height: 15px;
-            border: 3px solid lawngreen;
-            border-radius: 50%;
-            margin: auto;
-            filter: drop-shadow(0 0 1px black);
-        }
-    </style>
+  <title>TheWay Crosshair</title>
+  <style>
+    html {
+      height: 100%;
+    }
+    body {
+      height: 100%;
+      margin: 0;
+    }
+    .container {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #crosshair {
+      width: 15px;
+      height: 15px;
+      border: 3px solid lawngreen;
+      border-radius: 50%;
+      margin: auto;
+      filter: drop-shadow(0 0 1px black);
+    }
+  </style>
 </head>
 <body>
-<div class="container">
+  <div class="container">
     <div id="crosshair"></div>
-</div>
+  </div>
 </body>
 
 <script>
-    const { ipcRenderer } = require('electron');
-    ipcRenderer.send("getPreferences");
-    ipcRenderer.on("crosshairColor", (event, color) => {
-        let crosshairElement = document.getElementById("crosshair");
-        crosshairElement.style.border = `3px solid ${color}`;
-    });
+  const { ipcRenderer } = require("electron");
+  ipcRenderer.send("getPreferences");
+  ipcRenderer.on("crosshairColor", (event, color) => {
+    let crosshairElement = document.getElementById("crosshair");
+    crosshairElement.style.border = `3px solid ${color}`;
+  });
 </script>

@@ -21,19 +21,19 @@ const waypointsSlice = createSlice({
     },
     changeName(state, action) {
       const index = state.dcsWaypoints.findIndex(
-        (i) => i.id === action.payload.id
+        (i) => i.id === action.payload.id,
       );
       state.dcsWaypoints[index]["name"] = action.payload.name;
     },
     changeElevation(state, action) {
       const index = state.dcsWaypoints.findIndex(
-        (i) => i.id === action.payload.id
+        (i) => i.id === action.payload.id,
       );
       state.dcsWaypoints[index]["elev"] = action.payload.elev;
     },
     delete(state, action) {
       const index = state.dcsWaypoints.findIndex(
-        (i) => i.id === action.payload
+        (i) => i.id === action.payload,
       );
       state.dcsWaypoints.splice(index, 1);
     },
@@ -43,10 +43,10 @@ const waypointsSlice = createSlice({
     },
     changeOrder(state, action) {
       const oldIndex = state.dcsWaypoints.findIndex(
-        (i) => i.id === action.payload.over
+        (i) => i.id === action.payload.over,
       );
       const newIndex = state.dcsWaypoints.findIndex(
-        (i) => i.id === action.payload.active
+        (i) => i.id === action.payload.active,
       );
       state.dcsWaypoints = arrayMove(state.dcsWaypoints, newIndex, oldIndex);
     },
