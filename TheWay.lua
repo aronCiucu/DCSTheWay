@@ -111,7 +111,7 @@ function LuaExportAfterNextFrame()
     local elevation = LoGetAltitude(loX, loZ)
     local coords = LoLoCoordinatesToGeoCoordinates(loX, loZ)
     local selfData = LoGetSelfData()
-    local model = selfData and selfData['Name'] or ''
+    local model = selfData and selfData['Name'] or 'Spectator'
     local message = {}
     message["model"] = model
     message["coords"] = {}
