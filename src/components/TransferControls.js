@@ -5,7 +5,9 @@ import { useSelector } from "react-redux";
 
 const TransferControls = (props) => {
   const waypointList = useSelector((state) => state.waypoints.dcsWaypoints);
-  let hasWaypoints = waypointList.length > 0;
+  const { module } = useSelector((state) => state.dcsPoint);
+  const allowSaveFile = waypointList.length > 0;
+  const allowTransfer = allowSaveFile && module !== "Spectator";
 
   return (
     <>
@@ -21,10 +23,10 @@ const TransferControls = (props) => {
               size="medium"
               color="neutral"
               onClick={props.onSaveFile}
-              disabled={!hasWaypoints}
+              disabled={!allowSaveFile}
             >
               <FileDownloadIcon
-                style={hasWaypoints ? { color: "white" } : {}}
+                style={allowSaveFile ? { color: "white" } : {}}
               />
             </Fab>
           </Tooltip>
@@ -34,7 +36,7 @@ const TransferControls = (props) => {
             variant="extended"
             color="primary"
             onClick={props.onTransfer}
-            disabled={!hasWaypoints}
+            disabled={!allowTransfer}
           >
             <Typography variant="button" pr={2}>
               <b>Transfer to DCS</b>

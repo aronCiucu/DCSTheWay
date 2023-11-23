@@ -21,12 +21,6 @@ const useElectronIpcListeners = () => {
         }),
       );
     });
-    ipcRenderer.on(
-      "dataReceived",
-      throttle((event, msg) => {
-        dispatch(dcsPointActions.changeCoords(JSON.parse(msg)));
-      }, 100),
-    );
     ipcRenderer.on("fileOpened", (event, msg) => {
       dispatch(waypointsActions.appendWaypoints(msg));
     });
@@ -36,15 +30,27 @@ const useElectronIpcListeners = () => {
     ipcRenderer.on("preferencesReceived", (e, preferences) => {
       dispatch(uiActions.setUserPreferences(preferences));
     });
-    ipcRenderer.send("getPreferences");
     return () => {
       ipcRenderer.removeAllListeners("saveWaypoint");
-      ipcRenderer.removeAllListeners("dataReceived");
       ipcRenderer.removeAllListeners("fileOpened");
       ipcRenderer.removeAllListeners("deleteWaypoints");
       ipcRenderer.removeAllListeners("preferencesReceived");
     };
   }, [lat, long, elev]);
+
+  useEffect(() => {
+    ipcRenderer.send("getPreferences");
+    ipcRenderer.on(
+      "dataReceived",
+      throttle((event, msg) => {
+        dispatch(dcsPointActions.changeCoords(JSON.parse(msg)));
+      }, 100),
+    );
+
+    return () => {
+      ipcRenderer.removeAllListeners("dataReceived");
+    };
+  }, []);
 };
 
 export default useElectronIpcListeners;
