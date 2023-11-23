@@ -38,6 +38,8 @@ local lastDevice = ""
 local lastCode = ""
 local lastNeedDepress = true
 local whenToDepress = nil
+local sleep = false
+local sleepTime = 0
 function LuaExportBeforeNextFrame()
     if upstreamLuaExportBeforeNextFrame ~= nil then
         successful, err = pcall(upstreamLuaExportBeforeNextFrame)
@@ -57,6 +59,9 @@ function LuaExportBeforeNextFrame()
                 end
                 isPressed = false
                 currCommandIndex = currCommandIndex + 1
+                if sleep == true then
+                    socket.select(nil, nil, sleepTime / 1000)
+                end
             end
         else
             -- Prepare for new button push
@@ -69,6 +74,8 @@ function LuaExportBeforeNextFrame()
                 lastNeedDepress = stringtoboolean[keys[currCommandIndex]["addDepress"]]
                 local delay = tonumber(keys[currCommandIndex]["delay"])
                 local activate = tonumber(keys[currCommandIndex]["activate"])
+                sleep = stringtoboolean[keys[currCommandIndex]["sleep"]]
+                sleepTime = tonumber(keys[currCommandIndex]["sleepTime"]) --ms
                 -- Push the button
                 GetDevice(lastDevice):performClickableAction(lastCode, activate)
                 --Store the time when we will need to depress

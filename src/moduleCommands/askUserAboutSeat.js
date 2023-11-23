@@ -1,4 +1,4 @@
-import {TwoOptionsDialog} from "../components/TwoOptionsDialog";
+import {TwoOptionsDialog, TwoOptionsSimpleDialog} from "../components/TwoOptionsDialog";
 import {AlertDialog} from "../components/AlertDialog";
 
 const askUserAboutSeat = async (module, userPreferences) => {
@@ -49,13 +49,33 @@ const askUserAboutSeat = async (module, userPreferences) => {
       }).then((chosenRoute) => route = chosenRoute);
     }
 
-    let tgt;
-    await TwoOptionsDialog({
-      title: "Input as TGT?",
+    let jdam;
+    await TwoOptionsSimpleDialog({
+      title: "Input for JDAMs?",
       op1: "YES",
       op2: "NO",
-    }).then((asTGT) => tgt = asTGT);
-    return `F-15ESE_${seat.toLowerCase()}${(route === 'A{1/A}' ? "A" : "B")}${(tgt === 'YES' ? "TGT" : "NOTTGT")}`;
+    }).then((forJDAM) => jdam = forJDAM);
+
+    if (seat === "Pilot" && jdam === "YES") {
+      await AlertDialog({
+        title: "Make sure:",
+        content:
+            "1. Your RIGHT MPD is on Smart Weapons page.\n" +
+            "2. Used 'NXT STA' to select the bomb you want to start with.\n" +
+            "3. Do not program the JDAMs in PACS.(Recommend)"
+      });
+    } else if (seat === "WSO" && jdam === "YES") {
+      await AlertDialog({
+        title: "Make sure:",
+        content:
+            "1. The airplane's master mode is A/G\n" +
+            "2. Your RIGHT MPD(Green display) is on Smart Weapons page.\n" +
+            "3. Used 'NXT STA' to select the bomb you want to start with.\n" +
+            "4. Do not program the JDAMs in PACS.(Recommend)"
+      });
+    }
+
+    return `F-15ESE_${seat.toLowerCase()}${(route === 'A{1/A}' ? "A" : "B")}${(jdam === 'YES' ? "JDAM" : "NOJDAM")}`;
   } else if (module === "UH-60L") {
     if (moduleSpecificPreferences?.includes("Hide")) return "UH-60L";
     else {
