@@ -1,4 +1,4 @@
-import {Box, Button, Card, List, Typography} from "@mui/material";
+import { Box, Button, Card, List, Typography } from "@mui/material";
 import WaypointItem from "./WaypointItem";
 import { useDispatch, useSelector } from "react-redux";
 import { waypointsActions } from "../store/waypoints";
@@ -14,7 +14,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import ConvertModuleWaypoints from "../utils/ConvertModuleWaypoints";
-import {useEffect, useRef, useState} from "react";
+import { useEffect, useRef, useState } from "react";
 
 const WaypointList = () => {
   const isPending = useSelector((state) => state.ui.pendingWaypoint);
@@ -41,7 +41,7 @@ const WaypointList = () => {
         lat,
         long,
         elev,
-      })
+      }),
     );
   };
   const deleteHandler = (event, id) => {
@@ -61,18 +61,16 @@ const WaypointList = () => {
   };
 
   const expandHandler = (id, isExpanded) => {
-    isExpanded ?
-        setExpandedWaypointId(id) :
-        setExpandedWaypointId(-1);
-  }
+    isExpanded ? setExpandedWaypointId(id) : setExpandedWaypointId(-1);
+  };
 
-  const checkIfExpanded = (id) => (expandedWaypointId===id);
+  const checkIfExpanded = (id) => expandedWaypointId === id;
 
   const handleDragEnd = (event) => {
     const { active, over } = event;
     if (active.id !== over.id) {
       dispatch(
-        waypointsActions.changeOrder({ active: active.id, over: over.id })
+        waypointsActions.changeOrder({ active: active.id, over: over.id }),
       );
     }
   };
@@ -156,13 +154,12 @@ const WaypointList = () => {
           </SortableContext>
         </DndContext>
         {hasWaypoints && (
-            <Box sx={{width: "100%", textAlign: "center"}}>
-              <Button variant="text" size="small" onClick={deleteAllHandler}>
-                Clear All
-              </Button>
-            </Box>
-        )
-        }
+          <Box sx={{ width: "100%", textAlign: "center" }}>
+            <Button variant="text" size="small" onClick={deleteAllHandler}>
+              Clear All
+            </Button>
+          </Box>
+        )}
         <div ref={ref} />
       </List>
     </Card>

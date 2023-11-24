@@ -1,11 +1,10 @@
-.parent-container{
-    position: relative;
-    height: 100%;
+.parent-container {
+  position: relative;
+  height: 100%;
 }
 
-
-.selection-method{
-    position: absolute;
-    bottom: 0px;
-    width: 100%;
+.selection-method {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
 }

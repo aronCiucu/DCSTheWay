@@ -1,29 +1,40 @@
-import {TwoOptionsDialog, TwoOptionsSimpleDialog} from "../components/TwoOptionsDialog";
-import {AlertDialog} from "../components/AlertDialog";
+import {
+  TwoOptionsDialog,
+  TwoOptionsSimpleDialog,
+} from "../components/TwoOptionsDialog";
+import { AlertDialog } from "../components/AlertDialog";
 
 const askUserAboutSeat = async (module, userPreferences) => {
   const moduleSpecificPreferences = userPreferences[module];
 
   if (module === "AH-64D_BLK_II") {
-    if (moduleSpecificPreferences?.includes("Pilot")) return "AH-64D_BLK_IIpilot";
-    else if (moduleSpecificPreferences?.includes("CPG/Gunner")) return "AH-64D_BLK_IIgunner";
+    if (moduleSpecificPreferences?.includes("Pilot"))
+      return "AH-64D_BLK_IIpilot";
+    else if (moduleSpecificPreferences?.includes("CPG/Gunner"))
+      return "AH-64D_BLK_IIgunner";
     else {
       return TwoOptionsDialog({
         title: "What seat are you in?",
         op1: "Pilot",
         op2: "CPG/Gunner",
-      }).then((option) => option === "CPG/Gunner" ? "AH-64D_BLK_IIgunner" : "AH-64D_BLK_IIpilot");
+      }).then((option) =>
+        option === "CPG/Gunner" ? "AH-64D_BLK_IIgunner" : "AH-64D_BLK_IIpilot",
+      );
     }
-
-  } else if (module === "FA-18C_hornet" || module === "FA-18E" || module === "FA-18F" || module === "EA-18G") {
+  } else if (
+    module === "FA-18C_hornet" ||
+    module === "FA-18E" ||
+    module === "FA-18F" ||
+    module === "EA-18G"
+  ) {
     if (moduleSpecificPreferences?.includes("Hide")) return "FA-18C_hornet";
     else {
       return AlertDialog({
         title: "Please make sure that",
         content:
-            "1. PRECISE option is boxed in HSI > DATA\n" +
-            "2. You are not in the TAC menu\n" +
-            "3. You are in the 00°00.0000' coordinate format",
+          "1. PRECISE option is boxed in HSI > DATA\n" +
+          "2. You are not in the TAC menu\n" +
+          "3. You are in the 00°00.0000' coordinate format",
       }).then(() => "FA-18C_hornet");
     }
   } else if (module === "F-15ESE") {
@@ -35,7 +46,7 @@ const askUserAboutSeat = async (module, userPreferences) => {
         title: "What seat are you in?",
         op1: "Pilot",
         op2: "WSO",
-      }).then((chosenSeat) => seat = chosenSeat);
+      }).then((chosenSeat) => (seat = chosenSeat));
     }
 
     let route;
@@ -44,9 +55,9 @@ const askUserAboutSeat = async (module, userPreferences) => {
     else {
       await TwoOptionsDialog({
         title: "What route are you using?",
-        op1: "A{1/A}",  // op1: "A"
-        op2: "B{1/B}",  // op2: "B" // removed because its a nice touch to keep the explicitness of this here, instead of making it more inline.
-      }).then((chosenRoute) => route = chosenRoute);
+        op1: "A{1/A}", // op1: "A"
+        op2: "B{1/B}", // op2: "B" // removed because its a nice touch to keep the explicitness of this here, instead of making it more inline.
+      }).then((chosenRoute) => (route = chosenRoute));
     }
 
     let jdam;
@@ -54,36 +65,38 @@ const askUserAboutSeat = async (module, userPreferences) => {
       title: "Input for JDAMs?",
       op1: "YES",
       op2: "NO",
-    }).then((forJDAM) => jdam = forJDAM);
+    }).then((forJDAM) => (jdam = forJDAM));
 
     if (seat === "Pilot" && jdam === "YES") {
       await AlertDialog({
         title: "Make sure:",
         content:
-            "1. Your RIGHT MPD is on Smart Weapons page.\n" +
-            "2. Used 'NXT STA' to select the bomb you want to start with.\n" +
-            "3. Do not program the JDAMs in PACS.(Recommend)"
+          "1. Your RIGHT MPD is on Smart Weapons page.\n" +
+          "2. Used 'NXT STA' to select the bomb you want to start with.\n" +
+          "3. Do not program the JDAMs in PACS.(Recommend)",
       });
     } else if (seat === "WSO" && jdam === "YES") {
       await AlertDialog({
         title: "Make sure:",
         content:
-            "1. The airplane's master mode is A/G\n" +
-            "2. Your RIGHT MPD(Green display) is on Smart Weapons page.\n" +
-            "3. Used 'NXT STA' to select the bomb you want to start with.\n" +
-            "4. Do not program the JDAMs in PACS.(Recommend)"
+          "1. The airplane's master mode is A/G\n" +
+          "2. Your RIGHT MPD(Green display) is on Smart Weapons page.\n" +
+          "3. Used 'NXT STA' to select the bomb you want to start with.\n" +
+          "4. Do not program the JDAMs in PACS.(Recommend)",
       });
     }
 
-    return `F-15ESE_${seat.toLowerCase()}${(route === 'A{1/A}' ? "A" : "B")}${(jdam === 'YES' ? "JDAM" : "NOJDAM")}`;
+    return `F-15ESE_${seat.toLowerCase()}${route === "A{1/A}" ? "A" : "B"}${
+      jdam === "YES" ? "JDAM" : "NOJDAM"
+    }`;
   } else if (module === "UH-60L") {
     if (moduleSpecificPreferences?.includes("Hide")) return "UH-60L";
     else {
       return AlertDialog({
         title: "Be advised:",
         content:
-            "This may overwrite waypoints! " +
-            "If WP/TGT is on MIZ0 (00), 01 onwards will be overwritten."
+          "This may overwrite waypoints! " +
+          "If WP/TGT is on MIZ0 (00), 01 onwards will be overwritten.",
       }).then(() => "UH-60L");
     }
   } else return module;

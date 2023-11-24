@@ -1,6 +1,6 @@
 {
   "name": "theway",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "private": true,
   "main": "electron/electron.js",
   "dependencies": {
@@ -8,6 +8,7 @@
     "electron-is-dev": "^2.0.0",
     "electron-store": "^8.1.0",
     "lodash": "^4.17.21",
+    "mui-color-input": "^2.0.1",
     "uiohook-napi": "^1.5.0"
   },
   "scripts": {
@@ -52,10 +53,11 @@
     "@testing-library/react": "^14.0.0",
     "babel-jest": "^29.6.1",
     "concurrently": "^7.6.0",
-    "electron": "^24.0.0",
+    "electron": "^27.0.4",
     "electron-builder": "^23.6.0",
     "jest": "^27.5.1",
     "jest-environment-jsdom": "^27.5.1",
+    "prettier": "3.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-modal-promise": "^1.0.2",

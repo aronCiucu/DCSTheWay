@@ -1,19 +1,12 @@
 const { ipcMain, dialog } = require("electron");
-const CrosshairWindow = require("./CrosshairWindow");
 const fs = require("fs");
 
-class SelectionHandler {
-  crosshairWindow;
+class FileHandler {
   mainWindow;
 
   constructor(mainWindow) {
     this.mainWindow = mainWindow;
-    ipcMain.on("f10Start", () => {
-      this.f10SelectionStart();
-    });
-    ipcMain.on("f10Stop", () => {
-      this.f10SelectionStop();
-    });
+
     ipcMain.on("saveFile", (event, msg) => {
       this.saveFile(msg);
     });
@@ -68,14 +61,6 @@ class SelectionHandler {
         fs.writeFileSync(filePath, commands, "utf-8");
       });
   }
-
-  f10SelectionStart() {
-    this.crosshairWindow = new CrosshairWindow();
-  }
-
-  f10SelectionStop() {
-    this.crosshairWindow.close();
-  }
 }
 
-module.exports = SelectionHandler;
+module.exports = FileHandler;

@@ -12,11 +12,21 @@ const { ipcRenderer } = window.require("electron");
 
 const inputMethods = ["F10 Map", "From a file"];
 const supportedModules = [
+  "Spectator",
   "F-15ESE",
   "F-16C_50",
   //IDF project mods
-  "F-16I", "F-16D_50", "F-16D_50_NS", "F-16D_52", "F-16D_52_NS", "F-16D_Barak_30", "F-16D_Barak_40", 
-  "FA-18C_hornet", "FA-18E", "FA-18F", "EA-18G",
+  "F-16I",
+  "F-16D_50",
+  "F-16D_50_NS",
+  "F-16D_52",
+  "F-16D_52_NS",
+  "F-16D_Barak_30",
+  "F-16D_Barak_40",
+  "FA-18C_hornet",
+  "FA-18E",
+  "FA-18F",
+  "EA-18G",
   "AH-64D_BLK_II",
   "A-10C_2",
   "A-10C",
@@ -25,7 +35,7 @@ const supportedModules = [
   "Ka-50",
   "Ka-50_3",
   "Mirage-F1EE",
-  "UH-60L"
+  "UH-60L",
 ];
 const SourceSelector = () => {
   const [inputMethod, setInputMethod] = useState("F10 Map");
@@ -54,26 +64,21 @@ const SourceSelector = () => {
   };
 
   const isSupportedModule = supportedModules.includes(module);
+  const imagePath =
+    module === "Spectator" || module === null
+      ? "./assets/defaultImage.jpg"
+      : `./assets/moduleImages/${module}.jpg`;
+  const moduleText =
+    module === null
+      ? "No Connection To DCS"
+      : isSupportedModule
+      ? module
+      : `Module Not Supported: ${module}`;
 
   return (
     <>
       <div className="parent-container">
-        {module === null ? (
-          <Banner
-            text="No Connection To DCS"
-            imagePath={"./assets/defaultImage.jpg"}
-          ></Banner>
-        ) : isSupportedModule ? (
-          <Banner
-            text={module}
-            imagePath={`./assets/moduleImages/${module}.jpg`}
-          ></Banner>
-        ) : (
-          <Banner
-            text={`Module Not Supported: ${module}`}
-            imagePath={"./assets/defaultImage.jpg"}
-          ></Banner>
-        )}
+        <Banner text={moduleText} imagePath={imagePath} />
 
         <div className="selection-method">
           <Grid

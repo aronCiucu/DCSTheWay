@@ -7,8 +7,8 @@ class CrosshairWindow extends BrowserWindow {
   constructor() {
     const windowEdgeSize = 30;
     const bounds = electron.screen.getPrimaryDisplay().bounds;
-    const x = bounds.x + ((bounds.width - windowEdgeSize) / 2);
-    const y = bounds.y + ((bounds.height - windowEdgeSize) / 2);
+    const x = bounds.x + (bounds.width - windowEdgeSize) / 2;
+    const y = bounds.y + (bounds.height - windowEdgeSize) / 2;
     super({
       x,
       y,
@@ -18,6 +18,10 @@ class CrosshairWindow extends BrowserWindow {
       resizable: false,
       frame: false,
       focusable: false,
+      webPreferences: {
+        nodeIntegration: true,
+        contextIsolation: false,
+      },
     });
 
     this.setMenu(null);
@@ -26,7 +30,7 @@ class CrosshairWindow extends BrowserWindow {
     this.loadURL(
       isDev
         ? "http://localhost:3000/crosshair.html"
-        : `file://${path.join(__dirname, "../build/crosshair.html")}`
+        : `file://${path.join(__dirname, "../build/crosshair.html")}`,
     );
     // this.webContents.openDevTools({ mode: "detach" });
   }
