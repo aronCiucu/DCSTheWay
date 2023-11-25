@@ -1,4 +1,8 @@
-import { TwoOptionsDialog } from "../components/TwoOptionsDialog";
+import {
+  TwoOptionsDialog,
+  TwoOptionsSimpleDialog,
+} from "../components/TwoOptionsDialog";
+import { FourOptionsSimpleDialog } from "../components/FourOptionsDialog";
 import { AlertDialog } from "../components/AlertDialog";
 
 const askUserAboutSeat = async (module, userPreferences) => {
@@ -24,16 +28,45 @@ const askUserAboutSeat = async (module, userPreferences) => {
     module === "FA-18F" ||
     module === "EA-18G"
   ) {
-    if (moduleSpecificPreferences?.includes("Hide")) return "FA-18C_hornet";
-    else {
-      return AlertDialog({
-        title: "Please make sure that",
-        content:
-          "1. PRECISE option is boxed in HSI > DATA\n" +
-          "2. You are not in the TAC menu\n" +
-          "3. You are in the 00°00.0000' coordinate format",
-      }).then(() => "FA-18C_hornet");
+    let PPinput;
+    await TwoOptionsSimpleDialog({
+      title: "Input as PP MSN?",
+      op1: "YES",
+      op2: "NO",
+    }).then((pp) => (PPinput = pp));
+
+    let stations = "";
+    if (PPinput === "YES") {
+      await FourOptionsSimpleDialog({
+        title: "How many STATIONs carry this weapon?",
+        op1: "1",
+        op2: "2",
+        op3: "3",
+        op4: "4",
+      }).then((sta) => (stations = sta));
     }
+
+    let hide = false;
+    if (moduleSpecificPreferences?.includes("Hide")) {
+      hide = true;
+    }
+    if (hide === false) {
+      if (PPinput === "YES") {
+        await AlertDialog({
+          title: "Please make sure that",
+          content: "Your LEFT MDI is on PP MSN Page!\n",
+        });
+      } else {
+        await AlertDialog({
+          title: "Please make sure that",
+          content:
+            "1. PRECISE option is boxed in HSI > DATA\n" +
+            "2. You are not in the TAC menu\n" +
+            "3. You are in the 00°00.0000' coordinate format",
+        });
+      }
+    }
+    return `FA-18C_hornet${PPinput === "YES" ? "PP" : ""}${stations}`;
   } else if (module === "F-15ESE") {
     let seat;
     if (moduleSpecificPreferences?.includes("Pilot")) seat = "Pilot";
@@ -56,7 +89,42 @@ const askUserAboutSeat = async (module, userPreferences) => {
         op2: "B{1/B}", // op2: "B" // removed because its a nice touch to keep the explicitness of this here, instead of making it more inline.
       }).then((chosenRoute) => (route = chosenRoute));
     }
-    return `F-15ESE_${seat.toLowerCase()}${route === "A{1/A}" ? "A" : "B"}`;
+
+    let jdam;
+    await TwoOptionsSimpleDialog({
+      title: "Input for JDAMs?",
+      op1: "YES",
+      op2: "NO",
+    }).then((forJDAM) => (jdam = forJDAM));
+
+    let hide = false;
+    if (moduleSpecificPreferences?.includes("Hide")) {
+      hide = true;
+    }
+    if (hide === false) {
+      if (seat === "Pilot" && jdam === "YES") {
+        await AlertDialog({
+          title: "Make sure:",
+          content:
+            "1. Your RIGHT MPD is on Smart Weapons page.\n" +
+            "2. Used 'NXT STA' to select the bomb you want to start with.\n" +
+            "3. Do not program the JDAMs in PACS.(Recommend)",
+        });
+      } else if (seat === "WSO" && jdam === "YES") {
+        await AlertDialog({
+          title: "Make sure:",
+          content:
+            "1. The airplane's master mode is A/G\n" +
+            "2. Your RIGHT MPD(Green display) is on Smart Weapons page.\n" +
+            "3. Used 'NXT STA' to select the bomb you want to start with.\n" +
+            "4. Do not program the JDAMs in PACS.(Recommend)",
+        });
+      }
+    }
+
+    return `F-15ESE_${seat.toLowerCase()}${route === "A{1/A}" ? "A" : "B"}${
+      jdam === "YES" ? "JDAM" : "NOJDAM"
+    }`;
   } else if (module === "UH-60L") {
     if (moduleSpecificPreferences?.includes("Hide")) return "UH-60L";
     else {
