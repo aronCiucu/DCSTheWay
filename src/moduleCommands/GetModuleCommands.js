@@ -34,9 +34,11 @@ export default function getModuleCommands(module, waypoints, buttonExtraDelay) {
       return f16.createButtonCommands(waypoints);
     }
     case "FA-18C_hornet":
+    case "FA-18C_hornetPP":
     case "FA-18E":
     case "FA-18F":
     case "EA-18G": {
+      fa18.slotVariant = module;
       fa18.extraDelay = buttonExtraDelay;
       return fa18.createButtonCommands(waypoints);
     }

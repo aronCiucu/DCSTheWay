@@ -27,16 +27,30 @@ const askUserAboutSeat = async (module, userPreferences) => {
     module === "FA-18F" ||
     module === "EA-18G"
   ) {
-    if (moduleSpecificPreferences?.includes("Hide")) return "FA-18C_hornet";
-    else {
-      return AlertDialog({
-        title: "Please make sure that",
-        content:
-          "1. PRECISE option is boxed in HSI > DATA\n" +
-          "2. You are not in the TAC menu\n" +
-          "3. You are in the 00°00.0000' coordinate format",
-      }).then(() => "FA-18C_hornet");
+    let PPinput;
+    await TwoOptionsSimpleDialog({
+      title: "Input as PP MSN?",
+      op1: "YES",
+      op2: "NO",
+    }).then((pp) => (PPinput = pp));
+
+    if (moduleSpecificPreferences?.includes("Hide") === false) {
+      if (PPinput === "YES") {
+        AlertDialog({
+          title: "Please make sure that",
+          content: "Your LEFT MDI is on PP MSN Page!\n",
+        });
+      } else {
+        AlertDialog({
+          title: "Please make sure that",
+          content:
+            "1. PRECISE option is boxed in HSI > DATA\n" +
+            "2. You are not in the TAC menu\n" +
+            "3. You are in the 00°00.0000' coordinate format",
+        });
+      }
     }
+    return `FA-18C_hornet${PPinput === "YES" ? "PP" : ""}`;
   } else if (module === "F-15ESE") {
     let seat;
     if (moduleSpecificPreferences?.includes("Pilot")) seat = "Pilot";
@@ -67,23 +81,25 @@ const askUserAboutSeat = async (module, userPreferences) => {
       op2: "NO",
     }).then((forJDAM) => (jdam = forJDAM));
 
-    if (seat === "Pilot" && jdam === "YES") {
-      await AlertDialog({
-        title: "Make sure:",
-        content:
-          "1. Your RIGHT MPD is on Smart Weapons page.\n" +
-          "2. Used 'NXT STA' to select the bomb you want to start with.\n" +
-          "3. Do not program the JDAMs in PACS.(Recommend)",
-      });
-    } else if (seat === "WSO" && jdam === "YES") {
-      await AlertDialog({
-        title: "Make sure:",
-        content:
-          "1. The airplane's master mode is A/G\n" +
-          "2. Your RIGHT MPD(Green display) is on Smart Weapons page.\n" +
-          "3. Used 'NXT STA' to select the bomb you want to start with.\n" +
-          "4. Do not program the JDAMs in PACS.(Recommend)",
-      });
+    if (moduleSpecificPreferences?.includes("Hide") === false) {
+      if (seat === "Pilot" && jdam === "YES") {
+        await AlertDialog({
+          title: "Make sure:",
+          content:
+            "1. Your RIGHT MPD is on Smart Weapons page.\n" +
+            "2. Used 'NXT STA' to select the bomb you want to start with.\n" +
+            "3. Do not program the JDAMs in PACS.(Recommend)",
+        });
+      } else if (seat === "WSO" && jdam === "YES") {
+        await AlertDialog({
+          title: "Make sure:",
+          content:
+            "1. The airplane's master mode is A/G\n" +
+            "2. Your RIGHT MPD(Green display) is on Smart Weapons page.\n" +
+            "3. Used 'NXT STA' to select the bomb you want to start with.\n" +
+            "4. Do not program the JDAMs in PACS.(Recommend)",
+        });
+      }
     }
 
     return `F-15ESE_${seat.toLowerCase()}${route === "A{1/A}" ? "A" : "B"}${
