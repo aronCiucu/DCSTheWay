@@ -2,6 +2,7 @@ import {
   TwoOptionsDialog,
   TwoOptionsSimpleDialog,
 } from "../components/TwoOptionsDialog";
+import { FourOptionsSimpleDialog } from "../components/FourOptionsDialog";
 import { AlertDialog } from "../components/AlertDialog";
 
 const askUserAboutSeat = async (module, userPreferences) => {
@@ -34,14 +35,29 @@ const askUserAboutSeat = async (module, userPreferences) => {
       op2: "NO",
     }).then((pp) => (PPinput = pp));
 
-    if (moduleSpecificPreferences?.includes("Hide") === false) {
+    let stations = "";
+    if (PPinput === "YES") {
+      await FourOptionsSimpleDialog({
+        title: "How many STATIONs carry this weapon?",
+        op1: "1",
+        op2: "2",
+        op3: "3",
+        op4: "4",
+      }).then((sta) => (stations = sta));
+    }
+
+    let hide = false;
+    if (moduleSpecificPreferences?.includes("Hide")) {
+      hide = true;
+    }
+    if (hide === false) {
       if (PPinput === "YES") {
-        AlertDialog({
+        await AlertDialog({
           title: "Please make sure that",
           content: "Your LEFT MDI is on PP MSN Page!\n",
         });
       } else {
-        AlertDialog({
+        await AlertDialog({
           title: "Please make sure that",
           content:
             "1. PRECISE option is boxed in HSI > DATA\n" +
@@ -50,7 +66,7 @@ const askUserAboutSeat = async (module, userPreferences) => {
         });
       }
     }
-    return `FA-18C_hornet${PPinput === "YES" ? "PP" : ""}`;
+    return `FA-18C_hornet${PPinput === "YES" ? "PP" : ""}${stations}`;
   } else if (module === "F-15ESE") {
     let seat;
     if (moduleSpecificPreferences?.includes("Pilot")) seat = "Pilot";
@@ -81,7 +97,11 @@ const askUserAboutSeat = async (module, userPreferences) => {
       op2: "NO",
     }).then((forJDAM) => (jdam = forJDAM));
 
-    if (moduleSpecificPreferences?.includes("Hide") === false) {
+    let hide = false;
+    if (moduleSpecificPreferences?.includes("Hide")) {
+      hide = true;
+    }
+    if (hide === false) {
       if (seat === "Pilot" && jdam === "YES") {
         await AlertDialog({
           title: "Make sure:",

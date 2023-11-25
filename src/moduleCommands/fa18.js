@@ -1,9 +1,7 @@
-import {
-  FourOptionsSimpleDialog,
-} from "../components/FourOptionsDialog";
-
+import { AlertDialog } from "../components/AlertDialog";
 class fa18 {
   static slotVariant = "";
+  static stations = 4;
   static extraDelay = 0;
   static #delay100 = this.extraDelay + 100;
   static #delay200 = this.extraDelay + 200;
@@ -57,264 +55,345 @@ class fa18 {
   };
   static #codesPayload = [];
 
-  static #addKeyboardCode(payload, character) {
+  static #addKeyboardCode(character, wait) {
     const characterCode = this.#kuKeycodes[character.toLowerCase()];
     if (characterCode !== undefined)
-      payload.push({
-        device: this.device_UFC,
-        code: characterCode,
-        delay: this.#delay100,
-        activate: 1,
-        addDepress: "true",
-      });
+      if (wait === true) {
+        this.#codesPayload.push({
+          device: this.device_UFC,
+          code: characterCode,
+          delay: this.#delay100,
+          activate: 1,
+          addDepress: "fa18wait",
+        });
+      } else {
+        this.#codesPayload.push({
+          device: this.device_UFC,
+          code: characterCode,
+          delay: this.#delay100,
+          activate: 1,
+          addDepress: "true",
+        });
+      }
   }
 
-  static generatePPMSNCommands(wpt, payload) {
+  static generatePPMSNCommands(wpt) {
     //select STEP
-    payload.push({
+    this.#codesPayload.push({
       device: this.device_MDILeft,
       code: this.#kuKeycodes["PB13"],
       delay: this.#delay500,
       activate: 1,
-      addDepress: "true",
+      addDepress: "fa18wait",
     });
 
     //select TGT UFC
-    payload.push({
+    this.#codesPayload.push({
       device: this.device_MDILeft,
       code: this.#kuKeycodes["PB14"],
       delay: this.#delay800,
       activate: 1,
-      addDepress: "true",
+      addDepress: "fa18wait",
     });
 
     //select UFC POSN
-    payload.push({
+    this.#codesPayload.push({
       device: this.device_UFC,
       code: this.#kuKeycodes["UFCOpt3"],
       delay: this.#delay200,
       activate: 1,
-      addDepress: "true",
+      addDepress: "fa18wait",
     });
 
     //=============== Input Latitude ===============
     //select UFC LAT
-    payload.push({
+    this.#codesPayload.push({
       device: this.device_UFC,
       code: this.#kuKeycodes["UFCOpt1"],
       delay: this.#delay200,
       activate: 1,
-      addDepress: "true",
+      addDepress: "fa18wait",
     });
 
     //Type hem
     if (wpt.latHem === "N") {
-      payload.push({
+      this.#codesPayload.push({
         device: this.device_UFC,
         code: this.#kuKeycodes["UFCNorth"],
         delay: this.#delay100,
         activate: 1,
-        addDepress: "true",
+        addDepress: "fa18wait",
       });
     } else {
-      payload.push({
+      this.#codesPayload.push({
         device: this.device_UFC,
         code: this.#kuKeycodes["UFCSouth"],
         delay: this.#delay100,
         activate: 1,
-        addDepress: "true",
+        addDepress: "fa18wait",
       });
     }
     //enter first lat digits
     const firstLat = wpt.lat.substring(0, wpt.lat.length - 5);
-    const format_last4lat = (Number(wpt.lat.substring(wpt.lat.length - 4)) * 60 / 10000.0).toFixed(2).toString();
-    const first_lat_str = firstLat + format_last4lat.substring(0, format_last4lat.length - 3);
-    const second_lat_str = format_last4lat.substring(format_last4lat.length - 2);
+    const format_last4lat = (
+      (Number(wpt.lat.substring(wpt.lat.length - 4)) * 60) /
+      10000.0
+    )
+      .toFixed(2)
+      .toString();
+
+    let add_to_firstLat = format_last4lat.substring(
+      0,
+      format_last4lat.length - 3,
+    );
+
+    // only one number left, add a '0' before it
+    if (add_to_firstLat.length < 2) {
+      add_to_firstLat = "0" + add_to_firstLat;
+    }
+
+    const first_lat_str = firstLat + add_to_firstLat;
+    const second_lat_str = format_last4lat.substring(
+      format_last4lat.length - 2,
+    );
     //Type lat
     for (let i = 0; i < first_lat_str.length; i++) {
-      this.#addKeyboardCode(payload, first_lat_str.charAt(i));
+      this.#addKeyboardCode(first_lat_str.charAt(i), true);
     }
     //press enter
-    payload.push({
+    this.#codesPayload.push({
       device: this.device_UFC,
       code: this.#kuKeycodes["UFCEnter"],
       delay: this.#delay1000,
       activate: 1,
-      addDepress: "true",
+      addDepress: "fa18wait",
     });
     //enter last 2 digits
     for (let i = 0; i < second_lat_str.length; i++) {
-      this.#addKeyboardCode(payload, second_lat_str.charAt(i));
+      this.#addKeyboardCode(second_lat_str.charAt(i), true);
     }
     //press enter
-    payload.push({
+    this.#codesPayload.push({
       device: this.device_UFC,
       code: this.#kuKeycodes["UFCEnter"],
       delay: this.#delay1000,
       activate: 1,
-      addDepress: "true",
+      addDepress: "fa18wait",
     });
     //=============== end of Input Latitude ===============
 
-
     //=============== Input Longitude ===============
     //select UFC LON
-    payload.push({
+    this.#codesPayload.push({
       device: this.device_UFC,
       code: this.#kuKeycodes["UFCOpt3"],
       delay: this.#delay200,
       activate: 1,
-      addDepress: "true",
+      addDepress: "fa18wait",
     });
 
     //Type hem
     if (wpt.longHem === "E") {
-      payload.push({
+      this.#codesPayload.push({
         device: this.device_UFC,
         code: this.#kuKeycodes["UFCEast"],
         delay: this.#delay100,
         activate: 1,
-        addDepress: "true",
+        addDepress: "fa18wait",
       });
     } else {
-      payload.push({
+      this.#codesPayload.push({
         device: this.device_UFC,
         code: this.#kuKeycodes["UFCWest"],
         delay: this.#delay100,
         activate: 1,
-        addDepress: "true",
+        addDepress: "fa18wait",
       });
     }
     //enter first long digits
 
     const firstLong = wpt.long.substring(0, wpt.long.length - 4);
-    const format_last4long = (Number(wpt.long.substring(wpt.long.length - 3)) * 60 / 10000.0).toFixed(2).toString();
-    const first_long_str = firstLong + format_last4long.substring(0, format_last4long.length - 3);
-    const second_long_str = format_last4long.substring(format_last4long.length - 2);
+    const format_last4long = (
+      (Number(wpt.long.substring(wpt.long.length - 4)) * 60) /
+      10000.0
+    )
+      .toFixed(2)
+      .toString();
+
+    let add_to_firstLong = format_last4long.substring(
+      0,
+      format_last4long.length - 3,
+    );
+
+    // only one number left, add a '0' before it
+    if (add_to_firstLong.length < 2) {
+      add_to_firstLong = "0" + add_to_firstLong;
+    }
+
+    let first_long_str = firstLong + add_to_firstLong;
+    const second_long_str = format_last4long.substring(
+      format_last4long.length - 2,
+    );
+
+    // remove starting '0' in longitude, if it is 1xx°, then everything's fine
+    if (first_long_str.charAt(0) === "0") {
+      first_long_str = first_long_str.substring(1);
+    }
+
     //Type long
     for (let i = 0; i < first_long_str.length; i++) {
-      this.#addKeyboardCode(payload, first_long_str.charAt(i));
+      this.#addKeyboardCode(first_long_str.charAt(i), true);
     }
     //press enter
-    payload.push({
+    this.#codesPayload.push({
       device: this.device_UFC,
       code: this.#kuKeycodes["UFCEnter"],
       delay: this.#delay1000,
       activate: 1,
-      addDepress: "true",
+      addDepress: "fa18wait",
     });
     //enter last 4 digits
     for (let i = 0; i < second_long_str.length; i++) {
-      this.#addKeyboardCode(payload, second_long_str.charAt(i));
+      this.#addKeyboardCode(second_long_str.charAt(i), true);
     }
     //press enter
-    payload.push({
+    this.#codesPayload.push({
       device: this.device_UFC,
       code: this.#kuKeycodes["UFCEnter"],
       delay: this.#delay1000,
       activate: 1,
-      addDepress: "true",
+      addDepress: "fa18wait",
     });
     //=============== end of Input Longitude ===============
 
     //select TGT UFC
-    payload.push({
+    this.#codesPayload.push({
       device: this.device_MDILeft,
       code: this.#kuKeycodes["PB14"],
       delay: this.#delay800,
       activate: 1,
-      addDepress: "true",
+      addDepress: "fa18wait",
     });
     //select TGT UFC
-    payload.push({
+    this.#codesPayload.push({
       device: this.device_MDILeft,
       code: this.#kuKeycodes["PB14"],
       delay: this.#delay800,
       activate: 1,
-      addDepress: "true",
+      addDepress: "fa18wait",
     });
 
     //=============== Input Elevation ===============
     //select UFC ELEV
-    payload.push({
+    this.#codesPayload.push({
       device: this.device_UFC,
       code: this.#kuKeycodes["UFCOpt4"],
       delay: this.#delay200,
       activate: 1,
-      addDepress: "true",
+      addDepress: "fa18wait",
     });
 
     //press position 3 to select feet
-    payload.push({
+    this.#codesPayload.push({
       device: this.device_UFC,
       code: this.#kuKeycodes["UFCOpt3"],
       delay: this.#delay200,
       activate: 1,
-      addDepress: "true",
+      addDepress: "fa18wait",
     });
     //Type elev
     for (let i = 0; i < wpt.elev.length; i++) {
-      this.#addKeyboardCode(payload, wpt.elev.charAt(i));
+      this.#addKeyboardCode(wpt.elev.charAt(i), true);
     }
     //press enter
-    payload.push({
+    this.#codesPayload.push({
       device: this.device_UFC,
       code: this.#kuKeycodes["UFCEnter"],
       delay: this.#delay500,
       activate: 1,
-      addDepress: "true",
+      addDepress: "fa18wait",
     });
     //=============== end of Input Elevation ===============
 
     //select TGT UFC
-    payload.push({
+    this.#codesPayload.push({
       device: this.device_MDILeft,
       code: this.#kuKeycodes["PB14"],
       delay: this.#delay800,
       activate: 1,
-      addDepress: "true",
+      addDepress: "fa18wait",
     });
   }
 
-  static async createPPInputCommands(waypoints, payload) {
-    let stations;
-    await FourOptionsSimpleDialog({
-      title: "How many STATIONs for each PP msn?",
-      op1: "1",
-      op2: "2",
-      op3: "3",
-      op4: "4",
-    }).then((sta) => (stations = Number(sta)));
-    
-    let inputNum = stations * 5;
+  static createPPInputCommands(waypoints) {
+    let inputNum = this.stations * 5;
 
     let ppmsn = 0;
     let sta = 0;
-    for (let i = 0; i < Object.keys(waypoints).length() && i < inputNum; i++) {
-      let wpt = waypoints[i];
-      this.generatePPMSNCommands(wpt, payload);
-      sta += 1;
-      if (sta === stations) {
+    let count = 0;
+    for (const wpt of waypoints) {
+      if (sta === this.stations) {
         ppmsn += 1;
         sta = 0;
         //select next PP MSN
-        payload.push({
-          device: this.device_MDILeft,
-          code: this.#kuKeycodes["PB6"] + ppmsn,
-          delay: this.#delay500,
-          activate: 1,
-          addDepress: "true",
-        });
+        if (ppmsn < 5) {
+          this.#codesPayload.push({
+            device: this.device_MDILeft,
+            code: this.#kuKeycodes["PB6"] + ppmsn,
+            delay: this.#delay500,
+            activate: 1,
+            addDepress: "fa18wait",
+          });
+
+          for (let i = 0; i < this.stations - 1; i++) {
+            //select STEP
+            this.#codesPayload.push({
+              device: this.device_MDILeft,
+              code: this.#kuKeycodes["PB13"],
+              delay: this.#delay500,
+              activate: 1,
+              addDepress: "fa18wait",
+            });
+
+            //select next PP MSN
+            this.#codesPayload.push({
+              device: this.device_MDILeft,
+              code: this.#kuKeycodes["PB6"] + ppmsn,
+              delay: this.#delay500,
+              activate: 1,
+              addDepress: "fa18wait",
+            });
+          }
+        }
+      }
+      this.generatePPMSNCommands(wpt);
+      count++;
+      sta += 1;
+      if (count === inputNum) {
+        break;
       }
     }
   }
 
   static createButtonCommands(waypoints) {
     this.#codesPayload = [];
-    if (this.slotVariant === "FA-18C_hornetPP") {
-      this.createPPInputCommands(waypoints, this.#codesPayload);
-    }
-    else {
+    if (
+      this.slotVariant === "FA-18C_hornetPP1" ||
+      this.slotVariant === "FA-18C_hornetPP2" ||
+      this.slotVariant === "FA-18C_hornetPP3" ||
+      this.slotVariant === "FA-18C_hornetPP4"
+    ) {
+      if (this.slotVariant === "FA-18C_hornetPP1") {
+        this.stations = 1;
+      } else if (this.slotVariant === "FA-18C_hornetPP2") {
+        this.stations = 2;
+      } else if (this.slotVariant === "FA-18C_hornetPP3") {
+        this.stations = 3;
+      } else {
+        this.stations = 4;
+      }
+      this.createPPInputCommands(waypoints);
+    } else {
       //enter the SUPT menu
       this.#codesPayload.push({
         device: this.device_AMPCD,
@@ -395,7 +474,7 @@ class fa18 {
         const last4Lat = waypoint.lat.substring(waypoint.lat.length - 5);
         //Type lat
         for (let i = 0; i < firstLat.length; i++) {
-          this.#addKeyboardCode(this.#codesPayload, firstLat.charAt(i));
+          this.#addKeyboardCode(firstLat.charAt(i), false);
         }
         //press enter
         this.#codesPayload.push({
@@ -407,7 +486,7 @@ class fa18 {
         });
         //enter last 4 digits
         for (let i = 0; i < last4Lat.length; i++) {
-          this.#addKeyboardCode(this.#codesPayload, last4Lat.charAt(i));
+          this.#addKeyboardCode(last4Lat.charAt(i), false);
         }
         //press enter
         this.#codesPayload.push({
@@ -441,7 +520,7 @@ class fa18 {
         const last4Long = waypoint.long.substring(waypoint.long.length - 4);
         //Type long
         for (let i = 0; i < firstLong.length; i++) {
-          this.#addKeyboardCode(this.#codesPayload, firstLong.charAt(i));
+          this.#addKeyboardCode(firstLong.charAt(i), false);
         }
         //press enter
         this.#codesPayload.push({
@@ -453,7 +532,7 @@ class fa18 {
         });
         //enter last 4 digits
         for (let i = 0; i < last4Long.length; i++) {
-          this.#addKeyboardCode(this.#codesPayload, last4Long.charAt(i));
+          this.#addKeyboardCode(last4Long.charAt(i), false);
         }
         //press enter
         this.#codesPayload.push({
@@ -481,7 +560,7 @@ class fa18 {
         });
         //Type elev
         for (let i = 0; i < waypoint.elev.length; i++) {
-          this.#addKeyboardCode(this.#codesPayload, waypoint.elev.charAt(i));
+          this.#addKeyboardCode(waypoint.elev.charAt(i), false);
         }
         //press enter
         this.#codesPayload.push({
