@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 import AlwaysOnTopSetting from "./AlwaysOnTopSetting";
 import ButtonDelaySetting from "./ButtonDelaySetting";
 import CrosshairColorSetting from "./CrosshairColorSetting";
+import KeybindSettings from "./KeybindSettings";
 
 const SettingsDialog = ({ open, closeHandler }) => {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ const SettingsDialog = ({ open, closeHandler }) => {
   };
 
   return (
-    <Dialog open={open} fullWidth>
+    <Dialog open={open} fullWidth sx={{ m: -2 }}>
       <DialogTitle sx={{ m: 0, p: 2, pb: 0 }}>Settings</DialogTitle>
       <IconButton
         onClick={closeHandler}
@@ -49,6 +50,10 @@ const SettingsDialog = ({ open, closeHandler }) => {
             <CrosshairColorSetting
               settingChangeHandler={settingChangeHandler}
             />
+          </ListItem>
+          <Divider />
+          <ListItem sx={{ px: 0 }}>
+            <KeybindSettings settingChangeHandler={settingChangeHandler} />
           </ListItem>
         </List>
       </DialogContent>
