@@ -36,6 +36,7 @@ const supportedModules = [
   "Ka-50_3",
   "Mirage-F1EE",
   "UH-60L",
+  "Hercules",
 ];
 const SourceSelector = () => {
   const [inputMethod, setInputMethod] = useState("F10 Map");
