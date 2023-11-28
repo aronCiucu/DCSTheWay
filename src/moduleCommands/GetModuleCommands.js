@@ -8,6 +8,7 @@ import av8b from "./av8b";
 import ka50 from "./ka50";
 import miragef1 from "./miragef1";
 import uh60l from "./uh60l";
+import hercules from "./Hercules";
 
 export default function getModuleCommands(module, waypoints, buttonExtraDelay) {
   switch (module) {
@@ -71,6 +72,10 @@ export default function getModuleCommands(module, waypoints, buttonExtraDelay) {
     case "UH-60L": {
       uh60l.extraDelay = buttonExtraDelay;
       return uh60l.createButtonCommands(waypoints);
+    }
+    case "Hercules": {
+      hercules.extraDelay = buttonExtraDelay;
+      return hercules.createButtonCommands(waypoints);
     }
     default:
       return [];
