@@ -3,19 +3,19 @@ class hercules {
 	static #device_id = 20;
 	static #delay_value = 50 + this.extraDelay;
 	static #kuKeycodes = {
-		"navctrl": 3213,
-		"l1": 3201,
-		"l2": 3202,
-		"l3": 3203,
-		"l4": 3204,
-		"l5": 3205,
-		"l6": 3206,
-		"r1": 3207,
-		"r2": 3208,
-		"r3": 3209,
-		"r4": 3210,
-		"r5": 3211,
-		"r6": 3212,
+		"NavCTRL": 3213,
+		"L1": 3201,
+		"L2": 3202,
+		"L3": 3203,
+		"L4": 3204,
+		"L5": 3205,
+		"L6": 3206,
+		"R1": 3207,
+		"R2": 3208,
+		"R3": 3209,
+		"R4": 3210,
+		"R5": 3211,
+		"R6": 3212,
 		"1": 3214,
 		"2": 3215,
 		"3": 3216,
@@ -66,7 +66,7 @@ class hercules {
 				code: code,
 			  	delay: this.#delay_value,
 			  	activate: 1,
-			  	addDepress: "true",
+			  	addDepress: "false",
 			});
 		  }
 		} 
@@ -77,7 +77,7 @@ class hercules {
 			  		code: characterCode,
 			  		delay: this.#delay_value,
 			  		activate: 1,
-			  		addDepress: "true",
+			  		addDepress: "false",
 				});
 		}
 	}
@@ -96,15 +96,6 @@ class hercules {
 		)
 			
 		for (const waypoint of waypoints) {
-
-			//increment WP
-			this.#codesPayload.push({
-				device: this.#device_id,
-				code: this.#kuKeycodes["R1"],
-				delay: this.#delay_value,
-				activate: 1,
-				addDepress: "false",
-			});
 
 			//Type name (max 8 chars on display)
 			for (let i = 0; i < 8; i++) {
@@ -184,6 +175,15 @@ class hercules {
 				device: this.#device_id,
 				code: this.#kuKeycodes["L6"],
 				delay: this.#delay_value, 
+				activate: 1,
+				addDepress: "false",
+			})
+
+			//increment WP
+			this.#codesPayload.push({
+				device: this.#device_id,
+				code: this.#kuKeycodes["R1"],
+				delay: this.#delay_value,
 				activate: 1,
 				addDepress: "false",
 			});
