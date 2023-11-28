@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 import AlwaysOnTopSetting from "./AlwaysOnTopSetting";
 import ButtonDelaySetting from "./ButtonDelaySetting";
 import CrosshairColorSetting from "./CrosshairColorSetting";
-import KeybindSettings from "./KeybindSettings";
+import KeybindSetting from "./KeybindSetting/KeybindSetting";
 
 const SettingsDialog = ({ open, closeHandler }) => {
   const dispatch = useDispatch();
@@ -53,7 +53,7 @@ const SettingsDialog = ({ open, closeHandler }) => {
           </ListItem>
           <Divider />
           <ListItem sx={{ px: 0 }}>
-            <KeybindSettings settingChangeHandler={settingChangeHandler} />
+            <KeybindSetting settingChangeHandler={settingChangeHandler} />
           </ListItem>
         </List>
       </DialogContent>
