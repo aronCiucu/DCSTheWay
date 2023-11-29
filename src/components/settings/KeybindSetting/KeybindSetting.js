@@ -5,6 +5,9 @@ const KeybindSetting = ({ settingChangeHandler }) => {
   return (
     <Stack direction={"column"}>
       <Typography gutterBottom>Keybindings</Typography>
+      <Typography variant="caption" sx={{ pb: 1 }}>
+        Press Delete to remove a keybinding
+      </Typography>
 
       <KeybindItem
         name={"Toggle Crosshair"}
