@@ -30,7 +30,7 @@ class userPreferenceHandler {
 
   #writeSettingsPreferencesFile(data) {
     this.store.set(data.key, data.value);
-    this.applyElectronPreferences({ [data.key]: data.value });
+    if (data.apply) this.applyElectronPreferences({ [data.key]: data.value });
   }
 
   #readPreferencesFile() {

@@ -29,7 +29,7 @@ const KeybindItem = ({
       const shift = event.shiftKey ? "SHIFT+" : "";
       const alt = event.altKey ? "ALT+" : "";
       const newKeybind = ctrl + shift + alt + key.toUpperCase();
-      changeKeybindHandler(preferenceKey, newKeybind);
+      changeKeybindHandler(preferenceKey, newKeybind, false);
     }
   };
 

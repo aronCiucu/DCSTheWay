@@ -9,17 +9,18 @@ const { ipcRenderer } = window.require("electron");
 
 const useElectronIpcListeners = () => {
   const dispatch = useDispatch();
-  const { lat, long, elev } = useSelector((state) => state.dcsPoint);
+  const { lat, long, elev, module } = useSelector((state) => state.dcsPoint);
 
   useEffect(() => {
     ipcRenderer.on("saveWaypoint", () => {
-      dispatch(
-        waypointsActions.addDcsWaypoint({
-          lat,
-          long,
-          elev,
-        }),
-      );
+      if (module && lat && long && elev)
+        dispatch(
+          waypointsActions.addDcsWaypoint({
+            lat,
+            long,
+            elev,
+          }),
+        );
     });
     ipcRenderer.on("fileOpened", (event, msg) => {
       dispatch(waypointsActions.appendWaypoints(msg));
@@ -36,7 +37,7 @@ const useElectronIpcListeners = () => {
       ipcRenderer.removeAllListeners("deleteWaypoints");
       ipcRenderer.removeAllListeners("preferencesReceived");
     };
-  }, [lat, long, elev]);
+  }, [lat, long, elev, module]);
 
   useEffect(() => {
     ipcRenderer.send("getPreferences");

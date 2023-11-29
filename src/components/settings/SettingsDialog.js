@@ -18,10 +18,15 @@ import KeybindSetting from "./KeybindSetting/KeybindSetting";
 
 const SettingsDialog = ({ open, closeHandler }) => {
   const dispatch = useDispatch();
-  const settingChangeHandler = (settingName, newValue) => {
+  const settingChangeHandler = (
+    settingName,
+    newValue,
+    applyImmediately = true,
+  ) => {
     const setting = {
       key: settingName,
       value: newValue,
+      apply: applyImmediately,
     };
     dispatch(uiActions.setSettingsPreference(setting));
     saveSettingsPreferences(setting);

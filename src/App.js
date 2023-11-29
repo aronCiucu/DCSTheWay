@@ -27,6 +27,7 @@ function App() {
   useElectronIpcListeners();
 
   const handleTransfer = useCallback(async () => {
+    if (!module) return;
     const moduleWaypoints = ConvertModuleWaypoints(dcsWaypoints, module);
     const chosenSeat = await askUserAboutSeat(module, userPreferences);
     const commands = GetModuleCommands(

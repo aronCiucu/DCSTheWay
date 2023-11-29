@@ -6,7 +6,8 @@ const KeybindSetting = ({ settingChangeHandler }) => {
     <Stack direction={"column"}>
       <Typography gutterBottom>Keybindings</Typography>
       <Typography variant="caption" sx={{ pb: 1 }}>
-        Press Delete to remove a keybinding
+        Press Delete to remove a keybinding. Restart of the app needed to apply
+        the new bindings.
       </Typography>
 
       <KeybindItem
