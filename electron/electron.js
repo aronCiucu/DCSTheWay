@@ -61,7 +61,7 @@ if (!isTheOnlyInstance) {
       crosshairWindow = new CrosshairWindow();
     });
     ipcMain.on("f10Stop", () => {
-      crosshairWindow.close();
+      if (crosshairWindow) crosshairWindow.close();
       crosshairWindow = null;
     });
     function applyElectronPreferences(preferences) {

@@ -13,7 +13,7 @@ import { saveSettingsPreferences } from "../../utils/savePreferences";
 import { useDispatch } from "react-redux";
 import AlwaysOnTopSetting from "./AlwaysOnTopSetting";
 import ButtonDelaySetting from "./ButtonDelaySetting";
-import CrosshairColorSetting from "./CrosshairColorSetting";
+import CrosshairSetting from "./CrosshairSetting";
 import KeybindSetting from "./KeybindSetting/KeybindSetting";
 
 const SettingsDialog = ({ open, closeHandler }) => {
@@ -43,22 +43,20 @@ const SettingsDialog = ({ open, closeHandler }) => {
       </IconButton>
       <DialogContent sx={{ pt: 0 }}>
         <List sx={{ py: 0 }}>
-          <ListItem sx={{ px: 0 }}>
+          <ListItem sx={{ px: 0, pt: 2 }}>
             <AlwaysOnTopSetting settingChangeHandler={settingChangeHandler} />
           </ListItem>
           <Divider />
-          <ListItem sx={{ px: 0 }}>
-            <ButtonDelaySetting settingChangeHandler={settingChangeHandler} />
+          <ListItem sx={{ px: 0, pt: 2 }}>
+            <CrosshairSetting settingChangeHandler={settingChangeHandler} />
           </ListItem>
           <Divider />
-          <ListItem sx={{ px: 0 }}>
-            <CrosshairColorSetting
-              settingChangeHandler={settingChangeHandler}
-            />
-          </ListItem>
-          <Divider />
-          <ListItem sx={{ px: 0 }}>
+          <ListItem sx={{ px: 0, pt: 2 }}>
             <KeybindSetting settingChangeHandler={settingChangeHandler} />
+          </ListItem>
+          <Divider />
+          <ListItem sx={{ px: 0, pt: 2 }}>
+            <ButtonDelaySetting settingChangeHandler={settingChangeHandler} />
           </ListItem>
         </List>
       </DialogContent>

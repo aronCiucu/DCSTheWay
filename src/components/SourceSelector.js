@@ -40,6 +40,8 @@ const supportedModules = [
 const SourceSelector = () => {
   const [inputMethod, setInputMethod] = useState("F10 Map");
   const [isSelecting, setIsSelecting] = useState(false);
+  const userPreferences = useSelector((state) => state.ui.userPreferences);
+  const oldCrosshair = userPreferences["oldCrosshair"];
   const module = useSelector((state) => state.dcsPoint.module);
   const dispatch = useDispatch();
   const handleInputMethodChange = (event) => {
@@ -48,11 +50,14 @@ const SourceSelector = () => {
   const handleFab = () => {
     if (!isSelecting) {
       if (inputMethod === "F10 Map") {
-        ipcRenderer.send("messageToDcs", {
-          type: "crosshair",
-          payload: "true",
-        });
-        ipcRenderer.send("f10Start");
+        if (oldCrosshair) {
+          ipcRenderer.send("f10Start");
+        } else {
+          ipcRenderer.send("messageToDcs", {
+            type: "crosshair",
+            payload: "true",
+          });
+        }
         dispatch(uiActions.changePendingWaypoint(true));
         setIsSelecting(true);
       } else if (inputMethod === "From a file") {
@@ -60,11 +65,14 @@ const SourceSelector = () => {
       }
     } else {
       if (inputMethod === "F10 Map") {
-        ipcRenderer.send("messageToDcs", {
-          type: "crosshair",
-          payload: "false",
-        });
-        ipcRenderer.send("f10Stop");
+        if (oldCrosshair) {
+          ipcRenderer.send("f10Stop");
+        } else {
+          ipcRenderer.send("messageToDcs", {
+            type: "crosshair",
+            payload: "false",
+          });
+        }
         dispatch(uiActions.changePendingWaypoint(false));
         setIsSelecting(false);
       }
