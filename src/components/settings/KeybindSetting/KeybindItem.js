@@ -2,14 +2,9 @@ import { useSelector } from "react-redux";
 import { Grid, TextField, Typography } from "@mui/material";
 const { ipcRenderer } = window.require("electron");
 
-const KeybindItem = ({
-  name,
-  preferenceKey,
-  defaultKey,
-  changeKeybindHandler,
-}) => {
+const KeybindItem = ({ name, preferenceKey, changeKeybindHandler }) => {
   const userPreferences = useSelector((state) => state.ui.userPreferences);
-  const keybind = userPreferences[preferenceKey] || defaultKey;
+  const keybind = userPreferences[preferenceKey] || "None";
 
   const handleInputFocus = () => {
     ipcRenderer.send("focus");

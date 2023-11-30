@@ -24,7 +24,6 @@ const setupKeybinds = (mainWindow, preferences) => {
         event.altKey === isAlt &&
         event.keycode === UiohookKey[key]
       ) {
-        console.log(keybindName);
         switch (keybindName) {
           case "crosshairKeybind":
             break;
@@ -32,6 +31,7 @@ const setupKeybinds = (mainWindow, preferences) => {
             mainWindow.webContents.send("saveWaypoint");
             break;
           case "deleteLastKeybind":
+            mainWindow.webContents.send("deleteLastWaypoint");
             break;
           case "deleteAllKeybind":
             mainWindow.webContents.send("deleteWaypoints");

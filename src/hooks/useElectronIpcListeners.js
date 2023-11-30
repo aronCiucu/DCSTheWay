@@ -28,6 +28,9 @@ const useElectronIpcListeners = () => {
     ipcRenderer.on("deleteWaypoints", () => {
       dispatch(waypointsActions.deleteAll());
     });
+    ipcRenderer.on("deleteLastWaypoint", () => {
+      dispatch(waypointsActions.deleteLast());
+    });
     ipcRenderer.on("preferencesReceived", (e, preferences) => {
       dispatch(uiActions.setUserPreferences(preferences));
     });
@@ -35,6 +38,7 @@ const useElectronIpcListeners = () => {
       ipcRenderer.removeAllListeners("saveWaypoint");
       ipcRenderer.removeAllListeners("fileOpened");
       ipcRenderer.removeAllListeners("deleteWaypoints");
+      ipcRenderer.removeAllListeners("deleteLastWaypoint");
       ipcRenderer.removeAllListeners("preferencesReceived");
     };
   }, [lat, long, elev, module]);
