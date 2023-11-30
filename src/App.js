@@ -30,12 +30,11 @@ function App() {
     if (!module) return;
     const moduleWaypoints = ConvertModuleWaypoints(dcsWaypoints, module);
     const chosenSeat = await askUserAboutSeat(module, userPreferences);
-    const commands = GetModuleCommands(
-      chosenSeat,
-      moduleWaypoints,
-      buttonExtraDelay,
-    );
-    ipcRenderer.send("transfer", commands);
+    const commands = {
+      type: "waypoints",
+      payload: GetModuleCommands(chosenSeat, moduleWaypoints, buttonExtraDelay),
+    };
+    ipcRenderer.send("messageToDcs", commands);
   }, [dcsWaypoints, module, userPreferences]);
 
   const handleFileSave = useCallback(() => {

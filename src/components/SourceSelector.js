@@ -48,6 +48,10 @@ const SourceSelector = () => {
   const handleFab = () => {
     if (!isSelecting) {
       if (inputMethod === "F10 Map") {
+        ipcRenderer.send("messageToDcs", {
+          type: "crosshair",
+          payload: "true",
+        });
         ipcRenderer.send("f10Start");
         dispatch(uiActions.changePendingWaypoint(true));
         setIsSelecting(true);
@@ -56,6 +60,10 @@ const SourceSelector = () => {
       }
     } else {
       if (inputMethod === "F10 Map") {
+        ipcRenderer.send("messageToDcs", {
+          type: "crosshair",
+          payload: "false",
+        });
         ipcRenderer.send("f10Stop");
         dispatch(uiActions.changePendingWaypoint(false));
         setIsSelecting(false);

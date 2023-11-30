@@ -1,18 +1,22 @@
 log.write("THEWAY", log.INFO, "Initializing...")
---Version 3
+--For TheWay V2.4.0
 local tcpServer                        = nil
 local udpSpeaker                       = nil
 package.path                           = package.path .. ";" .. lfs.currentdir() .. "/LuaSocket/?.lua"
 package.cpath                          = package.cpath .. ";" .. lfs.currentdir() .. "/LuaSocket/?.dll"
-package.path                           = package.path .. ";" .. lfs.currentdir() .. "/Scripts/?.lua"
+package.path = package.path .. ";.\\Scripts\\?.lua;.\\Scripts\\UI\\?.lua;.\\dxgui\\loader\\?.lua;.\\dxgui\\bind\\?.lua;.\\dxgui\\skins\\common\\?.lua;.\\dxgui\\skins\\skinME\\?.lua"
 local socket                           = require("socket")
 local JSON                             = loadfile("Scripts\\JSON.lua")()
+local DialogLoader = require("DialogLoader")
+local dxgui = require('dxgui')
+local Skin = require("Skin")
+local SkinUtils = require("SkinUtils")
 
 local upstreamLuaExportStart           = LuaExportStart
 local upstreamLuaExportAfterNextFrame  = LuaExportAfterNextFrame
 local upstreamLuaExportBeforeNextFrame = LuaExportBeforeNextFrame
 
-
+local crosshair = nil 
 
 function LuaExportStart()
     if upstreamLuaExportStart ~= nil then
@@ -28,6 +32,22 @@ function LuaExportStart()
     tcpServer:bind("127.0.0.1", 42070)
     tcpServer:listen(1)
     tcpServer:settimeout(0)
+
+    -- local skin = crosshair:getSkin()
+    -- local crosshairPicturePath = lfs.writedir()..skin.skinData.states.released[1].picture.file
+    -- crosshair:setSkin(SkinUtils.setStaticPicture(crosshairPicturePath, skin))
+    crosshair = DialogLoader.spawnDialogFromFile(
+        lfs.writedir() .. "Scripts\\CrosshairWindow.dlg"
+    )
+    local screenWidth, screenHeigt = dxgui.GetScreenSize()
+    local x = screenWidth/2 - 8
+    local y = screenHeigt/2 - 8
+    crosshair:setBounds(math.floor(x), math.floor(y), 8, 8)
+    crosshair:setTransparentForUserInput(true)
+end
+
+function LuaExportStop()
+    crosshair:setVisible(false)
 end
 
 local data
@@ -38,6 +58,8 @@ local lastDevice = ""
 local lastCode = ""
 local lastNeedDepress = true
 local whenToDepress = nil
+local crosshairVisible = false
+local stringtoboolean={ ["true"]=true, ["false"]=false }
 function LuaExportBeforeNextFrame()
     if upstreamLuaExportBeforeNextFrame ~= nil then
         successful, err = pcall(upstreamLuaExportBeforeNextFrame)
@@ -60,7 +82,8 @@ function LuaExportBeforeNextFrame()
             end
         else
             -- Prepare for new button push
-            local keys = JSON:decode(data)
+            local decodedData = JSON:decode(data)
+            local keys = decodedData["payload"]
             --check if there are buttons left to press
             if currCommandIndex <= #keys then
                 lastDevice = keys[currCommandIndex]["device"]
@@ -90,7 +113,13 @@ function LuaExportBeforeNextFrame()
             end
 
             if data then
-                busy = true
+                local keys = JSON:decode(data)
+                if keys["type"] == "waypoints" then
+                    busy = true
+                elseif keys["type"] == "crosshair" then
+                    local shouldBeVisible = stringtoboolean[keys["payload"]]
+                    crosshair:setVisible(shouldBeVisible)
+                end
             end
         end
     end
