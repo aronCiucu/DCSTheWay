@@ -23,17 +23,17 @@ Multiplayer is supported as long as the server has Player Exports turned on (mos
 
 ## How to install?
 1. Download the latest zip file from the Releases section [found here](https://github.com/aronCiucu/DCSTheWay/releases), and extract it. 
-2. Copy the `TheWay.lua` file from the folder you just extracted into `Users/YourUsernameHere/Saved Games/DCS/Scripts`. The `DCS` folder name may be `DCS.openbeta` if you are on the openbeta version of the game. If you are on Steam, the name will always be just `DCS`.
-3. Edit the `Export.lua` file there and append this line at the end of the file, and save it:
+2. Copy the folder `TheWay` inside `Users/[yourname]/Saved Games/DCS/Scripts`
+   (The `DCS` folder name may be `DCS.openbeta` if you are on the openbeta version of the game).
+3. Edit the `Export.lua` file inside the `Scripts` folder and append this line at the end of the file, and save it:
   ```lua
-  local TheWayLfs=require('lfs'); dofile(TheWayLfs.writedir()..'Scripts/TheWay.lua')
+  local TheWayLfs=require('lfs'); dofile(TheWayLfs.writedir()..'Scripts/TheWay/TheWay.lua')
   ```
    If there is no `Export.lua` file already existing there, create it yourself, and it should include only the line above.
-
 4. Run the installer from the zip file you've previously extracted.
 5. After installation, the program will launch, and you can go fly! You can find a shortcut to TheWay on your desktop.
 
-If you are updating from an older version, simply download the newest release, rerun the installer and replace your existing `TheWay.lua` file in Saved Games with the new one.
+If you are updating from an older version, simply download the newest release, rerun the installer and replace your existing `TheWay` folder in Saved Games with the new one.
 
 ## How to use? 
 Video tutorial here:
@@ -44,19 +44,18 @@ Video tutorial here:
 ### I cannot find the installer
 Make sure you have downloaded the program from the Releases section, and not the source code.  
 ### How do I use this for VR?
-As I do not own a VR headset, it is hard for me to build a user interface for it. But, instead I have implemented a series of keybinds to help:
-CTRL+SHIFT+S: to save a point
-CTRL+SHIFT+T: to transfer the waypoints
-CTRL+SHIFT+D: to delete all waypoints
+The selection crosshair will show even in VR, and you can set keybinds for most functions of the program in the settings.
+Make sure you restart TheWay after setting the keybinds.
 ### I get a "No connection to DCS" error!
-Make sure you have followed the install instructions to the letter, and that every file is where it should be.
+Make sure you have followed the installation instructions to the letter, and that every file is where it should be.
 Check if the server you are flying on has Player Exports turned on. If it doesn't, this won't work! 
 ### Where is the app installed by default?
 TheWay files are installed in Windows at `C:\Users\USER\AppData\Local\Programs\theway`
 ### How can I reset the module seat choice after I've ticked "Remember my choice"?
 Go to `C:\Users\USER\AppData\Roaming\theway` and delete the `config.json` file. Now the dialogs will appear again.
+Mind this will also remove your other preferences.
 ### None of my issues are shown here
-Worry not, feel free to message me on Discord (Doge4634) or the ED Forums thread, and we'll have it sorted!
+Worry not, feel free to message me on Discord (Doge4634) or the ED Forums, and we'll have it sorted!
 
 ## Credits
 Special thanks to discord users: kukiric, Bepis, the88tench, okopanja, and the ED Forums users for their suggestions and help.
