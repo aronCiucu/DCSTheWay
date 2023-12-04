@@ -5,13 +5,13 @@ const UDPListener = require("./UDPListener.js");
 const UDPSender = require("./TCPSender");
 const UserPreferenceHandler = require("./userPreferenceHandler");
 const MainWindow = require("./MainWindow.js");
-const { uIOhook, UiohookKey } = require("uiohook-napi");
 const {
   default: installExtension,
   REDUX_DEVTOOLS,
 } = require("electron-devtools-installer");
 const CrosshairWindow = require("./CrosshairWindow");
 const FileHandler = require("./fileHandler");
+const setupKeybinds = require("./keybindListener");
 
 let mainWindow;
 let crosshairWindow;
@@ -61,56 +61,18 @@ if (!isTheOnlyInstance) {
       crosshairWindow = new CrosshairWindow();
     });
     ipcMain.on("f10Stop", () => {
-      crosshairWindow.close();
+      if (crosshairWindow) crosshairWindow.close();
       crosshairWindow = null;
     });
     function applyElectronPreferences(preferences) {
       const alwaysOnTop = preferences["alwaysOnTop"];
       const crosshairColor = preferences["crosshairColor"];
+      setupKeybinds(mainWindow, preferences);
       if (alwaysOnTop === false)
         mainWindow.setAlwaysOnTop(false, "screen-saver");
-      if (crosshairColor && crosshairWindow) {
+      if (crosshairColor && crosshairWindow)
         crosshairWindow.webContents.send("crosshairColor", crosshairColor);
-      }
     }
-
-    //keybinds
-    let shiftPressed = false;
-    let ctrlPressed = false;
-    uIOhook.on("keydown", (event) => {
-      if (event.keycode === UiohookKey.Shift) {
-        shiftPressed = true;
-      } else if (event.keycode === UiohookKey.Ctrl) {
-        ctrlPressed = true;
-      } else if (
-        event.keycode === UiohookKey.S &&
-        ctrlPressed &&
-        shiftPressed
-      ) {
-        mainWindow.webContents.send("saveWaypoint");
-      } else if (
-        event.keycode === UiohookKey.T &&
-        ctrlPressed &&
-        shiftPressed
-      ) {
-        mainWindow.webContents.send("transferWaypoints");
-      } else if (
-        event.keycode === UiohookKey.D &&
-        ctrlPressed &&
-        shiftPressed
-      ) {
-        mainWindow.webContents.send("deleteWaypoints");
-      }
-    });
-
-    uIOhook.on("keyup", (event) => {
-      if (event.keycode === UiohookKey.Shift) {
-        shiftPressed = false;
-      } else if (event.keycode === UiohookKey.Ctrl) {
-        ctrlPressed = false;
-      }
-    });
-    uIOhook.start();
   });
 
   app.on("window-all-closed", () => app.quit());

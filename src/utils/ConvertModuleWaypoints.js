@@ -2,6 +2,7 @@ import Convertors from "./Convertors";
 
 const convert = (dcsWaypoints, module) => {
   switch (module) {
+    default:
     case "F-15ESE":
     case "F-16C_50":
     case "F-16D_50":
@@ -189,15 +190,6 @@ const convert = (dcsWaypoints, module) => {
       }
       return waypoints;
     }
-    default:
-      return dcsWaypoints.map((wp) => ({
-        ...wp,
-        lat: Math.round(wp.lat * 100000) / 100000,
-        long: Math.round(wp.long * 100000) / 100000,
-        elev: Math.trunc(Convertors.mToF(wp.elev)).toString(),
-        latHem: wp.lat > 0 ? "N" : "S",
-        longHem: wp.long > 0 ? "E" : "W",
-      }));
   }
 };
 

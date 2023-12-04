@@ -7,7 +7,7 @@ const TransferControls = (props) => {
   const waypointList = useSelector((state) => state.waypoints.dcsWaypoints);
   const { module } = useSelector((state) => state.dcsPoint);
   const allowSaveFile = waypointList.length > 0;
-  const allowTransfer = allowSaveFile && module !== "Spectator";
+  const allowTransfer = allowSaveFile && module && module !== "Spectator";
 
   return (
     <>
