@@ -54,6 +54,9 @@ TheWay files are installed in Windows at `C:\Users\USER\AppData\Local\Programs\t
 ### How can I reset the module seat choice after I've ticked "Remember my choice"?
 Go to `C:\Users\USER\AppData\Roaming\theway` and delete the `config.json` file. Now the dialogs will appear again.
 Mind this will also remove your other preferences.
+### The buttons are not pressing correctly in DCS!
+If the waypoint entry is not working correctly, try increasing the Button Delay slider in the settings menu.
+If that still doesn't fix the issue, open an issue on GitHub and attach a video so I can check out what goes wrong.
 ### None of my issues are shown here
 Worry not, feel free to message me on Discord (Doge4634) or the ED Forums, and we'll have it sorted!
 
