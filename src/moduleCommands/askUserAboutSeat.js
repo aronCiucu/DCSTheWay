@@ -73,7 +73,8 @@ const askUserAboutSeat = async (module, userPreferences) => {
       return AlertDialog({
         title: "Be advised:",
         content:
-          "This may overwrite waypoints! ",
+          "This may overwrite waypoints! " +
+          "Make sure you have installed the Hercules Patch found in the readme!",
       }).then(() => "Hercules");
     }
   } else return module;

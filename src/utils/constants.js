@@ -24,4 +24,5 @@ export const supportedModules = [
   "Ka-50_3",
   "Mirage-F1EE",
   "UH-60L",
+  "Hercules",
 ];
