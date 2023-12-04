@@ -1,0 +1,67 @@
+dialog = {
+    ["type"] = "Window",
+    ["params"] = {
+        ["bounds"] = {
+            [1] = {
+                ["h"] = 10,
+                ["w"] = 10,
+                ["x"] = 0,
+                ["y"] = 0
+            }
+        },
+        ["draggable"] = false,
+        ["enabled"] = true,
+        ["hasCursor"] = false,
+        ["lockFlow"] = false,
+        ["modal"] = false,
+        ["offscreen"] = false,
+        ["resizable"] = false,
+        ["zOrder"] = 111,
+        ["text"] = ""
+    },
+    ["skin"] = {
+        ["params"] = {
+			["headerHeight"] = 0,
+            ["name"] = "windowSkin"
+        },
+        ["states"] = {
+            ["released"] = {
+                [1] = {
+                    ["bkg"] = {
+                        ["center_center"] = "0x00000000"
+                    }
+                }
+            }
+        }
+    },
+    ["children"] = {
+        ["WaypointCrosshair"] = {
+            ["type"] = "Static",
+            ["params"] = {
+                ["bounds"] = {
+                    ["h"] = 10,
+                    ["w"] = 10,
+                    ["x"] = 0,
+                    ["y"] = 0
+                },
+                ["enabled"] = true,
+                ["visible"] = true,
+            },
+            ["skin"] = {
+                ["params"] = {
+                    ["name"] = "staticSkin"
+                },
+                ["states"] = {
+                    ["released"] = {
+                        [1] = {
+                            ["picture"] = {
+                                ["color"] = "0xffffffff",
+                                ["file"] = "Scripts\\TheWay\\Crosshair.png"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

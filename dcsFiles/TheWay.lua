@@ -33,16 +33,16 @@ function LuaExportStart()
     tcpServer:listen(1)
     tcpServer:settimeout(0)
 
-    -- local skin = crosshair:getSkin()
-    -- local crosshairPicturePath = lfs.writedir()..skin.skinData.states.released[1].picture.file
-    -- crosshair:setSkin(SkinUtils.setStaticPicture(crosshairPicturePath, skin))
     crosshair = DialogLoader.spawnDialogFromFile(
-        lfs.writedir() .. "Scripts\\CrosshairWindow.dlg"
+        lfs.writedir() .. "Scripts\\TheWay\\Crosshair.dlg"
     )
+    local skin = crosshair.WaypointCrosshair:getSkin()
+    local crosshairPicturePath = lfs.writedir()..skin.skinData.states.released[1].picture.file
+    crosshair.WaypointCrosshair:setSkin(SkinUtils.setStaticPicture(crosshairPicturePath, skin))
     local screenWidth, screenHeigt = dxgui.GetScreenSize()
-    local x = screenWidth/2 - 8
-    local y = screenHeigt/2 - 8
-    crosshair:setBounds(math.floor(x), math.floor(y), 8, 8)
+    local x = screenWidth/2 - 5
+    local y = screenHeigt/2 - 5
+    crosshair:setBounds(math.floor(x), math.floor(y), 10, 10)
     crosshair:setTransparentForUserInput(true)
 end
 
