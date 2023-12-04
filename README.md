@@ -18,7 +18,7 @@ Supported modules:
 * AH-64D Apache (Pilot and CP/G)
 * Mirage F1EE
 * UH-60L Blackhawk
-* Hercules(Requires patch available at https://github.com/Summit60/DCS-Hercules-TheWay-patch)
+* Hercules (Requires patch available at https://github.com/Summit60/DCS-Hercules-TheWay-patch)
  
 Multiplayer is supported as long as the server has Player Exports turned on (most servers do).
 
@@ -31,8 +31,12 @@ Multiplayer is supported as long as the server has Player Exports turned on (mos
   local TheWayLfs=require('lfs'); dofile(TheWayLfs.writedir()..'Scripts/TheWay/TheWay.lua')
   ```
    If there is no `Export.lua` file already existing there, create it yourself, and it should include only the line above.
-4. Run the installer from the zip file you've previously extracted.
-5. After installation, the program will launch, and you can go fly! You can find a shortcut to TheWay on your desktop.
+
+4. In the end, the folder structure should look like this:
+ <img width="598" alt="folderStructure" src="https://github.com/aronCiucu/DCSTheWay/assets/45103765/567f33de-e6e5-4568-8026-30c3f39f62f7">
+   
+5. Run the installer from the zip file you've previously extracted.
+6. After installation, the program will launch, and you can go fly! You can find a shortcut to TheWay on your desktop.
 
 If you are updating from an older version, simply download the newest release, rerun the installer and replace your existing `TheWay` folder in Saved Games with the new one.
 
