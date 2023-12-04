@@ -14,7 +14,6 @@ const useElectronIpcListeners = () => {
   useEffect(() => {
     ipcRenderer.on("saveWaypoint", () => {
       if (module && lat && long && elev) {
-        console.log("yo");
         dispatch(
           waypointsActions.addDcsWaypoint({
             lat,

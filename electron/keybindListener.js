@@ -10,7 +10,6 @@ const setupKeybinds = (mainWindow, preferences) => {
   };
   for (const [keybindName, keybindValue] of Object.entries(allKeybinds)) {
     if (!keybindValue || keybindValue === "None") continue;
-    console.log("adding lister for " + keybindName);
     const keys = keybindValue.split("+");
     const isCtrl = keys.includes("CTRL");
     const isShift = keys.includes("SHIFT");
@@ -29,6 +28,7 @@ const setupKeybinds = (mainWindow, preferences) => {
         keydown = true;
         switch (keybindName) {
           case "crosshairKeybind":
+            mainWindow.webContents.send("toggleCrosshair");
             break;
           case "saveKeybind":
             mainWindow.webContents.send("saveWaypoint");
