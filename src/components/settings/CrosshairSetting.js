@@ -16,12 +16,13 @@ const { ipcRenderer } = window.require("electron");
 const CrosshairSetting = ({ settingChangeHandler }) => {
   const userPreferences = useSelector((state) => state.ui.userPreferences);
   const oldCrosshair = userPreferences["oldCrosshair"];
+  const userPreferenceColor = userPreferences["crosshairColor"];
 
   const [crosshairColor, setCrosshairColor] = useState("#7CFC00FF");
   useEffect(() => {
-    const color = userPreferences["crosshairColor"];
+    const color = userPreferenceColor;
     if (color) setCrosshairColor(color);
-  }, [userPreferences["crosshairColor"]]);
+  }, [userPreferenceColor]);
 
   return (
     <Stack direction={"column"}>
@@ -43,7 +44,8 @@ const CrosshairSetting = ({ settingChangeHandler }) => {
             label={"Old style crosshair"}
           />
           <Typography variant="caption">
-            The old crosshair has customizable colors, but does not show in VR.
+            The old crosshair has customizable colors, but does not show in VR
+            or work correctly with multiple monitors.
           </Typography>
         </FormGroup>
         {oldCrosshair && (

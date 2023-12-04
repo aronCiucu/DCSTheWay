@@ -13,7 +13,8 @@ const useElectronIpcListeners = () => {
 
   useEffect(() => {
     ipcRenderer.on("saveWaypoint", () => {
-      if (module && lat && long && elev)
+      if (module && lat && long && elev) {
+        console.log("yo");
         dispatch(
           waypointsActions.addDcsWaypoint({
             lat,
@@ -21,6 +22,7 @@ const useElectronIpcListeners = () => {
             elev,
           }),
         );
+      }
     });
     ipcRenderer.on("fileOpened", (event, msg) => {
       dispatch(waypointsActions.appendWaypoints(msg));

@@ -16,7 +16,8 @@ const KeybindItem = ({ name, preferenceKey, changeKeybindHandler }) => {
 
   const handleKeyPress = (event) => {
     const key = event.key;
-    if (key === "Shift" || key === "Control" || key === "Alt") return;
+    if (key === "Shift" || key === "Control" || key === "Alt" || event.repeat)
+      return;
     if (key === "Delete") {
       changeKeybindHandler(preferenceKey, "None");
     } else {

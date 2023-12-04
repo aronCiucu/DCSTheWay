@@ -16,14 +16,17 @@ const setupKeybinds = (mainWindow, preferences) => {
     const isShift = keys.includes("SHIFT");
     const isAlt = keys.includes("ALT");
     const key = keys.at(-1);
+    let keydown = false;
     uIOhook.stop();
     uIOhook.on("keydown", (event) => {
+      if (keydown) return;
       if (
         event.ctrlKey === isCtrl &&
         event.shiftKey === isShift &&
         event.altKey === isAlt &&
         event.keycode === UiohookKey[key]
       ) {
+        keydown = true;
         switch (keybindName) {
           case "crosshairKeybind":
             break;
@@ -41,6 +44,9 @@ const setupKeybinds = (mainWindow, preferences) => {
             break;
         }
       }
+    });
+    uIOhook.on("keyup", () => {
+      keydown = false;
     });
     uIOhook.start();
   }
