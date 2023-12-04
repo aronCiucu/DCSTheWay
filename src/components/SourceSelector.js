@@ -78,7 +78,7 @@ const SourceSelector = ({
                   aria-label={
                     isSelecting ? "Stop selection" : "Begin selection"
                   }
-                  disabled={module === null}
+                  disabled={inputMethod !== "From a file" && module === null}
                   onClick={handleSelectionToggle}
                 >
                   {isSelecting ? <CloseIcon /> : <AddIcon />}

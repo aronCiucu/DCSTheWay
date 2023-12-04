@@ -2,7 +2,7 @@ import createButtonPress from "../models/ButtonPress";
 
 class f16 {
   static extraDelay = 0;
-  static #delay100 = 100 + this.extraDelay;
+  static #delay150 = 150 + this.extraDelay;
   static #delay10 = 10 + this.extraDelay;
   static #kuKeycodes = {
     1: 3003,
@@ -29,14 +29,14 @@ class f16 {
   static createButtonCommands(waypoints) {
     this.#codesPayload = [];
     this.#codesPayload.push(
-      createButtonPress(17, 3032, this.#delay100, -1),
-      createButtonPress(17, 3006, this.#delay100),
+      createButtonPress(17, 3032, this.#delay150, -1),
+      createButtonPress(17, 3006, this.#delay150),
     );
     for (const waypoint of waypoints) {
       this.#codesPayload.push(
-        createButtonPress(17, 3030, this.#delay100),
-        createButtonPress(17, 3035, this.#delay100, -1),
-        createButtonPress(17, 3035, this.#delay100, -1),
+        createButtonPress(17, 3030, this.#delay150),
+        createButtonPress(17, 3035, this.#delay150, -1),
+        createButtonPress(17, 3035, this.#delay150, -1),
       );
       //Type hem
       if (waypoint.latHem === "N") {
@@ -53,7 +53,7 @@ class f16 {
       //enter
       this.#codesPayload.push(createButtonPress(17, 3016, this.#delay10));
       //dobber to long
-      this.#codesPayload.push(createButtonPress(17, 3035, this.#delay100, -1));
+      this.#codesPayload.push(createButtonPress(17, 3035, this.#delay150, -1));
       //Type hem
       if (waypoint.longHem === "E") {
         this.#codesPayload.push(createButtonPress(17, 3008, this.#delay10));
@@ -70,7 +70,7 @@ class f16 {
       //enter
       this.#codesPayload.push(createButtonPress(17, 3016, this.#delay10));
       //dobber to elev
-      this.#codesPayload.push(createButtonPress(17, 3035, this.#delay100, -1));
+      this.#codesPayload.push(createButtonPress(17, 3035, this.#delay150, -1));
 
       //type elev
       for (let i = 0; i < waypoint.elev.length; i++) {
@@ -82,15 +82,15 @@ class f16 {
       this.#codesPayload.push(createButtonPress(17, 3016, this.#delay10));
       //back to steerpoint field
       this.#codesPayload.push(
-        createButtonPress(17, 3034, this.#delay100),
-        createButtonPress(17, 3034, this.#delay100),
-        createButtonPress(17, 3034, this.#delay100),
-        createButtonPress(17, 3034, this.#delay100),
+        createButtonPress(17, 3034, this.#delay150),
+        createButtonPress(17, 3034, this.#delay150),
+        createButtonPress(17, 3034, this.#delay150),
+        createButtonPress(17, 3034, this.#delay150),
       );
     }
 
     //main page
-    this.#codesPayload.push(createButtonPress(17, 3032, this.#delay100, -1));
+    this.#codesPayload.push(createButtonPress(17, 3032, this.#delay150, -1));
 
     return this.#codesPayload;
   }
