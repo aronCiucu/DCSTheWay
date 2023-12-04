@@ -48,11 +48,11 @@ const SettingsDialog = ({ open, closeHandler }) => {
           </ListItem>
           <Divider />
           <ListItem sx={{ px: 0, pt: 2 }}>
-            <CrosshairSetting settingChangeHandler={settingChangeHandler} />
+            <KeybindSetting settingChangeHandler={settingChangeHandler} />
           </ListItem>
           <Divider />
           <ListItem sx={{ px: 0, pt: 2 }}>
-            <KeybindSetting settingChangeHandler={settingChangeHandler} />
+            <CrosshairSetting settingChangeHandler={settingChangeHandler} />
           </ListItem>
           <Divider />
           <ListItem sx={{ px: 0, pt: 2 }}>

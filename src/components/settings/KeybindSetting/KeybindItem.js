@@ -25,6 +25,7 @@ const KeybindItem = ({ name, preferenceKey, changeKeybindHandler }) => {
       const shift = event.shiftKey ? "SHIFT+" : "";
       const alt = event.altKey ? "ALT+" : "";
       const newKeybind = ctrl + shift + alt + key.toUpperCase();
+      if (Object.values(userPreferences).includes(newKeybind)) return;
       changeKeybindHandler(preferenceKey, newKeybind, false);
     }
   };
@@ -38,6 +39,7 @@ const KeybindItem = ({ name, preferenceKey, changeKeybindHandler }) => {
         <Grid item xs={8}>
           <TextField
             size="small"
+            multiline
             InputProps={{
               readOnly: true,
             }}
