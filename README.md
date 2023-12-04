@@ -18,6 +18,7 @@ Supported modules:
 * AH-64D Apache (Pilot and CP/G)
 * Mirage F1EE
 * UH-60L Blackhawk
+* Hercules(Requires patch available at https://github.com/Summit60/DCS-Hercules-TheWay-patch)
  
 Multiplayer is supported as long as the server has Player Exports turned on (most servers do).
 

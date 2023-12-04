@@ -67,6 +67,15 @@ const askUserAboutSeat = async (module, userPreferences) => {
           "If WP/TGT is on MIZ0 (00), 01 onwards will be overwritten.",
       }).then(() => "UH-60L");
     }
+  } else if (module === "Hercules") {
+    if (moduleSpecificPreferences?.includes("Hide")) return "Hercules";
+    else {
+      return AlertDialog({
+        title: "Be advised:",
+        content:
+          "This may overwrite waypoints! ",
+      }).then(() => "Hercules");
+    }
   } else return module;
 };
 
