@@ -15,7 +15,9 @@ const KeybindItem = ({ name, preferenceKey, changeKeybindHandler }) => {
   };
 
   const handleKeyPress = (event) => {
+    event.preventDefault();
     const key = event.key;
+    let code = event.code;
     if (key === "Shift" || key === "Control" || key === "Alt" || event.repeat)
       return;
     if (key === "Delete") {
@@ -24,7 +26,8 @@ const KeybindItem = ({ name, preferenceKey, changeKeybindHandler }) => {
       const ctrl = event.ctrlKey ? "CTRL+" : "";
       const shift = event.shiftKey ? "SHIFT+" : "";
       const alt = event.altKey ? "ALT+" : "";
-      const newKeybind = ctrl + shift + alt + key.toUpperCase();
+      code = code.replace("Key", "").replace("Digit", "");
+      const newKeybind = ctrl + shift + alt + code;
       if (Object.values(userPreferences).includes(newKeybind)) return;
       changeKeybindHandler(preferenceKey, newKeybind, false);
     }
