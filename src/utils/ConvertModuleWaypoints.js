@@ -15,6 +15,7 @@ const convert = (dcsWaypoints, module) => {
     case "A-10C_2":
     case "A-10C":
     case "Hercules":
+    case "AV8BNA":
     case "M-2000C": {
       // lat  00.00.000 DMM
       //long 000.00.000
@@ -65,42 +66,6 @@ const convert = (dcsWaypoints, module) => {
           dmmLong.deg.toString().padStart(3, "0") +
           "." +
           dmmLong.min.toFixed(2).toString().padStart(5, "0");
-        const elev = Math.trunc(Convertors.mToF(dcsWaypoint.elev)).toString();
-        const latHem = dcsWaypoint.lat > 0 ? "N" : "S";
-        const longHem = dcsWaypoint.long > 0 ? "E" : "W";
-        waypoints.push({
-          name,
-          id,
-          lat,
-          long,
-          elev,
-          latHem,
-          longHem,
-        });
-      }
-      return waypoints;
-    }
-    case "AV8BNA": {
-      // lat 00.00.00 DMS
-      // long 000.00.00
-      let waypoints = [];
-      for (const dcsWaypoint of dcsWaypoints) {
-        const name = dcsWaypoint.name;
-        const id = dcsWaypoint.id;
-        const dmsLat = Convertors.decimalToDMS(dcsWaypoint.lat);
-        const dmsLong = Convertors.decimalToDMS(dcsWaypoint.long);
-        const lat =
-          dmsLat.deg.toString().padStart(2, "0") +
-          "." +
-          dmsLat.min.toString().padStart(2, "0") +
-          "." +
-          dmsLat.sec.toString().padStart(2, "0");
-        const long =
-          dmsLong.deg.toString().padStart(3, "0") +
-          "." +
-          dmsLong.min.toString().padStart(2, "0") +
-          "." +
-          dmsLong.sec.toString().padStart(2, "0");
         const elev = Math.trunc(Convertors.mToF(dcsWaypoint.elev)).toString();
         const latHem = dcsWaypoint.lat > 0 ? "N" : "S";
         const longHem = dcsWaypoint.long > 0 ? "E" : "W";
