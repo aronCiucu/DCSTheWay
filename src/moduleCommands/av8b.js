@@ -117,13 +117,10 @@ class av8b {
         });
       }
       //type lat
-      for (let i = 0, j = 0; i < waypoint.lat.length; i++) {
-        //ignore first dot
-        if ((waypoint.lat.charAt(i) === ".") && j === 0) {
-        j = 1;
-        } else {
-          this.#addKeyboardCode(waypoint.lat.charAt(i));
-        }
+      for (let i = 0, j = false; i < waypoint.lat.length; i++) {
+        //ignore the first dot "." in coordinate 00.00.000
+        if ((waypoint.lat.charAt(i) === ".") && !j) j=!j;
+        else this.#addKeyboardCode(waypoint.lat.charAt(i));
       }
       this.#codesPayload.push(
         //ENT
@@ -154,13 +151,10 @@ class av8b {
         });
       }
       //type long
-      for (let i = 0, j = 0; i < waypoint.long.length; i++) {
-        //ignore first dot
-        if ((waypoint.long.charAt(i) === ".") && j === 0) {
-          j = 1;
-        } else {
-          this.#addKeyboardCode(waypoint.long.charAt(i));
-        }
+      for (let i = 0, j = false; i < waypoint.long.length; i++) {
+        //ignore the first dot "." in coordinate 000.00.000
+        if ((waypoint.long.charAt(i) === ".") && !j) j=!j;
+        else this.#addKeyboardCode(waypoint.long.charAt(i));
       }
       this.#codesPayload.push(
         //ENT
