@@ -28,7 +28,7 @@ Multiplayer is supported as long as the server has Player Exports turned on (mos
    (The `DCS` folder name may be `DCS.openbeta` if you are on the openbeta version of the game).
 3. Edit the `Export.lua` file inside the `Scripts` folder and append this line at the end of the file, and save it:
   ```lua
-  local TheWayLfs=require('lfs'); dofile(TheWayLfs.writedir()..'Scripts/TheWay/TheWay.lua')
+  pcall(function() local TheWayLfs=require('lfs');dofile(TheWayLfs.writedir()..'Scripts/TheWay/TheWay.lua'); end)
   ```
    If there is no `Export.lua` file already existing there, create it yourself, and it should include only the line above.
 
