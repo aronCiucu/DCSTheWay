@@ -13,7 +13,7 @@ const useElectronIpcListeners = () => {
 
   useEffect(() => {
     ipcRenderer.on("saveWaypoint", () => {
-      if (module && lat && long && elev) {
+      if (module && lat && long) {
         dispatch(
           waypointsActions.addDcsWaypoint({
             lat,
