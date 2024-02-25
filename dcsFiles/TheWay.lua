@@ -1,5 +1,4 @@
-log.write("THEWAY", log.INFO, "Initializing...")
---For TheWay V2.4.0
+log.write("THEWAY", log.INFO, "Initializing V2.4.2")
 local tcpServer                        = nil
 local udpSpeaker                       = nil
 package.path                           = package.path .. ";" .. lfs.currentdir() .. "/LuaSocket/?.lua"
@@ -43,7 +42,6 @@ function LuaExportStart()
     local x = screenWidth/2 - 5
     local y = screenHeigt/2 - 5
     crosshair:setBounds(math.floor(x), math.floor(y), 10, 10)
-    crosshair:setTransparentForUserInput(true)
 end
 
 function LuaExportStop()
