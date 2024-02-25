@@ -1,6 +1,6 @@
 {
   "name": "theway",
-  "version": "2.4.1",
+  "version": "2.4.2",
   "private": true,
   "main": "electron/electron.js",
   "dependencies": {
