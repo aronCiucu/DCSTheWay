@@ -13,14 +13,14 @@ const TransferControls = (props) => {
     <>
       <Grid
         container
-        justifyContent="space-around"
+        justifyContent="space-evenly"
         alignItems="center"
         style={{ height: "100%" }}
       >
         <Grid item>
           <Tooltip title="Save waypoints to file">
             <Fab
-              size="medium"
+              size="small"
               color="neutral"
               onClick={props.onSaveFile}
               disabled={!allowSaveFile}
@@ -32,13 +32,24 @@ const TransferControls = (props) => {
           </Tooltip>
         </Grid>
         <Grid item>
+          <Tooltip title="Start Aircraft">
+            <Fab
+              size="small"
+              color="black"
+              onClick={props.onAircraftStart}
+            >
+            </Fab>
+          </Tooltip>
+        </Grid>
+        <Grid item>
           <Fab
+            size="small"
             variant="extended"
             color="primary"
             onClick={props.onTransfer}
             disabled={!allowTransfer}
           >
-            <Typography variant="button" pr={2}>
+            <Typography variant="button" pr={1}>
               <b>Transfer to DCS</b>
             </Typography>
             <SendIcon />

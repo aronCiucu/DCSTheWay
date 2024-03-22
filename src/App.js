@@ -31,6 +31,17 @@ function App() {
   const dispatch = useDispatch();
   useElectronIpcListeners();
 
+  const handleAircraftStart = async () => {
+    if (!module || !dcsWaypoints.length) return;
+    const chosenSeat = module+"_START";
+
+    const commands = {
+        type: "waypoints",
+        payload: GetModuleCommands(chosenSeat, null, buttonExtraDelay),
+      };
+      ipcRenderer.send("messageToDcs", commands);
+    };
+
   const handleTransfer = useCallback(async () => {
     if (!module || !dcsWaypoints.length) return;
     const moduleWaypoints = ConvertModuleWaypoints(dcsWaypoints, module);
@@ -111,6 +122,7 @@ function App() {
         </Box>
         <Box sx={{ height: "15%" }}>
           <TransferControls
+            onAircraftStart={handleAircraftStart}
             onTransfer={handleTransfer}
             onSaveFile={handleFileSave}
           />

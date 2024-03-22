@@ -64,6 +64,129 @@ class ah64 {
     return this.slotVariant === "AH-64D_BLK_IIpilot";
   }
 
+  static createStartButtonCommands() {
+    this.#codesPayload = [];
+    // APU START
+    this.#codesPayload.push({ // Master Ignition - BATT
+        device: 3, // 3003 ELEC_INTERFACE
+        code: 3003, 
+        delay: 100,
+        activate: 0.5,
+        addDepress: "true",
+    });
+    this.#codesPayload.push({
+        device: 6, // ENGINE_INTERFACE
+        code: 3002,
+        delay: 100,
+        activate: 1,
+        addDepress: "true",
+    });
+    this.#codesPayload.push({
+        device: 6, // ENGINE_INTERFACE
+        code: 3001,
+        delay: 100,
+        activate: 1,
+        addDepress: "true",
+    });
+    // CLOSE CANOPY
+    this.#codesPayload.push({
+        device: 9, // CPT_MECH
+        code: 3005,
+        delay: 100,
+        activate: 1,
+        addDepress: "true",
+    });
+    // ENGINE START
+    this.#codesPayload.push({
+        device: 6, // ENGINE_INTERFACE
+        code: 3003,
+        delay: 19000,
+        activate: 1,
+        addDepress: "true",
+    });
+    this.#codesPayload.push({
+        device: 6, // ENGINE_INTERFACE
+        code: 3005,
+        delay: 1000,
+        activate: 1,
+        addDepress: "true",
+    });
+    // FCR UNPIN
+    this.#codesPayload.push({
+        device: 42, // left MPD
+        code: 3031, // FCR
+        delay: 200,
+        activate: 1,
+        addDepress: "true",
+    });
+    this.#codesPayload.push({
+        device: 42, // left MPD
+        code: 3006,
+        delay: 200,
+        activate: 1,
+        addDepress: "true",
+    });
+    this.#codesPayload.push({
+        device: 42, // left MPD
+        code: 3012,
+        delay: 200,
+        activate: 1,
+        addDepress: "true",
+    });
+    // RWR ENABLE
+    this.#codesPayload.push({
+        device: 42, // left MPD
+        code: 3030,
+        delay: 200,
+        activate: 1,
+        addDepress: "true",
+    });
+    this.#codesPayload.push({
+        device: 42, // left MPD
+        code: 3002,
+        delay: 200,
+        activate: 1,
+        addDepress: "true",
+    });
+    this.#codesPayload.push({
+        device: 42, // left MPD
+        code: 3006,
+        delay: 200,
+        activate: 1,
+        addDepress: "true",
+    });
+    this.#codesPayload.push({
+        device: 42, // left MPD
+        code: 3010,
+        delay: 200,
+        activate: 1,
+        addDepress: "true",
+    });
+    // CMWS ENABLE
+    this.#codesPayload.push({
+        device: 80, // CMWS
+        code: 3001,
+        delay: 200,
+        activate: 0.5,
+        addDepress: "true",
+    });
+    this.#codesPayload.push({
+        device: 80, // CMWS
+        code: 3017,
+        delay: 200,
+        activate: 1,
+        addDepress: "true",
+    });
+    this.#codesPayload.push({
+        device: 80, // CMWS
+        code: 3019,
+        delay: 200,
+        activate: 1,
+        addDepress: "true",
+    });
+    return this.#codesPayload;
+}
+
   static createButtonCommands(waypoints) {
     this.#codesPayload = [];
     //Enter TSD Page

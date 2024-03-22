@@ -37,6 +37,11 @@ export default function getModuleCommands(module, waypoints, buttonExtraDelay) {
       fa18.extraDelay = buttonExtraDelay;
       return fa18.createButtonCommands(waypoints);
     }
+    case "AH-64D_BLK_II_START":  {
+        ah64.extraDelay = buttonExtraDelay;
+        ah64.slotVariant = "AH-64D_BLK_IIpilot";
+        return ah64.createStartButtonCommands();
+    }
     case "AH-64D_BLK_IIpilot": {
       ah64.extraDelay = buttonExtraDelay;
       ah64.slotVariant = "AH-64D_BLK_IIpilot";
