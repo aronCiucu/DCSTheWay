@@ -1,4 +1,5 @@
 class fa18 {
+  static storedStart = false
   static extraDelay = 0;
   static #delay100 = this.extraDelay + 100;
   static #delay200 = this.extraDelay + 200;

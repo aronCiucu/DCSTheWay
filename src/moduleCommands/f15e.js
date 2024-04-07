@@ -1,4 +1,5 @@
 class f15e {
+  static storedStart = false
   static slotVariant = "";
   static extraDelay = 0;
   static delay = 100 + this.extraDelay;

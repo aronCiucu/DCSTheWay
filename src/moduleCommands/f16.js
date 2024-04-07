@@ -1,6 +1,7 @@
 import createButtonPress from "../models/ButtonPress";
 
 class f16 {
+  static storedStart = false
   static extraDelay = 0;
   static #delay150 = 150 + this.extraDelay;
   static #delay10 = 10 + this.extraDelay;

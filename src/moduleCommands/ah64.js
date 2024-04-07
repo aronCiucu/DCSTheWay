@@ -1,4 +1,5 @@
 class ah64 {
+  static storedStart = true
   static extraDelay = 0;
   static #delay100 = 100 + this.extraDelay;
   static slotVariant = "";
@@ -111,6 +112,14 @@ class ah64 {
         activate: 1,
         addDepress: "true",
     });
+    // ENGINE THROTTLE - FLY INSTANT
+    this.#codesPayload.push({
+      device: 6, // ENGINE_INTERFACE
+      code: 3059,
+      delay: 100,
+      activate: 0.9,
+      addDepress: "false",
+  });
     // FCR UNPIN
     this.#codesPayload.push({
         device: 42, // left MPD
@@ -162,27 +171,100 @@ class ah64 {
         activate: 1,
         addDepress: "true",
     });
+    // TSD SHOW THREATS
+    this.#codesPayload.push({
+      device: 42, // left MPD
+      code: 3029, // TSD
+      delay: 200,
+      activate: 1,
+      addDepress: "true",
+    });
+    this.#codesPayload.push({
+      device: 42, // left MPD
+      code: 3003, // T3
+      delay: 200,
+      activate: 1,
+      addDepress: "true",
+    });
+    this.#codesPayload.push({
+      device: 42, // left MPD
+      code: 3005, // T5
+      delay: 200,
+      activate: 1,
+      addDepress: "true",
+    });
+    this.#codesPayload.push({
+      device: 42, // left MPD
+      code: 3011, // R5
+      delay: 200,
+      activate: 1,
+      addDepress: "true",
+    });
+    this.#codesPayload.push({
+      device: 42, // left MPD
+      code: 3003, // T3
+      delay: 200,
+      activate: 1,
+      addDepress: "true",
+    });
+    // TSD UTIL RESET INU 1
+    this.#codesPayload.push({
+      device: 42, // left MPD
+      code: 3006, // T6
+      delay: 200,
+      activate: 1,
+      addDepress: "true",
+    });
+    this.#codesPayload.push({
+      device: 42, // left MPD
+      code: 3024, // L1
+      delay: 200,
+      activate: 1,
+      addDepress: "true",
+    });
+    // VIDEO SET TADS
+    this.#codesPayload.push({
+      device: 42, // left MPD
+      code: 3026, // VID
+      delay: 200,
+      activate: 1,
+      addDepress: "true",
+    });
+    this.#codesPayload.push({
+      device: 42, // left MPD
+      code: 3007, // R1
+      delay: 200,
+      activate: 1,
+      addDepress: "true",
+    });
+    this.#codesPayload.push({
+      device: 42, // left MPD
+      code: 3006, // T6
+      delay: 200,
+      activate: 1,
+      addDepress: "true",
+    });
     // CMWS ENABLE
     this.#codesPayload.push({
         device: 80, // CMWS
         code: 3001,
         delay: 200,
         activate: 0.5,
-        addDepress: "true",
+        addDepress: "false",
     });
     this.#codesPayload.push({
         device: 80, // CMWS
         code: 3017,
         delay: 200,
         activate: 1,
-        addDepress: "true",
+        addDepress: "false",
     });
     this.#codesPayload.push({
         device: 80, // CMWS
         code: 3019,
         delay: 200,
         activate: 1,
-        addDepress: "true",
+        addDepress: "false",
     });
     return this.#codesPayload;
 }
