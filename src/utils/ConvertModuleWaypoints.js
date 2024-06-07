@@ -20,8 +20,15 @@ const convert = (dcsWaypoints, module) => {
       //long 000.00.000
       let waypoints = [];
       for (const dcsWaypoint of dcsWaypoints) {
+
         const name = dcsWaypoint.name;
         const id = dcsWaypoint.id;
+        
+        // debug code for oh-58d
+        const dmmMGRS = Convertors.decimalToMGRS(dcsWaypoint.lat, dcsWaypoint.long);
+        console.log(dmmMGRS);
+        // ========================
+
         const dmmLat = Convertors.decimalToDMM(dcsWaypoint.lat);
         const dmmLong = Convertors.decimalToDMM(dcsWaypoint.long);
         const lat =
@@ -189,6 +196,15 @@ const convert = (dcsWaypoints, module) => {
         });
       }
       return waypoints;
+    }
+    case "OH58D": {
+      let waypoints = [];
+      for (const dcsWaypoint of dcsWaypoints) {
+        const name = dcsWaypoint.name;
+        const id = dcsWaypoint.id;
+        const dmmMGRS = Convertors.decimalToMGRS(dcsWaypoint.lat, dcsWaypoint.long);
+
+      }
     }
   }
 };
