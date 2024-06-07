@@ -9,6 +9,7 @@ import ka50 from "./ka50";
 import miragef1 from "./miragef1";
 import uh60l from "./uh60l";
 import hercules from "./Hercules";
+import oh58d from "./oh58d";
 
 export default function getModuleCommands(module, waypoints, buttonExtraDelay) {
   switch (module) {
