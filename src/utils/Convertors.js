@@ -1,15 +1,11 @@
-
-
 class Convertors {
   static decimalToDMM(decimalCoordinate) {
-    console.log(decimalCoordinate);
     const deg = Math.abs(Math.trunc(decimalCoordinate));
     const min = Number("0." + decimalCoordinate.toString().split(".")[1]) * 60;
     return { deg, min };
   }
 
   static decimalToDMS(decimalCoordinate) {
-    console.log(decimalCoordinate);
     const deg = Math.trunc(decimalCoordinate);
     const minDec =
       Number("0." + decimalCoordinate.toString().split(".")[1]) * 60;
@@ -27,7 +23,6 @@ class Convertors {
   }
 
   static decimalToMGRS(Lat, Long) { // source: https://stackoverflow.com/questions/46728319/how-to-convert-between-lat-long-and-mgrs-using-javascript-without-dependence-on
-    console.log(Lat, Long);
     if (Lat < -80) return 'Too far South' ; if (Lat > 84) return 'Too far North' ;
     var c = 1 + Math.floor ((Long+180)/6);
     var e = c*6 - 183 ;
@@ -59,7 +54,6 @@ class Convertors {
     function pad (val) {if (val < 10) {val = '0000' + val} else if (val < 100) {val = '000' + val} else if (val < 1000) {val = '00' + val} else if (val < 10000) {val = '0' + val};return val};
     aa = Math.floor (aa%100000); aa = pad (aa);
     ab = Math.floor (ab%100000); ab = pad (ab);
-    console.log(c + ad + ' ' + af + ah + ' ' + aa + ' ' + ab);
     return c + ad + ' ' + af + ah + ' ' + aa + ' ' + ab;
 }
 }
