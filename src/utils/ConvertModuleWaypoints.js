@@ -205,7 +205,6 @@ const convert = (dcsWaypoints, module) => {
           elev,
         });
       }
-      console.log(waypoints);
       return waypoints;
     }
   }
