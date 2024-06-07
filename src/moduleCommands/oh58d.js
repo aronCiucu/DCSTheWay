@@ -1,7 +1,7 @@
 import createButtonPress from "../models/ButtonPress";
 
 class oh58d {
-    static extraDelay = 400;
+    static extraDelay = 100;
     static #delay100 = 100 + this.extraDelay;
     static slotVariant = "";
     static #oh58dkeycodes = {
