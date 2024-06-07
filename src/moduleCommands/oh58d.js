@@ -3,6 +3,7 @@ import createButtonPress from "../models/ButtonPress";
 class oh58d {
     static extraDelay = 400;
     static #delay100 = 100 + this.extraDelay;
+    static slotVariant = "";
     static #oh58dkeycodes = {
         // Keyboard keys (device 14)
         "a": 3063,
@@ -48,7 +49,7 @@ class oh58d {
         "-": 3095,
         "enter": 3089,
         "clear": 3091,
-        // pilot MFD (device 11)
+        // pilot MFD (device 11) copilot MFD (device 23)
         "vsd": 3008,
         "hsd": 3009,
         "l1": 3001,
@@ -66,17 +67,22 @@ class oh58d {
     };
     static #codesPayload = [];
 
+    static #isPilot() {
+        console.log(this.slotVariant, this.slotVariant === "OH58Dright-seat");
+        return this.slotVariant === "OH58Dright-seat";
+    }
+
     static createButtonCommands(waypoints) {
         this.#codesPayload = [];
         this.#codesPayload.push( // enter nav setup on pilot MFD
-            createButtonPress(11, this.#oh58dkeycodes["hsd"], this.#delay100),
-            createButtonPress(11, this.#oh58dkeycodes["r2"], this.#delay100),
-            createButtonPress(11, this.#oh58dkeycodes["l4"], this.#delay100),
+            createButtonPress(this.#isPilot() ? 11 : 23, this.#oh58dkeycodes["hsd"], this.#delay100),
+            createButtonPress(this.#isPilot() ? 11 : 23, this.#oh58dkeycodes["r2"], this.#delay100),
+            createButtonPress(this.#isPilot() ? 11 : 23, this.#oh58dkeycodes["l4"], this.#delay100),
         );
 
         for (const waypoint of waypoints) {
             this.#codesPayload.push( // enter waypoint 
-                createButtonPress(11, this.#oh58dkeycodes["l2"], this.#delay100),
+                createButtonPress(this.#isPilot() ? 11 : 23, this.#oh58dkeycodes["l2"], this.#delay100),
                 createButtonPress(14, this.#oh58dkeycodes["clear"], this.#delay100),
             );
             const [zone, squareId, easting, northing] = waypoint.MGRS.split(' ');
@@ -90,14 +96,14 @@ class oh58d {
             }
             this.#codesPayload.push( // enter MGRS into UFC
                 createButtonPress(14, this.#oh58dkeycodes["enter"], this.#delay100),
-                createButtonPress(11, this.#oh58dkeycodes["r5"], this.#delay100),
+                createButtonPress(this.#isPilot() ? 11 : 23, this.#oh58dkeycodes["r5"], this.#delay100),
             );
             
 
         }
 
         this.#codesPayload.push( // exit nav setup on pilot MFD
-            createButtonPress(11, this.#oh58dkeycodes["vsd"], this.#delay100),
+            createButtonPress(this.#isPilot() ? 11 : 23, this.#oh58dkeycodes["vsd"], this.#delay100),
         );
         
         return this.#codesPayload;

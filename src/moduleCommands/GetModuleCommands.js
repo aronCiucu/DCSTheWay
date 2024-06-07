@@ -78,8 +78,14 @@ export default function getModuleCommands(module, waypoints, buttonExtraDelay) {
       hercules.extraDelay = buttonExtraDelay;
       return hercules.createButtonCommands(waypoints);
     }
-    case "OH58D": {
+    case "OH58Dright-seat": {
       oh58d.extraDelay = buttonExtraDelay;
+      oh58d.slotVariant = "OH58Dright-seat";
+      return oh58d.createButtonCommands(waypoints);
+    }
+    case "OH58Dleft-seat": {
+      oh58d.extraDelay = buttonExtraDelay;
+      oh58d.slotVariant = "OH58Dleft-seat";
       return oh58d.createButtonCommands(waypoints);
     }
     default:
