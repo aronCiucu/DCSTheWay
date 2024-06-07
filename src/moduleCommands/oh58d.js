@@ -68,7 +68,6 @@ class oh58d {
     static #codesPayload = [];
 
     static #isPilot() {
-        console.log(this.slotVariant, this.slotVariant === "OH58Dright-seat");
         return this.slotVariant === "OH58Dright-seat";
     }
 
