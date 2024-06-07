@@ -196,12 +196,12 @@ const convert = (dcsWaypoints, module) => {
       for (const dcsWaypoint of dcsWaypoints) {
         const name = dcsWaypoint.name;
         const id = dcsWaypoint.id;
-        const dmmMGRS = Convertors.decimalToMGRS(dcsWaypoint.lat, dcsWaypoint.long);
+        const MGRS = Convertors.decimalToMGRS(dcsWaypoint.lat, dcsWaypoint.long);
         const elev = Math.trunc(Convertors.mToF(dcsWaypoint.elev)).toString();
         waypoints.push({
           name,
           id,
-          dmmMGRS,
+          MGRS,
           elev,
         });
       }
