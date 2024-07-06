@@ -48,7 +48,7 @@ function LuaExportStop()
     crosshair:setVisible(false)
 end
 
-local data
+local keys = nil
 local busy = false;
 local isPressed = false
 local currCommandIndex = 1
@@ -58,14 +58,8 @@ local lastNeedDepress = true
 local whenToDepress = nil
 local crosshairVisible = false
 local stringtoboolean={ ["true"]=true, ["false"]=false }
-function LuaExportBeforeNextFrame()
-    if upstreamLuaExportBeforeNextFrame ~= nil then
-        successful, err = pcall(upstreamLuaExportBeforeNextFrame)
-        if not successful then
-            log.write("THEWAY", log.ERROR, "Error in upstream LuaExportBeforeNextFrame function" .. tostring(err))
-        end
-    end
 
+function pressKeys()
     if busy then
         if isPressed then
             -- check if the time has come to depress
@@ -79,9 +73,6 @@ function LuaExportBeforeNextFrame()
                 currCommandIndex = currCommandIndex + 1
             end
         else
-            -- Prepare for new button push
-            local decodedData = JSON:decode(data)
-            local keys = decodedData["payload"]
             --check if there are buttons left to press
             if currCommandIndex <= #keys then
                 lastDevice = keys[currCommandIndex]["device"]
@@ -97,30 +88,51 @@ function LuaExportBeforeNextFrame()
                 isPressed = true
             else
                 --if there's nothing else to press, we are done
+                keys = nil
                 busy = false
                 currCommandIndex = 1
             end
         end
-    else
-        local client, err = tcpServer:accept()
-        if client ~= nil then
-            client:settimeout(10)
-            data, err = client:receive()
-            if err then
-                log.write("THEWAY", log.ERROR, "Error at receiving: " .. err)
-            end
+    end
+end
 
-            if data then
-                local keys = JSON:decode(data)
-                if keys["type"] == "waypoints" then
-                    busy = true
-                elseif keys["type"] == "crosshair" then
-                    local shouldBeVisible = stringtoboolean[keys["payload"]]
-                    crosshair:setVisible(shouldBeVisible)
-                end
+function checkSocket()
+    local client, err = tcpServer:accept()
+    if client ~= nil then
+        client:settimeout(10)
+        local data, err = client:receive()
+        if err then
+            log.write("THEWAY", log.ERROR, "Error at receiving: " .. err)
+        end
+
+        if data then
+            local decodedData = JSON:decode(data)
+            if decodedData["type"] == "waypoints" then
+                keys = decodedData["payload"]
+                busy = true
+                currCommandIndex = 1
+            elseif decodedData["type"] == "crosshair" then
+                local shouldBeVisible = stringtoboolean[decodedData["payload"]]
+                crosshair:setVisible(shouldBeVisible)
+            elseif decodedData["type"] == "abort" then
+                keys = nil
+                busy = false
+                currCommandIndex = 1
             end
         end
     end
+end
+
+function LuaExportBeforeNextFrame()
+    if upstreamLuaExportBeforeNextFrame ~= nil then
+        successful, err = pcall(upstreamLuaExportBeforeNextFrame)
+        if not successful then
+            log.write("THEWAY", log.ERROR, "Error in upstream LuaExportBeforeNextFrame function" .. tostring(err))
+        end
+    end
+
+    pressKeys()
+    checkSocket()
 end
 
 function LuaExportAfterNextFrame()
@@ -145,6 +157,7 @@ function LuaExportAfterNextFrame()
     message["coords"]["lat"] = tostring(coords.latitude)
     message["coords"]["long"] = tostring(coords.longitude)
     message["elev"] = tostring(elevation)
+    message["busy"] = busy
     local toSend = JSON:encode(message)
 
     if pcall(function()
