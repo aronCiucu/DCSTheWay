@@ -49,7 +49,12 @@ const useElectronIpcListeners = () => {
     ipcRenderer.on(
       "dataReceived",
       throttle((event, msg) => {
-        dispatch(dcsPointActions.changeCoords(JSON.parse(msg)));
+        let parsed = JSON.parse(msg);
+        if(parsed.version !== 1) {
+          dispatch(dcsPointActions.setError("The version of the lua script does not match with the version of this UI."))
+        } else {
+          dispatch(dcsPointActions.changeCoords(parsed));
+        }
       }, 100),
     );
 
