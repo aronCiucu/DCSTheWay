@@ -13,6 +13,7 @@ import GetModuleCommands from "./moduleCommands/GetModuleCommands";
 import askUserAboutSeat from "./moduleCommands/askUserAboutSeat";
 import useElectronIpcListeners from "./hooks/useElectronIpcListeners";
 import SettingsDialog from "./components/settings/SettingsDialog";
+import Error from "./components/Error";
 import { uiActions } from "./store/ui";
 
 const { ipcRenderer } = window.require("electron");
@@ -20,7 +21,7 @@ const { ipcRenderer } = window.require("electron");
 const theme = createTheme(theWayTheme);
 
 function App() {
-  const { module } = useSelector((state) => state.dcsPoint);
+  const { module, error } = useSelector((state) => state.dcsPoint);
   const dcsWaypoints = useSelector((state) => state.waypoints.dcsWaypoints);
   const userPreferences = useSelector((state) => state.ui.userPreferences);
   const [settingsModalOpen, setSettingsModalOpen] = useState(false);
@@ -87,6 +88,14 @@ function App() {
     };
   }, [handleTransfer, handleSelectionToggle]);
 
+  function mainContent() {
+    if(error == null) {
+      return <WaypointList />;
+    } else {
+      return <Error error={error} />;
+    }
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline enableColorScheme />
@@ -107,7 +116,7 @@ function App() {
           />
         </Box>
         <Box sx={{ height: "60%", paddingX: 2 }}>
-          <WaypointList />
+          { mainContent() }
         </Box>
         <Box sx={{ height: "15%" }}>
           <TransferControls

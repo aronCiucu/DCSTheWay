@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { module: null, lat: null, long: null, elev: null };
+const initialState = { module: null, lat: null, long: null, elev: null, error: null };
 
 const dcsPointSlice = createSlice({
   name: "dcsPoint",
@@ -12,6 +12,14 @@ const dcsPointSlice = createSlice({
       state.lat = Number(action.payload.coords.lat);
       state.long = Number(action.payload.coords.long);
       state.elev = Number(action.payload.elev);
+      state.error = null
+    },
+    setError(state, action) {
+      state.module = null;
+      state.lat = null;
+      state.long = null;
+      state.elev = null;
+      state.error = action.payload
     },
   },
 });

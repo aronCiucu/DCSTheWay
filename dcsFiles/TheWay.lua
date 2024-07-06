@@ -140,6 +140,7 @@ function LuaExportAfterNextFrame()
     local selfData = LoGetSelfData()
     local model = selfData and selfData['Name'] or 'Spectator'
     local message = {}
+    message["version"] = 1
     message["model"] = model
     message["coords"] = {}
     message["coords"]["lat"] = tostring(coords.latitude)
