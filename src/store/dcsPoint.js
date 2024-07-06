@@ -12,7 +12,7 @@ const dcsPointSlice = createSlice({
       state.lat = Number(action.payload.coords.lat);
       state.long = Number(action.payload.coords.long);
       state.elev = Number(action.payload.elev);
-      state.busy = Number(action.payload.busy);
+      state.busy = action.payload.busy;
     },
   },
 });
