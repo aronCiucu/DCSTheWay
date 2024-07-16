@@ -16,6 +16,7 @@ Supported modules:
 * AV8BNA Harrier
 * Ka-50 Blackshark
 * AH-64D Apache (Pilot and CP/G)
+* OH-58D Kiowa Warrior
 * Mirage F1EE
 * UH-60L Blackhawk
 * Hercules (Requires patch available at https://github.com/Summit60/DCS-Hercules-TheWay-patch)

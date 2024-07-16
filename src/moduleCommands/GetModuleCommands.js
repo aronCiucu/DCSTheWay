@@ -9,6 +9,7 @@ import ka50 from "./ka50";
 import miragef1 from "./miragef1";
 import uh60l from "./uh60l";
 import hercules from "./Hercules";
+import oh58d from "./oh58d";
 
 export default function getModuleCommands(module, waypoints, buttonExtraDelay) {
   switch (module) {
@@ -76,6 +77,16 @@ export default function getModuleCommands(module, waypoints, buttonExtraDelay) {
     case "Hercules": {
       hercules.extraDelay = buttonExtraDelay;
       return hercules.createButtonCommands(waypoints);
+    }
+    case "OH58Dright-seat": {
+      oh58d.extraDelay = buttonExtraDelay;
+      oh58d.slotVariant = "OH58Dright-seat";
+      return oh58d.createButtonCommands(waypoints);
+    }
+    case "OH58Dleft-seat": {
+      oh58d.extraDelay = buttonExtraDelay;
+      oh58d.slotVariant = "OH58Dleft-seat";
+      return oh58d.createButtonCommands(waypoints);
     }
     default:
       return [];

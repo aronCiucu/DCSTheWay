@@ -20,6 +20,7 @@ const convert = (dcsWaypoints, module) => {
       //long 000.00.000
       let waypoints = [];
       for (const dcsWaypoint of dcsWaypoints) {
+
         const name = dcsWaypoint.name;
         const id = dcsWaypoint.id;
         const dmmLat = Convertors.decimalToDMM(dcsWaypoint.lat);
@@ -186,6 +187,22 @@ const convert = (dcsWaypoints, module) => {
           elev,
           latHem,
           longHem,
+        });
+      }
+      return waypoints;
+    }
+    case "OH58D": {
+      let waypoints = [];
+      for (const dcsWaypoint of dcsWaypoints) {
+        const name = dcsWaypoint.name;
+        const id = dcsWaypoint.id;
+        const MGRS = Convertors.decimalToMGRS(dcsWaypoint.lat, dcsWaypoint.long);
+        const elev = Math.trunc(Convertors.mToF(dcsWaypoint.elev)).toString();
+        waypoints.push({
+          name,
+          id,
+          MGRS,
+          elev,
         });
       }
       return waypoints;

@@ -25,4 +25,5 @@ export const supportedModules = [
   "Mirage-F1EE",
   "UH-60L",
   "Hercules",
+  "OH58D",
 ];
