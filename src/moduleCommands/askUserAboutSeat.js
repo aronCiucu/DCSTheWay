@@ -77,9 +77,9 @@ const askUserAboutSeat = async (module, userPreferences) => {
       }).then(() => "Hercules");
     }
   } else if (module === "OH58D") {
-    if (moduleSpecificPreferences?.includes("right-seat"))
+    if (moduleSpecificPreferences?.includes("Right Seat"))
       return "OH58Dright-seat";
-    else if (moduleSpecificPreferences?.includes("left-seat"))
+    else if (moduleSpecificPreferences?.includes("Left Seat"))
       return "OH58Dleft-seat";
     else {
       return TwoOptionsDialog({
