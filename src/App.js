@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ModalContainer from "react-modal-promise";
 
 import SourceSelector from "./components/SourceSelector";
-import WaypointList from "./components/WaypointList";
+import WaypointList from "./components/waypoints/WaypointList";
 import theWayTheme from "./theme/TheWayTheme";
 import TransferControls from "./components/TransferControls";
 import TitleBar from "./components/TitleBar";
