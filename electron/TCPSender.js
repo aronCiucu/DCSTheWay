@@ -8,6 +8,7 @@ class TCPSender {
       client
         .connect(42070, "127.0.0.1", function () {
           client.write(JSON.stringify(msg) + "\n");
+          client.end();
         })
         .on("error", (e) => {
           console.log(e);
