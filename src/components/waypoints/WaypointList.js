@@ -56,8 +56,11 @@ const WaypointList = () => {
   };
 
   const elevationHandler = (event, id) => {
-    const elev = Convertors.fToM(event.target.value);
-    dispatch(waypointsActions.changeElevation({ id, elev }));
+    const enteredValue = event.target.value;
+    if (!isNaN(enteredValue)) {
+      const elev = Convertors.fToM(event.target.value);
+      dispatch(waypointsActions.changeElevation({ id, elev }));
+    }
   };
 
   const expandHandler = (id, isExpanded) => {
@@ -114,11 +117,7 @@ const WaypointList = () => {
                 ))}
 
                 {isPending && (
-                  <WaypointItem
-                    pending={true}
-                    name={"New Waypoint"}
-                    onSave={saveWaypointHandler}
-                  />
+                  <WaypointItem pending={true} onSave={saveWaypointHandler} />
                 )}
               </>
             ) : (

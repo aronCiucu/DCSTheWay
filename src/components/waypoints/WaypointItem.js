@@ -37,7 +37,7 @@ const WaypointItem = ({
   onElevation,
 }) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: wp.id });
+    useSortable({ id: wp?.id });
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
@@ -52,7 +52,7 @@ const WaypointItem = ({
   };
   const handleInputFinished = (event) => {
     if (event.key === "Enter") {
-      onExpand(wp.id, !expanded);
+      onExpand(wp?.id, !expanded);
       handleInputDefocus();
     }
   };
@@ -67,22 +67,22 @@ const WaypointItem = ({
                 {expanded ? (
                   <TextField
                     size="small"
-                    defaultValue={wp.name}
-                    onChange={(e) => onRename(e, wp.id)}
+                    defaultValue={wp?.name}
+                    onChange={(e) => onRename(e, wp?.id)}
                     onMouseEnter={handleInputFocus}
                     onMouseLeave={handleInputDefocus}
                     onKeyDown={handleInputFinished}
                     onFocus={(e) => e.target.select()}
                   />
                 ) : (
-                  <ListItemText>{wp.name}</ListItemText>
+                  <ListItemText>{wp?.name || "New Waypoint"}</ListItemText>
                 )}
 
-                {wp.MGRS ? (
+                {wp?.MGRS ? (
                   <WaypointFieldsMGRS
-                    id={wp.id}
-                    mgrs={wp.MGRS}
-                    elev={wp.elev}
+                    id={wp?.id}
+                    mgrs={wp?.MGRS}
+                    elev={wp?.elev}
                     onElevation={onElevation}
                     handleInputFocus={handleInputFocus}
                     handleInputDefocus={handleInputDefocus}
@@ -90,12 +90,12 @@ const WaypointItem = ({
                   />
                 ) : (
                   <WaypointFieldsLatLong
-                    id={wp.id}
-                    latHem={wp.latHem}
-                    longHem={wp.longHem}
-                    lat={wp.lat}
-                    long={wp.long}
-                    elev={wp.elev}
+                    id={wp?.id}
+                    latHem={wp?.latHem}
+                    longHem={wp?.longHem}
+                    lat={wp?.lat}
+                    long={wp?.long}
+                    elev={wp?.elev}
                     onElevation={onElevation}
                     handleInputFocus={handleInputFocus}
                     handleInputDefocus={handleInputDefocus}
@@ -124,10 +124,10 @@ const WaypointItem = ({
                 justifyContent="flex-end"
                 alignItems="center"
               >
-                <IconButton onClick={(e) => onDelete(e, wp.id)}>
+                <IconButton onClick={(e) => onDelete(e, wp?.id)}>
                   <Delete />
                 </IconButton>
-                <IconButton onClick={() => onExpand(wp.id, !expanded)}>
+                <IconButton onClick={() => onExpand(wp?.id, !expanded)}>
                   {expanded ? <ArrowDropUp /> : <ArrowDropDown />}
                 </IconButton>
                 <Box className="dragHandle" {...listeners}>
