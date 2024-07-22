@@ -14,10 +14,10 @@ Supported modules:
 * A-10C and A-10C2
 * Mirage 2000
 * AV8BNA Harrier
+* Mirage F1EE
 * Ka-50 Blackshark
 * AH-64D Apache (Pilot and CP/G)
 * OH-58D Kiowa Warrior
-* Mirage F1EE
 * UH-60L Blackhawk
 * Hercules (Requires patch available at https://github.com/Summit60/DCS-Hercules-TheWay-patch)
  
@@ -50,8 +50,8 @@ Video tutorial here:
 ### I cannot find the installer
 Make sure you have downloaded the program from the Releases section, and not the source code.  
 ### How do I use this for VR?
-The selection crosshair will show even in VR, and you can set keybinds for most functions of the program in the settings.
-Make sure you restart TheWay after setting the keybinds.
+You can use the DCS 2D Mirror that you see on your desktop to interact with TheWay and DCS.
+Or you can use the VR keybinds that can be adjusted in settings. 
 ### I get a "No connection to DCS" error!
 Make sure you have followed the installation instructions to the letter, and that every file is where it should be.
 Check if the server you are flying on has Player Exports turned on. If it doesn't, this won't work! 
@@ -64,7 +64,7 @@ Mind this will also remove your other preferences.
 If the waypoint entry is not working correctly, try increasing the Button Delay slider in the settings menu.
 If that still doesn't fix the issue, open an issue on GitHub and attach a video so I can check out what goes wrong.
 ### None of my issues are shown here
-Worry not, feel free to message me on Discord (Doge4634) or the ED Forums, and we'll have it sorted!
+Worry not, feel free to issue a message request on Discord (Doge4634), and we'll have it sorted!
 
 ## Credits
 Special thanks to discord users: kukiric, Bepis, the88tench, okopanja, and the ED Forums users for their suggestions and help.
