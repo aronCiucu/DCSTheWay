@@ -12,6 +12,7 @@ class av8b {
     8: 3311,
     9: 3312,
     0: 3315,
+    ".": 3316,
   };
   static #codesPayload = [];
 
@@ -116,8 +117,10 @@ class av8b {
         });
       }
       //type lat
-      for (let i = 0; i < waypoint.lat.length; i++) {
-        this.#addKeyboardCode(waypoint.lat.charAt(i));
+      for (let i = 0, j = false; i < waypoint.lat.length; i++) {
+        //ignore the first dot "." in coordinate 00.00.000
+        if ((waypoint.lat.charAt(i) === ".") && !j) j=!j;
+        else this.#addKeyboardCode(waypoint.lat.charAt(i));
       }
       this.#codesPayload.push(
         //ENT
@@ -148,8 +151,10 @@ class av8b {
         });
       }
       //type long
-      for (let i = 0; i < waypoint.long.length; i++) {
-        this.#addKeyboardCode(waypoint.long.charAt(i));
+      for (let i = 0, j = false; i < waypoint.long.length; i++) {
+        //ignore the first dot "." in coordinate 000.00.000
+        if ((waypoint.long.charAt(i) === ".") && !j) j=!j;
+        else this.#addKeyboardCode(waypoint.long.charAt(i));
       }
       this.#codesPayload.push(
         //ENT
