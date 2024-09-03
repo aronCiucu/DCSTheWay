@@ -26,4 +26,5 @@ export const supportedModules = [
   "UH-60L",
   "Hercules",
   "OH58D",
+  "CH-47Fbl1"
 ];

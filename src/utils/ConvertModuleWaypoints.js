@@ -15,7 +15,8 @@ const convert = (dcsWaypoints, module) => {
     case "A-10C_2":
     case "A-10C":
     case "Hercules":
-    case "M-2000C": {
+    case "M-2000C": 
+    case "CH-47Fbl1": {
       // lat  00.00.000 DMM
       //long 000.00.000
       let waypoints = [];

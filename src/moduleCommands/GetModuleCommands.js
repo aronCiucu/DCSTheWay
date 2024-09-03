@@ -10,6 +10,7 @@ import miragef1 from "./miragef1";
 import uh60l from "./uh60l";
 import hercules from "./Hercules";
 import oh58d from "./oh58d";
+import ch47f from "./ch47f";
 
 export default function getModuleCommands(module, waypoints, buttonExtraDelay) {
   switch (module) {
@@ -87,6 +88,10 @@ export default function getModuleCommands(module, waypoints, buttonExtraDelay) {
       oh58d.extraDelay = buttonExtraDelay;
       oh58d.slotVariant = "OH58Dleft-seat";
       return oh58d.createButtonCommands(waypoints);
+    }
+    case "CH-47Fbl1": {
+      ch47f.extraDelay = buttonExtraDelay;
+      return ch47f.createButtonCommands(waypoints);
     }
     default:
       return [];

@@ -20,6 +20,7 @@ Supported modules:
 * OH-58D Kiowa Warrior
 * UH-60L Blackhawk
 * Hercules (Requires patch available at https://github.com/Summit60/DCS-Hercules-TheWay-patch)
+* CH-47F
  
 Multiplayer is supported as long as the server has Player Exports turned on (most servers do).
 
