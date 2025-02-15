@@ -17,7 +17,7 @@ class FileHandler {
   openFile() {
     dialog
       .showOpenDialog({
-        filters: [{ name: "TheWay file", extensions: ["tw"] }],
+        filters: [{ name: "TheWay file", extensions: ["tw", "json"] }],
       })
       .then(({ filePaths }) => {
         if (filePaths.length === 1) {
