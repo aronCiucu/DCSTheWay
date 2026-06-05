@@ -132,7 +132,8 @@ class oh58d {
         ),
         createButtonPress(14, this.#oh58dkeycodes["clear"], this.#delay100), // clear current alt
       );
-
+      waypoint.elev = waypoint.elev * 0.3048; // convert feet to meters
+      
       for (let i = 0; i < waypoint.elev.length; i++) {
         // enter in waypoint elevation
         this.#codesPayload.push(

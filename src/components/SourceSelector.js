@@ -13,8 +13,24 @@ const SourceSelector = ({
   setInputMethod,
   isSelecting,
 }) => {
+  const applyInputMethod = (next) => {
+    if (next === inputMethod) return;
+
+    if (isSelecting) {
+      handleSelectionToggle();
+    }
+
+    setInputMethod(next);
+  };
+
+  const cycleInputMethod = (dir) => {
+    const idx = inputMethods.findIndex((m) => m === inputMethod);
+    const nextIdx = (idx + dir + inputMethods.length) % inputMethods.length;
+    applyInputMethod(inputMethods[nextIdx]);
+  };
+
   const handleInputMethodChange = (event) => {
-    setInputMethod(event.target.value);
+    applyInputMethod(event.target.value);
   };
 
   const isSupportedModule = supportedModules.includes(module);
@@ -24,10 +40,10 @@ const SourceSelector = ({
       : `./assets/moduleImages/${module}.jpg`;
   const moduleText =
     module === null
-      ? "No Connection To DCS"
+      ? "Enter Cockpit to Connect"
       : isSupportedModule
       ? module
-      : `Module Not Supported: ${module}`;
+      : `Not Supported: ${module}`;
 
   return (
     <>
@@ -46,13 +62,22 @@ const SourceSelector = ({
               <Select
                 value={inputMethod}
                 onChange={handleInputMethodChange}
-                sx={{ width: "100%" }}
                 size="small"
+                onWheel={(e) => {
+                  e.preventDefault();
+                  const dir = e.deltaY > 0 ? 1 : -1;
+                  cycleInputMethod(dir);
+                }}
+                sx={{
+                  width: "75%",
+                  backgroundColor: "rgba(0, 0, 0, 0.25)",
+                  color: "text.primary",
+                }}
                 inputProps={{
                   MenuProps: {
                     MenuListProps: {
                       sx: {
-                        backgroundColor: "background.default",
+                        backgroundColor: "rgba(20, 20, 20, 0.95)",
                       },
                     },
                   },
@@ -65,6 +90,7 @@ const SourceSelector = ({
                 ))}
               </Select>
             </Grid>
+
             <Grid item>
               <Tooltip
                 placement="top"

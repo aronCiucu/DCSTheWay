@@ -30,6 +30,8 @@ import m2000 from "./m2000";
 import miragef1 from "./miragef1";
 import uh60l from "./uh60l";
 import f16 from "./f16";
+import ch47f from "./ch47f";
+import c130j from "./c130j";
 
 describe("Converts module waypoints to button presses", () => {
   test("A-10", () => {
@@ -72,5 +74,13 @@ describe("Converts module waypoints to button presses", () => {
   test("UH-60", () => {
     const buttonPresses = uh60l.createButtonCommands(uh60Waypoints);
     expect(buttonPresses).toEqual(uh60Buttons);
+  });
+  test("CH-47Fbl1", () => {
+    const buttonPresses = ch47f.createButtonCommands(ch47fWaypoints);
+    expect(buttonPresses).toEqual(ch47fButtons);
+  });
+  test("C-130J-30", () => {
+    const buttonPresses = c130j.createButtonCommands(c130jWaypoints);
+    expect(buttonPresses).toEqual(c130jButtons);
   });
 });

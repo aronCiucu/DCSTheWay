@@ -1,4 +1,5 @@
 class a10 {
+  static slotVariant = ""; // Holds the variant type
   static extraDelay = 0;
   static #delay100 = 100 + this.extraDelay;
   static #kuKeycodes = {
@@ -76,15 +77,49 @@ class a10 {
       },
     );
 
-    for (const waypoint of waypoints) {
+    for (let index = 0; index < waypoints.length; index++) {
+      const waypoint = waypoints[index]; // Access the waypoint using the index
+      const waypointNumber = index + 1; // Use the index to get the waypoint number starting at 1
+
+      //Press the CLR key, to avoid CDU INPUT ERROR
       this.#codesPayload.push({
         device: 9,
-        code: 3007,
+        code: 3058,
         delay: this.#delay100,
         activate: 1,
         addDepress: "true",
       });
-      //Type hem
+
+      if (this.slotVariant === "a10ADD") {
+
+        //Press LSK R3 to Create new waypoint
+        this.#codesPayload.push({
+          device: 9,
+          code: 3007,
+          delay: this.#delay100,
+          activate: 1,
+          addDepress: "true",
+        });
+
+      } else if (this.slotVariant === "a10NEW") {
+        // Use the loop number as the waypoint name
+        const waypointName = waypointNumber.toString(); // Convert the waypoint number to string
+
+        for (let i = 0; i < Math.min(waypointName.length, 9); i++) {
+          this.#addKeyboardCode(waypointName.charAt(i));  // Type the waypoint number
+        }
+
+        //Press LSK L1 to select waypoint to be altered
+        this.#codesPayload.push({
+          device: 9,
+          code: 3001,
+          delay: this.#delay100,
+          activate: 1,
+          addDepress: "true",
+        });
+      }
+
+      // Type hem
       if (waypoint.latHem === "N") {
         this.#codesPayload.push({
           device: 9,
@@ -102,7 +137,7 @@ class a10 {
           addDepress: "true",
         });
       }
-      //Type lat
+      // Type lat
       for (let i = 0; i < waypoint.lat.length; i++) {
         waypoint.lat.charAt(i) !== "." &&
           this.#addKeyboardCode(waypoint.lat.charAt(i));
@@ -114,7 +149,7 @@ class a10 {
         activate: 1,
         addDepress: "true",
       });
-      //Type hem
+      // Type hem
       if (waypoint.longHem === "E") {
         this.#codesPayload.push({
           device: 9,
@@ -132,7 +167,7 @@ class a10 {
           addDepress: "true",
         });
       }
-      //Type long
+      // Type long
       for (let i = 0; i < waypoint.long.length; i++) {
         waypoint.long.charAt(i) !== "." &&
           this.#addKeyboardCode(waypoint.long.charAt(i));
@@ -144,13 +179,13 @@ class a10 {
         activate: 1,
         addDepress: "true",
       });
-      //Type name
+      // Type name
       const waypointNameLength =
         waypoint.name.length < 12 ? waypoint.name.length : 12;
       for (let i = 0; i < waypointNameLength; i++) {
         this.#addKeyboardCode(waypoint.name.charAt(i));
       }
-      //Enter name
+      // Enter name
       this.#codesPayload.push({
         device: 9,
         code: 3005,

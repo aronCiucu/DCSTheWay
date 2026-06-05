@@ -35,8 +35,10 @@ class f16 {
     for (const waypoint of waypoints) {
       this.#codesPayload.push(
         createButtonPress(17, 3030, this.#delay150),
-        createButtonPress(17, 3035, this.#delay150, -1),
-        createButtonPress(17, 3035, this.#delay150, -1),
+        createButtonPress(17, 3034, this.#delay150, 1),
+        createButtonPress(17, 3034, this.#delay150, 1),
+        createButtonPress(17, 3034, this.#delay150, 1),
+        createButtonPress(17, 3034, this.#delay150, 1),
       );
       //Type hem
       if (waypoint.latHem === "N") {
@@ -63,7 +65,7 @@ class f16 {
 
       //type long
       for (let i = 0; i < waypoint.long.length; i++) {
-        // Type Longtitude into UFC
+        // Type Longitude into UFC
         this.#addKeyboardCode(waypoint.long.charAt(i));
       }
 
@@ -77,15 +79,14 @@ class f16 {
         // Type Elevation into UFC
         this.#addKeyboardCode(waypoint.elev.charAt(i));
       }
-
       //enter
       this.#codesPayload.push(createButtonPress(17, 3016, this.#delay10));
+      
+      
       //back to steerpoint field
       this.#codesPayload.push(
-        createButtonPress(17, 3034, this.#delay150),
-        createButtonPress(17, 3034, this.#delay150),
-        createButtonPress(17, 3034, this.#delay150),
-        createButtonPress(17, 3034, this.#delay150),
+        createButtonPress(17, 3035, this.#delay150, -1),
+        createButtonPress(17, 3035, this.#delay150, -1),
       );
     }
 

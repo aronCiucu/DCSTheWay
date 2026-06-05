@@ -8,9 +8,9 @@ import {
   ListItem,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { uiActions } from "../../store/ui";
 import { saveSettingsPreferences } from "../../utils/savePreferences";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { uiActions } from "../../store/ui";
 import AlwaysOnTopSetting from "./AlwaysOnTopSetting";
 import ButtonDelaySetting from "./ButtonDelaySetting";
 import CrosshairSetting from "./CrosshairSetting";
@@ -18,11 +18,9 @@ import KeybindSetting from "./KeybindSetting/KeybindSetting";
 
 const SettingsDialog = ({ open, closeHandler }) => {
   const dispatch = useDispatch();
-  const settingChangeHandler = (
-    settingName,
-    newValue,
-    applyImmediately = true,
-  ) => {
+  const preferences = useSelector((state) => state.ui.preferences);
+
+  const settingChangeHandler = (settingName, newValue, applyImmediately = true) => {
     const setting = {
       key: settingName,
       value: newValue,
@@ -48,7 +46,11 @@ const SettingsDialog = ({ open, closeHandler }) => {
           </ListItem>
           <Divider />
           <ListItem sx={{ px: 0, pt: 2 }}>
-            <KeybindSetting settingChangeHandler={settingChangeHandler} />
+            {/* Updated KeybindSetting now includes op1–op4 */}
+            <KeybindSetting
+              settingChangeHandler={settingChangeHandler}
+              preferences={preferences}
+            />
           </ListItem>
           <Divider />
           <ListItem sx={{ px: 0, pt: 2 }}>

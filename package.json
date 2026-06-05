@@ -1,6 +1,6 @@
 {
   "name": "theway",
-  "version": "2.5.0",
+  "version": "2.7.3",
   "private": true,
   "main": "electron/electron.js",
   "dependencies": {
@@ -15,7 +15,7 @@
     "react-start": "react-scripts start",
     "react-build": "react-scripts build",
     "electron-dev": "electron .",
-    "dev": "concurrently -k \"npm run start\" \"electron .\"",
+    "dev": "concurrently -k \"npm run react-start\" \"npm run electron-dev\"",
     "electron-build": "electron-builder",
     "package": "npm run react-build && npm run electron-build",
     "test": "jest"
@@ -66,16 +66,17 @@
     "react-test-renderer": "^18.2.0"
   },
   "build": {
-    "productName": "TheWay",
-    "extends": null,
-    "files": [
-      "node_modules",
-      "build/**/*",
-      "electron"
-    ],
-    "win": {
-      "icon": "build/TheWayIcon.ico"
-    }
-  },
+  "productName": "TheWay",
+  "extends": null,
+  "files": [
+    "node_modules",
+    "build/**/*",
+    "electron"
+  ],
+  "win": {
+    "icon": "build/TheWayIcon.ico"
+  }
+}
+,
   "homepage": "./"
 }

@@ -14,30 +14,45 @@ class userPreferenceHandler {
       this.#writeModulePreferencesFile(data);
     });
     ipcMain.on("saveSettingsPreferences", (e, data) => {
-      this.#writeSettingsPreferencesFile(data);
+  console.log("[TheWay] saveSettingsPreferences received:", data);
+  this.#writeSettingsPreferencesFile(data);
     });
     ipcMain.on("getPreferences", () => {
       this.#readPreferencesFile();
     });
   }
 
-  #writeModulePreferencesFile(data) {
-    const existingPreference = this.store.get(data.module);
-    existingPreference
-      ? this.store.set(data.module, [...existingPreference, data.option])
-      : this.store.set(data.module, [data.option]);
+    #writeModulePreferencesFile(data) {
+    this.store.set(data.module, [data.option]);
   }
 
-  #writeSettingsPreferencesFile(data) {
-    this.store.set(data.key, data.value);
+    #writeSettingsPreferencesFile(data) {
+    // Support keys like "optionDialogKeybinds.op1"
+    if (typeof data.key === "string" && data.key.includes(".")) {
+      const [parentKey, childKey] = data.key.split(".", 2);
+
+      const existingParent = this.store.get(parentKey);
+      const safeParent =
+        existingParent && typeof existingParent === "object"
+          ? existingParent
+          : {};
+
+      this.store.set(parentKey, { ...safeParent, [childKey]: data.value });
+    } else {
+      this.store.set(data.key, data.value);
+    }
+
     if (data.apply) this.applyElectronPreferences({ [data.key]: data.value });
   }
 
-  #readPreferencesFile() {
+
+      #readPreferencesFile() {
     const preferences = this.store.get();
     this.applyElectronPreferences(preferences);
     this.mainWindow.webContents.send("preferencesReceived", preferences);
   }
+
+
 }
 
 module.exports = userPreferenceHandler;

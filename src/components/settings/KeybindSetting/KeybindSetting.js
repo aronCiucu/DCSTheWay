@@ -1,7 +1,9 @@
 import { Stack, Typography } from "@mui/material";
 import KeybindItem from "./KeybindItem";
 
-const KeybindSetting = ({ settingChangeHandler }) => {
+const KeybindSetting = ({ settingChangeHandler, preferences }) => {
+  const optionKeybinds = preferences?.optionDialogKeybinds || {};
+
   return (
     <Stack direction={"column"}>
       <Typography gutterBottom>Keybindings</Typography>
@@ -13,6 +15,7 @@ const KeybindSetting = ({ settingChangeHandler }) => {
         Restart of the app is needed to apply the new bindings.
       </Typography>
 
+      {/* Existing keybinds */}
       <KeybindItem
         name={"Toggle Crosshair"}
         preferenceKey={"crosshairKeybind"}
@@ -37,6 +40,35 @@ const KeybindSetting = ({ settingChangeHandler }) => {
         name={"Transfer Waypoints"}
         preferenceKey={"transferKeybind"}
         changeKeybindHandler={settingChangeHandler}
+      />
+
+      {/* --- NEW Option Dialog Keybinds --- */}
+      <Typography variant="subtitle2" sx={{ mt: 2 }}>
+        Option Dialog Keybinds (op1–op4)
+      </Typography>
+      <KeybindItem
+        name={"Option 1"}
+        preferenceKey={"optionDialogKeybinds.op1"}
+        changeKeybindHandler={settingChangeHandler}
+        value={optionKeybinds.op1 || ""}
+      />
+      <KeybindItem
+        name={"Option 2"}
+        preferenceKey={"optionDialogKeybinds.op2"}
+        changeKeybindHandler={settingChangeHandler}
+        value={optionKeybinds.op2 || ""}
+      />
+      <KeybindItem
+        name={"Option 3"}
+        preferenceKey={"optionDialogKeybinds.op3"}
+        changeKeybindHandler={settingChangeHandler}
+        value={optionKeybinds.op3 || ""}
+      />
+      <KeybindItem
+        name={"Option 4"}
+        preferenceKey={"optionDialogKeybinds.op4"}
+        changeKeybindHandler={settingChangeHandler}
+        value={optionKeybinds.op4 || ""}
       />
     </Stack>
   );

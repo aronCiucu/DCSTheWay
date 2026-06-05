@@ -1,7 +1,46 @@
+//v2
 import Convertors from "./Convertors";
 
 const convert = (dcsWaypoints, module) => {
   switch (module) {
+    case "AH-6J":
+    case "MH-6J": {
+      // lat  00.00.000 DMM
+      // long 000.00.000
+      // AH/MH-6J also carries explicit hemisphere fields for TNL3100 entry
+      let waypoints = [];
+      for (const dcsWaypoint of dcsWaypoints) {
+        const name = dcsWaypoint.name;
+        const id = dcsWaypoint.id;
+        const dmmLat = Convertors.decimalToDMM(dcsWaypoint.lat);
+        const dmmLong = Convertors.decimalToDMM(dcsWaypoint.long);
+        const lat =
+          dmmLat.deg.toString().padStart(2, "0") +
+          "." +
+          dmmLat.min.toFixed(3).toString().padStart(6, "0");
+        const long =
+          dmmLong.deg.toString().padStart(3, "0") +
+          "." +
+          dmmLong.min.toFixed(3).toString().padStart(6, "0");
+        const elev = Math.trunc(Convertors.mToF(dcsWaypoint.elev)).toString();
+        const latHem = dcsWaypoint.lat >= 0 ? "N" : "S";
+        const longHem = dcsWaypoint.long >= 0 ? "E" : "W";
+
+        waypoints.push({
+          name,
+          id,
+          lat,
+          long,
+          elev,
+          latHem,
+          longHem,
+          latHemi: latHem,
+          longHemi: longHem,
+        });
+      }
+      return waypoints;
+    }
+
     default:
     case "F-15ESE":
     case "F-16C_50":
@@ -15,12 +54,14 @@ const convert = (dcsWaypoints, module) => {
     case "A-10C_2":
     case "A-10C":
     case "Hercules":
-    case "M-2000C": {
+    case "M-2000C":
+    case "AV8BNA":
+    case "CH-47Fbl1":
+    case "C-130J-30": {
       // lat  00.00.000 DMM
-      //long 000.00.000
+      // long 000.00.000
       let waypoints = [];
       for (const dcsWaypoint of dcsWaypoints) {
-
         const name = dcsWaypoint.name;
         const id = dcsWaypoint.id;
         const dmmLat = Convertors.decimalToDMM(dcsWaypoint.lat);
@@ -48,10 +89,82 @@ const convert = (dcsWaypoints, module) => {
       }
       return waypoints;
     }
+
+
+    case "A-10A":
+    case "AJS37":
+    case "Bf-109K-4":
+    case "C-101CC":
+    case "C-101EB":
+    case "Christen Eagle II":
+    case "F-14B":
+    case "F-15C":
+    case "F-5E-3":
+    case "F-86F Sabre":
+    case "FW-190D9":
+    case "I-16":
+    case "JF-17":
+    case "J-11A":
+    case "L-39C":
+    case "L-39ZA":
+    case "Mi-24P":
+    case "Mi-8MT":
+    case "MiG-15bis":
+    case "MiG-21bis":
+    case "MiG-29 Fulcrum":
+    case "MiG-29A":
+    case "MiG-29G":
+    case "MiG-29S":
+    case "P-51D":
+    case "SpitfireLFMkIX":
+    case "SpitfireLFMkIXCW":
+    case "Su-25":
+    case "Su-25T":
+    case "Su-27":
+    case "Su-33":
+    case "TF-51D":
+    case "UH-1H":
+    case "Yak-52": {
+      // lat  00.00 DMM
+      // long 000.00 DMM
+      let waypoints = [];
+      for (const dcsWaypoint of dcsWaypoints) {
+        const name = dcsWaypoint.name;
+        const id = dcsWaypoint.id;
+        const dmmLat = Convertors.decimalToDMM(dcsWaypoint.lat);
+        const dmmLong = Convertors.decimalToDMM(dcsWaypoint.long);
+        const lat =
+          dmmLat.deg.toString().padStart(2, "0") +
+          "." +
+          dmmLat.min.toFixed(2).toString().padStart(5, "0");
+        const long =
+          dmmLong.deg.toString().padStart(3, "0") +
+          "." +
+          dmmLong.min.toFixed(2).toString().padStart(5, "0");
+        const elev = Math.trunc(Convertors.mToF(dcsWaypoint.elev)).toString();
+        const latHem = dcsWaypoint.lat >= 0 ? "N" : "S";
+        const longHem = dcsWaypoint.long >= 0 ? "E" : "W";
+
+        waypoints.push({
+          name,
+          id,
+          lat,
+          long,
+          elev,
+          latHem,
+          longHem,
+          latHemi: latHem,
+          longHemi: longHem,
+        });
+      }
+      return waypoints;
+    }
+
     case "AH-64D_BLK_II":
-    case "UH-60L": {
+    case "UH-60L":
+    case "UH-60L_DAP": {
       // lat  00.00.00 DMM
-      //long 000.00.00
+      // long 000.00.00
       let waypoints = [];
       for (const dcsWaypoint of dcsWaypoints) {
         const name = dcsWaypoint.name;
@@ -81,47 +194,15 @@ const convert = (dcsWaypoints, module) => {
       }
       return waypoints;
     }
-    case "AV8BNA": {
-      // lat 00.00.00 DMS
-      // long 000.00.00
-      let waypoints = [];
-      for (const dcsWaypoint of dcsWaypoints) {
-        const name = dcsWaypoint.name;
-        const id = dcsWaypoint.id;
-        const dmsLat = Convertors.decimalToDMS(dcsWaypoint.lat);
-        const dmsLong = Convertors.decimalToDMS(dcsWaypoint.long);
-        const lat =
-          dmsLat.deg.toString().padStart(2, "0") +
-          "." +
-          dmsLat.min.toString().padStart(2, "0") +
-          "." +
-          dmsLat.sec.toString().padStart(2, "0");
-        const long =
-          dmsLong.deg.toString().padStart(3, "0") +
-          "." +
-          dmsLong.min.toString().padStart(2, "0") +
-          "." +
-          dmsLong.sec.toString().padStart(2, "0");
-        const elev = Math.trunc(Convertors.mToF(dcsWaypoint.elev)).toString();
-        const latHem = dcsWaypoint.lat > 0 ? "N" : "S";
-        const longHem = dcsWaypoint.long > 0 ? "E" : "W";
-        waypoints.push({
-          name,
-          id,
-          lat,
-          long,
-          elev,
-          latHem,
-          longHem,
-        });
-      }
-      return waypoints;
-    }
+
     case "Mirage-F1EE":
     case "Ka-50":
-    case "Ka-50_3": {
+    case "Ka-50_3":
+    case "SA342L":
+    case "SA342M":
+    case "SA342Minigun": {
       // lat  00.00.0 DMM
-      //long 000.00.0
+      // long 000.00.0
       let waypoints = [];
       for (const dcsWaypoint of dcsWaypoints) {
         const name = dcsWaypoint.name;
@@ -156,12 +237,13 @@ const convert = (dcsWaypoints, module) => {
       }
       return waypoints;
     }
+
     case "FA-18C_hornet":
     case "FA-18E":
     case "FA-18F":
     case "EA-18G": {
       // lat  00.00.0000 DMM
-      //long 000.00.0000
+      // long 000.00.0000
       let waypoints = [];
       for (const dcsWaypoint of dcsWaypoints) {
         const name = dcsWaypoint.name;
@@ -191,6 +273,7 @@ const convert = (dcsWaypoints, module) => {
       }
       return waypoints;
     }
+
     case "OH58D": {
       let waypoints = [];
       for (const dcsWaypoint of dcsWaypoints) {

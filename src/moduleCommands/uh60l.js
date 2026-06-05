@@ -1,6 +1,6 @@
 class uh60l {
   static extraDelay = 0;
-  static #device_id = 23;
+  static #device_id = 26;
   static #mode_value = 0.04;
   static #display_value = 0.05;
   static #delay_value = 50 + this.extraDelay;

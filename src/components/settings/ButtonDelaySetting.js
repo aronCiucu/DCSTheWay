@@ -17,11 +17,11 @@ const ButtonDelaySetting = ({ settingChangeHandler }) => {
           size="small"
           marks={[
             { value: 0, label: "+0ms" },
-            { value: 100, label: "+100ms" },
+            { value: 500, label: "+500ms" },
           ]}
           step={10}
           min={0}
-          max={100}
+          max={500}
           defaultValue={userPreferences["buttonDelay"]}
           valueLabelFormat={(value) => `+${value}ms`}
           valueLabelDisplay="auto"
