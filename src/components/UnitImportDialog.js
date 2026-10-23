@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { UNIT_LOOKUP } from "../data/unitLookupFromCatalog";
+import { UNIT_IMPORT_CONFIG } from "../config/unitImportProfile";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import {
   Dialog,
@@ -31,9 +32,9 @@ import {
 
 const { ipcRenderer } = window.require("electron");
 
-// Top-of-file config
-const SHOW_WITHIN_FILTER = false;
-const MAX_WITHIN_RADIUS = 10;
+// ---- Unit Import build profile ----
+const SHOW_WITHIN_FILTER = UNIT_IMPORT_CONFIG.showWithinFilter;
+const MAX_WITHIN_RADIUS = UNIT_IMPORT_CONFIG.maxWithinRadius;
 
 // ---- LocalStorage keys (UI prefs) ----
 const LS_PREFIX = "theway.unitImport.";
