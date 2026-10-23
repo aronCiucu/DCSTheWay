@@ -169,10 +169,16 @@ export default function getModuleCommands(module, waypoints, buttonExtraDelay) {
     case "C-101CC":
     case "C-101EB":
     case "Christen Eagle II":
+    case "F-100D":
+    case "F-14A-95-GR":
+    case "F-14A-135-GR":
+    case "F-14A-135-GR-Early":
     case "F-14B":
+    case "F-14BU":
     case "F-15C":
     case "F-5E-3":
     case "F-86F Sabre":
+    case "FW-190A8":
     case "FW-190D9":
     case "I-16":
     case "JF-17":
@@ -187,6 +193,9 @@ export default function getModuleCommands(module, waypoints, buttonExtraDelay) {
     case "MiG-29A":
     case "MiG-29G":
     case "MiG-29S":
+    case "P-47D-30":
+    case "P-47D-30b11":
+    case "P-47D-40":
     case "P-51D":
     case "SpitfireLFMkIX":
     case "SpitfireLFMkIXCW":
